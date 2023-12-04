@@ -1,0 +1,624 @@
+---
+title: "Gayane"
+output: html_notebook
+---
+
+Date: 11/18/2023
+
+Primary Hypothesis:   
+Correlate baseline_D-wave_distal decrease with low parameters in clinical data (scores etc).    
+
+# Setup
+```{r}
+require(data.table)
+require(ggplot2)
+require(table1)
+require(formatters)
+```
+
+# Data
+## Load data
+```{r}
+dt_clin <- fread("Combined data Slutgiltig Clinical data 11182023.csv")
+dt_np <- fread("Combined data Slutgiltig Neurophysiology data 11182023.csv")
+```
+
+## Remove Subject 53 and Subject 62 second surgeries (more than 10 years later)
+```{r}
+dt_np <- dt_np[!(`Study nr` == 53 &
+                   Op_datum == "4/13/2021"), ]
+
+dt_np <- dt_np[!(`Study nr` == 62 &
+                   Op_datum == "12/10/2019"), ]
+```
+
+## Merge
+```{r}
+dt1 <- merge(dt_clin,
+             dt_np,
+             by = "Study nr",
+             all = TRUE)
+```
+
+## Clear
+```{r}
+rm(list = c("dt_clin",
+            "dt_np"))
+gc()
+```
+
+## Format outcomes
+```{r}
+# Intraoperative D-wave distal
+# "Not detected" = 100% loss of D-wave
+# N/A = not measured
+# "" = remove 1 patient (Study nr = 5) as no data is available for them
+dt1 <- dt1[`Intraoperative_D-wave_distal` != "",]
+
+# Create new variable for the analysis, merging D-wave groups
+dt1$interop_d_distal <- unlist(lapply(X = substr(x = tolower(dt1$`Intraoperative_D-wave_distal`),
+                                                 start = 1,
+                                                 stop = 3),
+                                      FUN = function(a) {switch(a,
+                                                                "unc" = "unchanged",
+                                                                "non" = "non-signif decrease",
+                                                                "sig" = "signif decrease",
+                                                                "not" = "not detected",
+                                                                "abs" = "not detected",
+                                                                "not measured/unavailable")}))
+
+dt1$interop_d_distal <- factor(dt1$interop_d_distal,
+                               levels = c("unchanged",
+                                          "non-signif decrease",
+                                          "signif decrease",
+                                          "not detected",
+                                          "not measured/unavailable"))
+
+# Baseline D-wave distal
+dt1$`baseline_D-wave_distal`[dt1$`baseline_D-wave_distal` == ""] <- "normal"
+dt1$baseline_d_distal <- factor(dt1$`baseline_D-wave_distal`,
+                                levels = c("normal",
+                                           "low amplitude",
+                                           "not detected"))
+
+# Table
+addmargins(table(interop_d_distal = dt1$interop_d_distal,
+                 baseline_d_distal = dt1$baseline_d_distal))
+```
+
+## Errata
+### Typos
+```{r}
+dt1$`Long-term pain change`[dt1$`Long-term pain change` == "wose"] <- "worse"
+
+dt1$Intraoperative_SEP_left_foot[dt1$Intraoperative_SEP_left_foot == "ampitude decrease"] <- "amplitude decrease"
+```
+
+### Shorthand
+```{r}
+dt1$`Long-term bowel change`[dt1$`Long-term bowel change` == "u"] <- "unchanged"
+```
+
+### Baseline BCR
+```{r}
+dt1$baseline_BCR[dt1$baseline_BCR == ""] <- "normal"
+
+# Study nr = 10: missing at baseline, intraoperative = N/A
+dt1$baseline_BCR[dt1$`Study nr` %in% c(10)] <- "N/A"
+```
+
+## Format other variables
+```{r}
+dt2 <- data.table(study_id = dt1$`Study nr`,
+                  
+                  # D-wave
+                  # dt1$`baseline_D-wave_proximal`, # All NA
+                  # dt1$`Intraoperative_D-wave_proximal` # All `unchanged` or NA
+                  
+                  d_wave_distal_baseline = dt1$baseline_d_distal,
+                  d_wave_distal_intraoperative = dt1$interop_d_distal,
+                  
+                  surgery_date = as.Date(x = dt1$`date surgery`,
+                                         format = "%Y/%m/%d"),
+                  op_date = as.Date(dt1$Op_datum,
+                                    format = "%Y/%m/%d"),
+                  long_term_followup_date = as.Date(x = dt1$`Long-term follow-up date`,
+                                                    format = "%Y/%m/%d"),
+                  
+                  # Death
+                  dead = dt1$dead == 1,
+                  dead_spinal_pathology = dt1$`Death due to spinal pathology` == 1,
+                  death_date = as.Date(x = dt1$`date death`,
+                                       format = "%Y/%m/%d"),
+                  
+                  sex = factor(dt1$male,
+                               levels = 0:1,
+                               labels = c("Female",
+                                          "Male")),
+                  age = dt1$age,
+                  
+                  # Tumor
+                  pad = factor(dt1$pad),
+                  myelomalacia  = factor(dt1$myelomalacia,
+                                         levels = 0:1,
+                                         labels = c("No",
+                                                    "Yes")),
+                  contrast_enhancing_tumor = factor(dt1$`contrast enhancing tumor`,
+                                                    levels = 0:1,
+                                                    labels = c("No",
+                                                               "Yes")),
+                  syrinx = factor(dt1$syrinx,
+                                  levels = 0:1,
+                                  labels = c("No",
+                                             "Yes")),
+                  
+                  who = as.numeric(dt1$who),
+                  symptom_duration_mo = as.numeric(dt1$`symptom duration (months)`),
+                  
+                  # Motor
+                  motor_pre = factor(dt1$`pre motor`,
+                                     levels = 0:1,
+                                     labels = c("No",
+                                                "Yes")),
+                  motor_3m = factor(dt1$`3m motor`,
+                                    levels = 0:1,
+                                    labels = c("No",
+                                               "Yes")),
+                  motor_3m_change = factor(tolower(dt1$`3m  motor change`),
+                                           levels = c("unchanged",
+                                                      "worse",
+                                                      "better")),
+                  motor_long_term = factor(dt1$`Long-term motor`,
+                                           levels = c("0",
+                                                      "1",
+                                                      "N/A"),
+                                           labels = c("No",
+                                                      "Yes",
+                                                      "n/a")),
+                  motor_long_term_change = factor(tolower(dt1$`Long-term motor change`),
+                                                  levels = c("unchanged",
+                                                             "worse",
+                                                             "better",
+                                                             "n/a")),
+                  
+                  # Sensory
+                  sensory_pre = factor(dt1$`pre sensoty`,
+                                       levels = 0:1,
+                                       labels = c("No",
+                                                  "Yes")),
+                  
+                  sensory_3m = factor(dt1$`3m sensory`,
+                                      levels = c("0",
+                                                 "1"),
+                                      labels = c("No",
+                                                 "Yes")),
+                  sensory_3m_change = factor(tolower(dt1$`3m sensory change`),
+                                             levels = c("unchanged",
+                                                        "worse",
+                                                        "better")),
+                  sensory_long_term = factor(dt1$`Long-term sensory`),
+                  sensory_long_term_change = factor(tolower(dt1$`Long-term sensory change`),
+                                                    levels = c("unchanged",
+                                                               "worse",
+                                                               "better",
+                                                               "n/a")),
+                  # Pain
+                  pain_pre = factor(dt1$`pre pain`,
+                                    levels = 0:1,
+                                    labels = c("No",
+                                               "Yes")),
+                  pain_3m = factor(dt1$`3m pain`,
+                                   levels = 0:1,
+                                   labels = c("No",
+                                              "Yes")),
+                  pain_3m_change = factor(tolower(dt1$`3m pain change`),
+                                          levels = c("unchanged",
+                                                     "worse",
+                                                     "better")),
+                  pain_long_term = factor(dt1$`Long-term pain`,
+                                          levels = 0:1,
+                                          labels = c("No",
+                                                     "Yes")),
+                  pain_long_term_change = factor(tolower(dt1$`Long-term pain change`),
+                                                 levels = c("unchanged",
+                                                            "worse",
+                                                            "better")),
+                  
+                  # Bowel
+                  bowel_pre = factor(dt1$`pre bowel`,
+                                     levels = 0:1,
+                                     labels = c("No",
+                                                "Yes")),
+                  bowel_3m = factor(dt1$`3m bowel`,
+                                    levels = 0:1,
+                                    labels = c("No",
+                                               "Yes")),
+                  bowel_3m_change = factor(tolower(dt1$`3m bowel change`),
+                                           levels = c("unchanged",
+                                                      "worse",
+                                                      "better")),
+                  bowel_long_term = factor(dt1$`Long-term bowel`,
+                                           levels = 0:1,
+                                           labels = c("No",
+                                                      "Yes")),
+                  bowel_long_term_change = factor(tolower(dt1$`Long-term bowel change`),
+                                                  levels = c("unchanged",
+                                                             "worse",
+                                                             "better")),
+                  
+                  # Bladder
+                  bladder_pre = factor(dt1$`pre bladder`,
+                                       levels = 0:1,
+                                       labels = c("No",
+                                                  "Yes")),
+                  bladder_3m = factor(dt1$`3m bladder`,
+                                      levels = 0:1,
+                                      labels = c("No",
+                                                 "Yes")),
+                  bladder_3m_change = factor(tolower(dt1$`3m bladder change`),
+                                             levels = c("unchanged",
+                                                        "worse",
+                                                        "better")),
+                  bladder_long_term = factor(dt1$`Long-term bladder`,
+                                             levels = 0:1,
+                                             labels = c("No",
+                                                        "Yes")),
+                  bladder_long_term_change = factor(tolower(dt1$`Long-term bladder change`),
+                                                    levels = c("unchanged",
+                                                               "worse",
+                                                               "better")),
+                  
+                  #mMCs
+                  mmcs_pre = factor(dt1$`pre mMCs`,
+                                    levels = 1:5),
+                  mmcs_3m = factor(dt1$`3m mMCs`,
+                                    levels = 1:5),
+                  mmcs_3m_change = factor(tolower(dt1$`3m mMCs change`),
+                                          levels = c("unchanged",
+                                                     "worse",
+                                                     "better")),
+                  mmcs_long_term  = factor(dt1$`Long-term mMCs`,
+                                    levels = 1:5),
+                  mmcs_long_term_change = factor(tolower(dt1$`Long-term mMCs change`),
+                                                 levels = c("unchanged",
+                                                            "worse",
+                                                            "better")),
+                  
+                  # ASIA IS
+                  asia_is_pre = factor(dt1$`pre ASIA IS`,
+                                       levels = LETTERS[1:5]),
+                  asia_is_3m = factor(dt1$`3m ASIA IS`,
+                                       levels = LETTERS[1:5]),
+                  asia_is_3m_change = factor(tolower(dt1$`3m ASIA IS change`),
+                                             levels = c("unchanged",
+                                                        "worse",
+                                                        "better")),
+                  
+                  asia_is_long_term = factor(dt1$`Long-term ASIA IS`,
+                                       levels = LETTERS[1:5]),
+                  asia_is_long_term_change = factor(tolower(dt1$`Long-term ASIA IS change`),
+                                                    levels = c("unchanged",
+                                                               "worse",
+                                                               "better")),
+                  
+                  # BCR
+                  bcr_baseline = factor(tolower(dt1$baseline_BCR),
+                                        levels = c("not detected",
+                                                   "no response (sph sin)",
+                                                   "normal",
+                                                   "n/a")),
+                  bcr_intraoperative = factor(tolower(dt1$Intraoperative_BCR),
+                                              levels = c("unchanged",
+                                                         "amplitude decrease (sph dx)",
+                                                         "not detected",
+                                                         "n/a")),
+                  
+                  spinal_segment = factor(dt1$`spinal segment`), # group segments into sections
+                  surgical_radicality = factor(dt1$`surgical radicality`),
+                  # dt1$`neurophysiology used` # all = 1
+                  adjuvent_radio = factor(dt1$`adjuvent radio`,
+                                          levels = 0:1,
+                                          labels = c("No",
+                                                     "Yes")),
+                  adjuvant_chemo = factor(dt1$`adjuvant chemo`,
+                                          levels = 0:1,
+                                          labels = c("No",
+                                                     "Yes")),
+                  
+                  # Motor evoked potentials
+                  # baseline_MEP_right_hand = factor(tolower(dt1$baseline_MEP_right_hand)),
+                  # baseline_MEP_left_hand = factor(tolower(dt1$baseline_MEP_left_hand)),
+                  baseline_MEP_right_leg = factor(tolower(dt1$baseline_MEP_right_leg)),
+                  baseline_MEP_left_leg = factor(tolower(dt1$baseline_MEP_left_leg)),
+
+                  Intraoperative_MEP_right_hand = factor(tolower(dt1$Intraoperative_MEP_right_hand)),
+                  Intraoperative_MEP_left_hand = factor(tolower(dt1$Intraoperative_MEP_left_hand)),
+                  Intraoperative_MEP_right_leg = factor(tolower(dt1$Intraoperative_MEP_right_leg)),
+                  Intraoperative_MEP_left_leg = factor(tolower(dt1$Intraoperative_MEP_left_leg)),
+                 
+                  # Sensory evoked potentials
+                  baseline_SEP_right_hand = factor(tolower(dt1$baseline_SEP_right_hand)),
+                  baseline_SEP_left_hand = factor(tolower(dt1$baseline_SEP_left_hand)),
+                  baseline_SEP_right_leg = factor(tolower(dt1$baseline_SEP_right_leg)),
+                  baseline_SEP_left_leg = factor(tolower(dt1$baseline_SEP_left_leg)),
+
+                  Intraoperative_SEP_right_hand = factor(tolower(dt1$Intraoperative_SEP_right_hand),
+                                                         levels = c("unchanged",
+                                                                    "absent from the start of the surgery",
+                                                                    "amplitude decrease",
+                                                                    "amplitude decrease, prolonged latency",
+                                                                    "loss of response",
+                                                                    "n/a")),
+                  Intraoperative_SEP_left_hand = factor(tolower(dt1$Intraoperative_SEP_left_hand)),
+                  Intraoperative_SEP_right_foot = factor(tolower(dt1$Intraoperative_SEP_right_foot)),
+                  Intraoperative_SEP_left_foot = factor(tolower(dt1$Intraoperative_SEP_left_foot))
+)
+```
+
+# Table 1: D-wave Distal Baseline
+```{r}
+t1 <- table1(~ .| d_wave_distal_baseline,
+             data = dt2[, -c("study_id",
+                             "op_date",
+                             "surgery_date",
+                             "long_term_followup_date",
+                             "death_date")])
+
+# formatters::export_as_rtf(x = t1,
+#                           file = "t1.rtf")
+
+t1
+```
+
+# Table 2: D-wave Distal Intraoperative
+```{r}
+table1(~ .| d_wave_distal_intraoperative,
+       data = dt2[, -c("study_id",
+                       "surgery_date",
+                       "death_date",
+                       "long_term_followup_date",
+                       "op_date")])
+```
+
+```{r}
+addmargins(table(motor_pre = dt2$motor_pre,
+                 motor_3m_change = dt2$motor_3m_change,
+                 motor_long_term_change = dt2$motor_long_term_change))
+```
+
+# Figures
+## Figure 1: mMCs Scores
+```{r}
+dt_f1 <- melt.data.table(data = dt2[, c("study_id",
+                                        "d_wave_distal_baseline",
+                                        "mmcs_pre",
+                                        "mmcs_3m",
+                                        "mmcs_long_term")],
+                         id.vars = 1:2,
+                         measure.vars = 3:5,
+                         variable.name = "Followup",
+                         value.name = "mMCs") 
+
+dt_f1$study_id <- factor(dt_f1$study_id)
+
+dt_f1$Followup <- factor(dt_f1$Followup,
+                         levels = c("mmcs_pre",
+                                    "mmcs_3m",
+                                    "mmcs_long_term"),
+                         labels = c("Pre-Op",
+                                    "3 Months",
+                                    "Long Term"))
+```
+
+```{r,fig.width=6,fig.height=3}
+ggplot(dt_f1,
+       aes(x = Followup,
+           y = mMCs,
+           group = study_id,
+           color = study_id)) +
+  facet_wrap(~ d_wave_distal_baseline) +
+  geom_line(position = position_dodge(0.3)) +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 45,
+                                   hjust = 1),
+        legend.position = "none")
+```
+
+## Figure 1: ASIA IS Scores
+```{r}
+dt_f2 <- melt.data.table(data = dt2[, c("study_id",
+                                        "d_wave_distal_baseline",
+                                        "asia_is_pre",
+                                        "asia_is_3m",
+                                        "asia_is_long_term")],
+                         id.vars = 1:2,
+                         measure.vars = 3:5,
+                         variable.name = "Followup",
+                         value.name = "ASIA IS") 
+
+dt_f2$study_id <- factor(dt_f2$study_id)
+
+dt_f2$Followup <- factor(dt_f2$Followup,
+                         levels = c("asia_is_pre",
+                                    "asia_is_3m",
+                                    "asia_is_long_term"),
+                         labels = c("Pre-Op",
+                                    "3 Months",
+                                    "Long Term"))
+
+dt_f2$`ASIA IS` <- factor(dt_f2$`ASIA IS`,
+                          levels = LETTERS[1:5])
+```
+
+```{r,fig.width=6,fig.height=3}
+ggplot(dt_f2,
+       aes(x = Followup,
+           y = `ASIA IS`,
+           group = study_id,
+           color = study_id)) +
+  facet_wrap(~ d_wave_distal_baseline) +
+  geom_line(position = position_dodge(0.3)) +
+  scale_y_discrete(drop = FALSE) +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 45,
+                                   hjust = 1),
+        legend.position = "none")
+```
+
+# Tests
+Correlation of intraoperative changes in SEP, MEP and D-wave vs. Clinical Variables at 3 months and long-term
+
+
+Motor Evoked Potentials (MEP)
+
+## Intraoperative SEP Feet vs. Sensory Change at 3 Months
+Sensory Evoked Potentials (SEP)
+
+### Merge SEP right and left feet
+```{r}
+addmargins(table(Intraoperative_SEP_right_foot = dt2$Intraoperative_SEP_right_foot,
+                 motor_3m = dt2$sensory_3m_change))
+
+addmargins(table(Intraoperative_SEP_left_hand = dt2$Intraoperative_SEP_left_foot,
+                 motor_3m = dt2$sensory_3m_change))
+```
+
+```{r}
+unique(tolower(dt2$Intraoperative_SEP_right_foot))
+
+dt2$intraop_sep_rf <- unlist(lapply(X = substr(x = tolower(dt2$Intraoperative_SEP_right_foot),
+                                                 start = 1,
+                                                 stop = 3),
+                                      FUN = function(a) {switch(a,
+                                                                "unc" = "unchanged",
+                                                                "abs" = "unchanged",
+                                                                "los" = "loss of response",
+                                                                "amp" = "amplitude decrease",
+                                                                "non distinct respone")}))
+dt2$intraop_sep_rf <- factor(dt2$intraop_sep_rf,
+                             levels = c("unchanged",
+                                        "loss of response",
+                                        "amplitude decrease",
+                                        "non distinct respone"))
+table(dt2$intraop_sep_rf)
+```
+
+
+```{r}
+unique(tolower(dt2$Intraoperative_SEP_left_foot))
+
+dt2$intraop_sep_lf <- unlist(lapply(X = substr(x = tolower(dt2$Intraoperative_SEP_left_foot),
+                                                 start = 1,
+                                                 stop = 3),
+                                      FUN = function(a) {switch(a,
+                                                                "unc" = "unchanged",
+                                                                "lat" = "unchanged",
+                                                                "abs" = "unchanged",
+                                                                "los" = "loss of response",
+                                                                "amp" = "amplitude decrease",
+                                                                "non distinct respone")}))
+dt2$intraop_sep_lf <- factor(dt2$intraop_sep_lf,
+                             levels = c("unchanged",
+                                        "loss of response",
+                                        "amplitude decrease",
+                                        "non distinct respone"))
+table(dt2$intraop_sep_lf)
+```
+
+```{r}
+addmargins(table(rf = dt2$intraop_sep_rf,
+                 lf = dt2$intraop_sep_lf))
+
+dt2$intraop_sep_feet <- "unchanged"
+
+dt2$intraop_sep_feet[dt2$intraop_sep_rf == "loss of response" |
+                       dt2$intraop_sep_lf == "loss of response"] <- "loss of response"
+
+dt2$intraop_sep_feet[dt2$intraop_sep_rf == "amplitude decrease" |
+                       dt2$intraop_sep_lf == "amplitude decrease"] <- "amplitude decrease"
+
+dt2$intraop_sep_feet[dt2$intraop_sep_rf == "non distinct respone" |
+                       dt2$intraop_sep_lf == "non distinct respone"] <- "non distinct respone"
+dt2$intraop_sep_feet <- factor(dt2$intraop_sep_feet,
+                               levels = c("unchanged",
+                                          "loss of response",
+                                          "amplitude decrease",
+                                          "non distinct respone"))
+
+addmargins(table(dt2$intraop_sep_feet))
+```
+
+```{r}
+s11 <- summary(glm((sensory_3m_change == "worse") ~ dt2$intraop_sep_feet,
+                   data = dt2,
+                   family = "binomial"))
+s11
+
+out11 <- data.table(Y = "Motor Worse at 3 Months",
+                  X = "Intraoperative SEP Feet",
+                  Comparisons = paste(levels(dt2$intraop_sep_feet)[-1],
+                                      "vs. unchanged"),
+                  OR = round(exp(s11$coefficients[-1, 1]),
+                             2))
+print("Odds of getting worst motor function at 3 months followup if the Intraop SEP Right Hand had a status XXX vs unchanged")
+out11
+```
+
+```{r}
+s11 <- summary(glm((sensory_3m_change == "better") ~ dt2$intraop_sep_feet,
+                   data = dt2,
+                   family = "binomial"))
+s11
+
+out11 <- data.table(Y = "Motor Worse at 3 Months",
+                  X = "Intraoperative SEP Feet",
+                  Comparisons = paste(levels(dt2$intraop_sep_feet)[-1],
+                                      "vs. unchanged"),
+                  OR = round(exp(s11$coefficients[-1, 1]),
+                             2))
+print("Odds of getting worst motor function at 3 months followup if the Intraop SEP Right Hand had a status XXX vs unchanged")
+out11
+```
+
+
+```{r}
+
+# Same as:
+22/(62 - 22)
+0.9/(1 - 0.9)
+(0.9/(1 - 0.9))/(22/(62 - 22))
+
+
+s12 <- summary(glm((motor_3m_change == "better") ~ Intraoperative_SEP_right_hand,
+                   data = dt2,
+                   family = "binomial"))
+summary(s12)
+
+out12 <- data.table(Y = "Motor Better at 3 Months",
+                    X = "Intraoperative SEP Feet",
+                    Comparisons = paste(levels(dt2$Intraoperative_SEP_right_hand)[-1],
+                                        "vs. unchanged"),
+                    OR = round(exp(s12$coefficients[-1, 1]),
+                               2))
+out12
+
+
+m13 <- glm((motor_3m_change == "unchanged") ~ Intraoperative_SEP_right_hand,
+          data = dt2,
+          family = "binomial")
+summary(m13)
+```
+
+
+
+# Save data
+```{r}
+write.csv(dt2,
+          file = "gayane_data_10082023.CSV",
+          row.names = TRUE)
+```
+
+# Session
+```{r}
+sessionInfo()
+```

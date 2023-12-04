@@ -1,0 +1,108 @@
+From: Henrik Frisk <henrik.frisk@ki.se>
+Date: October 12, 2023 at 14:22:02 GMT+2
+To: "adrian.elmi.terander" <adrian.elmi.terander@gmail.com>, Gayane Margaryan <gayane.margaryan@stud.ki.se>, Erik Edstrom <cegedstrom@gmail.com>
+Subject: Sv: Data update
+
+﻿
+Hi Gayane,
+
+ 
+
+From what I can see in one of the files, two R-tables have been created from the exel file. One categorized from Baseline D-wave and the other from Intraop D-wave changes. The last part of the file with the motor change tables I don´t understand.
+
+ 
+
+I agree with Adrian, we are interested in the possible correlations between the intraoperative changes in SEP, MEP and D-wave and the changes in the clinical variables, both 3 month and long term.
+
+ 
+
+Do I understand the data correctly that we have detailed neurophysiological data with actual numbers in 7 cases?  In the rest we have these categories of change (unchanged, amplitude decrease etc.)?
+
+ 
+
+Best regards
+
+Henrik
+
+Från: Adrian Elmi Terander <adrian.elmi.terander@gmail.com>
+Skickat: den 12 oktober 2023 12:20
+Till: Gayane Margaryan <gayane.margaryan@stud.ki.se>; Henrik Frisk <henrik.frisk@ki.se>; Erik Edstrom <cegedstrom@gmail.com>
+Ämne: Re: Data update
+
+ 
+
+Dear Gayane,
+
+ 
+
+I have difficulties reading these files, One is at least readable, the other is only code!
+
+ 
+
+What we are looking for is correlations between intra operative changes and clinical status at follow-up.
+
+In few cases where we have preoperative neurophysiology and postoperative dito, it would be nice to illustrate if the changes in neurophysiology correspond to clinical findings.
+
+ 
+
+We also had 6 cases with detailed neurophysiological data. I don't know what we can do with those.
+
+ 
+
+Since we have SEP, MEP and D-vawe, we look at each one separately.
+
+ 
+
+It would have been interesting to detect thresholds for how much the signal must decrease to result in clinical deficits. For instance if the SEP decreases by 30% vs 70% and if the latter results in deficit and we could calculate a threshold of 66% as predictive. Samr for MEP and D-vawe. However, I think our sample size is too small for this.
+
+ 
+
+Basically, I suggest that you extract everything possible from the data and present it in a table. We can then decide which findings are interesting and should be included in the manuscript.
+
+ 
+
+Best regards
+
+Adrian
+
+ 
+
+ 
+
+ 
+
+On Tue, Oct 10, 2023 at 9:18 AM Gayane Margaryan <gayane.margaryan@stud.ki.se> wrote:
+
+Dear Adrian,
+
+ 
+
+I hope you are doing well.
+
+ 
+
+I had a session with David yesterday and he is done with the most time consuming part. Please find below the two files in a format that we can look at and think what exactly we want to be analyzed.
+
+ 
+
+I have a session with him this weekend and he needs only about 2 hours to get the analysis we need. He can run any analysis we propose out of the summary two files attached. We will sit together with that.
+
+ 
+
+Please let me know if you have any suggestions and I will try to meet Jonas this week before David starts the analysis.
+
+ 
+
+From neurophysiology point of view, I think distal D wave, intraop. MEPs and lastly SEPs should be correlated with postop. clinical results. 
+
+ 
+
+ 
+
+Thank you.
+
+ 
+
+Kind regards,
+
+Gayane 

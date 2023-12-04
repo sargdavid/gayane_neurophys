@@ -1,0 +1,1603 @@
+---
+title: "Correlation of Intraoperative Neurophysiology with Clinical Scores in Spinal Tumor Patients"
+output: html_notebook
+---
+
+Date: 11/19/2023  
+Last Updated: 12/3/2023  
+  
+# Definitions
+Correlation of intraoperative changes in SEP, MEP and D-wave vs. Clinical Variables at 3 months and long-term
+.Sensory Evoked Potentials (SEP)  
+.Motor Evoked Potentials (MEP)  
+.McCormick Scale(mMCs): clinical classification scale to evaluate patients with intramedulary spinal cord tumors to categorize patient's mobility and sensory statuses.  
+.The American Spinal Injury Association Impairment Scale (ASIA IS): standardized neurological examination used by the rehabilitation team to assess the sensory and motor levels which were affected by the spinal cord injury  
+  
+# Primary Hypotheses 
+.SEP vs. Sensory, McCormick, ASIA IS and Pain change (3 months and long term)  
+.MEP vs. Motor, McCormick, ASIA IS, Bladder and Bowel change (3m and long term)    
+.D-wave vs. Motor, Sensory, Pain, Bladder, Bowel, McCormick and ASIA IS (3 months and long term)  
+  
+# Setup
+```{r}
+require(data.table)
+require(ggplot2)
+require(table1)
+require(formatters)
+```
+
+# Data
+## Load data
+```{r}
+dt_clin <- fread("data/Combined data Slutgiltig Clinical data11192023.csv")
+dt_np <- fread("data/Combined data Slutgiltig Neorophysiology data11192023.csv")
+```
+
+## Merge
+```{r}
+dt1 <- merge(dt_clin,
+             dt_np,
+             by = "Study nr",
+             all.y = TRUE)
+```
+
+## Clear
+```{r}
+rm(list = c("dt_clin",
+            "dt_np"))
+gc()
+```
+
+## Format outcomes
+```{r}
+# Intraoperative D-wave distal
+# "Not detected" = 100% loss of D-wave
+# N/A = not measured
+
+# Create new variable for the analysis, merging D-wave groups
+dt1$interop_d_distal <- unlist(lapply(X = substr(x = tolower(dt1$`Intraoperative_D-wave_distal`),
+                                                 start = 1,
+                                                 stop = 3),
+                                      FUN = function(a) {switch(a,
+                                                                "unc" = "unchanged",
+                                                                "non" = "non-signif decrease",
+                                                                "sig" = "signif decrease",
+                                                                "not" = "not detected",
+                                                                "abs" = "not detected",
+                                                                "not measured/unavailable")}))
+
+dt1$interop_d_distal <- factor(dt1$interop_d_distal,
+                               levels = c("unchanged",
+                                          "non-signif decrease",
+                                          "signif decrease",
+                                          "not detected",
+                                          "not measured/unavailable"))
+
+# Baseline D-wave distal
+dt1$`baseline_D-wave_distal`[dt1$`baseline_D-wave_distal` == ""] <- "normal"
+dt1$baseline_d_distal <- factor(dt1$`baseline_D-wave_distal`,
+                                levels = c("normal",
+                                           "low amplitude",
+                                           "not detected"))
+
+# Table
+addmargins(table(interop_d_distal = dt1$interop_d_distal,
+                 baseline_d_distal = dt1$baseline_d_distal))
+```
+
+## Errata
+Patient study_id = 18, additional data from Aman, 12/1/2023. NO need to code this, changed the CSV file entries in "Combined data Slutgiltig Clinical data11192023.csv"  
+  
+dt1$`Long-term motor`[dt1$`Study nr` == 18] <- "1"  
+dt1$`Long-term motor change`[dt1$`Study nr` == 18] <- "worse"   
+  
+dt1$`Long-term sensory`[dt1$`Study nr` == 18] <- "1"  
+dt1$`Long-term sensory change`[dt1$`Study nr` == 18] <- "worse"  
+  
+## Format other variables
+```{r}
+dt2 <- data.table(study_id = dt1$`Study nr`,
+                  
+                  # D-wave
+                  # dt1$`baseline_D-wave_proximal`, # All NA
+                  # dt1$`Intraoperative_D-wave_proximal` # All `unchanged` or NA
+                  
+                  d_wave_distal_baseline = dt1$baseline_d_distal,
+                  d_wave_distal_intraoperative = dt1$interop_d_distal,
+                  
+                  surgery_date = as.Date(x = dt1$`date surgery`,
+                                         format = "%Y/%m/%d"),
+                  op_date = as.Date(dt1$Op_datum,
+                                    format = "%Y/%m/%d"),
+                  long_term_followup_date = as.Date(x = dt1$`Long-term follow-up date`,
+                                                    format = "%Y/%m/%d"),
+                  
+                  # Death
+                  dead = dt1$dead == 1,
+                  dead_spinal_pathology = dt1$`Death due to spinal pathology` == 1,
+                  death_date = as.Date(x = dt1$`date death`,
+                                       format = "%Y/%m/%d"),
+                  
+                  sex = factor(dt1$male,
+                               levels = 0:1,
+                               labels = c("Female",
+                                          "Male")),
+                  age = dt1$age,
+                  
+                  # Tumor
+                  pad = factor(dt1$pad),
+                  myelomalacia  = factor(dt1$myelomalacia,
+                                         levels = 0:1,
+                                         labels = c("No",
+                                                    "Yes")),
+                  contrast_enhancing_tumor = factor(dt1$`contrast enhancing tumor`,
+                                                    levels = 0:1,
+                                                    labels = c("No",
+                                                               "Yes")),
+                  syrinx = factor(dt1$syrinx,
+                                  levels = 0:1,
+                                  labels = c("No",
+                                             "Yes")),
+                  
+                  who = as.numeric(dt1$who),
+                  symptom_duration_mo = as.numeric(dt1$`symptom duration (months)`),
+                  
+                  # Motor
+                  motor_pre = factor(dt1$`pre motor`,
+                                     levels = 0:1,
+                                     labels = c("No",
+                                                "Yes")),
+                  motor_3m = factor(dt1$`3m motor`,
+                                    levels = 0:1,
+                                    labels = c("No",
+                                               "Yes")),
+                  motor_3m_change = factor(tolower(dt1$`3m  motor change`),
+                                           levels = c("unchanged",
+                                                      "worse",
+                                                      "better")),
+                  motor_long_term = factor(as.character(dt1$`Long-term motor`),
+                                           levels = c("0",
+                                                      "1",
+                                                      "N/A"),
+                                           labels = c("No",
+                                                      "Yes",
+                                                      "n/a")),
+                  motor_long_term_change = factor(tolower(dt1$`Long-term motor change`),
+                                                  levels = c("unchanged",
+                                                             "worse",
+                                                             "better",
+                                                             "n/a")),
+                  
+                  # Sensory
+                  sensory_pre = factor(dt1$`pre sensoty`,
+                                       levels = 0:1,
+                                       labels = c("No",
+                                                  "Yes")),
+                  
+                  sensory_3m = factor(dt1$`3m sensory`,
+                                      levels = c("0",
+                                                 "1"),
+                                      labels = c("No",
+                                                 "Yes")),
+                  sensory_3m_change = factor(tolower(dt1$`3m sensory change`),
+                                             levels = c("unchanged",
+                                                        "worse",
+                                                        "better")),
+                  sensory_long_term = factor(as.character(dt1$`Long-term sensory`),
+                                             levels = c("0",
+                                                        "1",
+                                                        "N/A"),
+                                             labels = c("No",
+                                                        "Yes",
+                                                        "n/a")),
+                  sensory_long_term_change = factor(tolower(dt1$`Long-term sensory change`),
+                                                    levels = c("unchanged",
+                                                               "worse",
+                                                               "better",
+                                                               "n/a")),
+                  # Pain
+                  pain_pre = factor(dt1$`pre pain`,
+                                    levels = 0:1,
+                                    labels = c("No",
+                                               "Yes")),
+                  pain_3m = factor(dt1$`3m pain`,
+                                   levels = 0:1,
+                                   labels = c("No",
+                                              "Yes")),
+                  pain_3m_change = factor(tolower(dt1$`3m pain change`),
+                                          levels = c("unchanged",
+                                                     "worse",
+                                                     "better")),
+                  pain_long_term = factor(dt1$`Long-term pain`,
+                                          levels = 0:1,
+                                          labels = c("No",
+                                                     "Yes")),
+                  pain_long_term_change = factor(tolower(dt1$`Long-term pain change`),
+                                                 levels = c("unchanged",
+                                                            "worse",
+                                                            "better")),
+                  
+                  # Bowel
+                  bowel_pre = factor(dt1$`pre bowel`,
+                                     levels = 0:1,
+                                     labels = c("No",
+                                                "Yes")),
+                  bowel_3m = factor(dt1$`3m bowel`,
+                                    levels = 0:1,
+                                    labels = c("No",
+                                               "Yes")),
+                  bowel_3m_change = factor(tolower(dt1$`3m bowel change`),
+                                           levels = c("unchanged",
+                                                      "worse",
+                                                      "better")),
+                  bowel_long_term = factor(dt1$`Long-term bowel`,
+                                           levels = 0:1,
+                                           labels = c("No",
+                                                      "Yes")),
+                  bowel_long_term_change = factor(tolower(dt1$`Long-term bowel change`),
+                                                  levels = c("unchanged",
+                                                             "worse",
+                                                             "better")),
+                  
+                  # Bladder
+                  bladder_pre = factor(dt1$`pre bladder`,
+                                       levels = 0:1,
+                                       labels = c("No",
+                                                  "Yes")),
+                  bladder_3m = factor(dt1$`3m bladder`,
+                                      levels = 0:1,
+                                      labels = c("No",
+                                                 "Yes")),
+                  bladder_3m_change = factor(tolower(dt1$`3m bladder change`),
+                                             levels = c("unchanged",
+                                                        "worse",
+                                                        "better")),
+                  bladder_long_term = factor(dt1$`Long-term bladder`,
+                                             levels = 0:1,
+                                             labels = c("No",
+                                                        "Yes")),
+                  bladder_long_term_change = factor(tolower(dt1$`Long-term bladder change`),
+                                                    levels = c("unchanged",
+                                                               "worse",
+                                                               "better")),
+                  
+                  #mMCs
+                  mmcs_pre = factor(dt1$`pre mMCs`,
+                                    levels = 1:5),
+                  mmcs_3m = factor(dt1$`3m mMCs`,
+                                    levels = 1:5),
+                  mmcs_3m_change = factor(tolower(dt1$`3m mMCs change`),
+                                          levels = c("unchanged",
+                                                     "worse",
+                                                     "better")),
+                  mmcs_long_term  = factor(dt1$`Long-term mMCs`,
+                                    levels = 1:5),
+                  mmcs_long_term_change = factor(tolower(dt1$`Long-term mMCs change`),
+                                                 levels = c("unchanged",
+                                                            "worse",
+                                                            "better")),
+                  
+                  # ASIA IS
+                  asia_is_pre = factor(dt1$`pre ASIA IS`,
+                                       levels = LETTERS[1:5]),
+                  asia_is_3m = factor(dt1$`3m ASIA IS`,
+                                       levels = LETTERS[1:5]),
+                  asia_is_3m_change = factor(tolower(dt1$`3m ASIA IS change`),
+                                             levels = c("unchanged",
+                                                        "worse",
+                                                        "better")),
+                  
+                  asia_is_long_term = factor(dt1$`Long-term ASIA IS`,
+                                       levels = LETTERS[1:5]),
+                  asia_is_long_term_change = factor(tolower(dt1$`Long-term ASIA IS change`),
+                                                    levels = c("unchanged",
+                                                               "worse",
+                                                               "better")),
+                  
+                  # BCR
+                  bcr_baseline = factor(tolower(dt1$baseline_BCR),
+                                        levels = c("not detected",
+                                                   "no response (sph sin)",
+                                                   "normal",
+                                                   "n/a")),
+                  bcr_intraoperative = factor(tolower(dt1$Intraoperative_BCR),
+                                              levels = c("unchanged",
+                                                         "amplitude decrease (sph dx)",
+                                                         "not detected",
+                                                         "n/a")),
+                  
+                  spinal_segment = factor(dt1$`spinal segment`), # group segments into sections
+                  surgical_radicality = factor(dt1$`surgical radicality`),
+                  # dt1$`neurophysiology used` # all = 1
+                  adjuvent_radio = factor(dt1$`adjuvent radio`,
+                                          levels = 0:1,
+                                          labels = c("No",
+                                                     "Yes")),
+                  adjuvant_chemo = factor(dt1$`adjuvant chemo`,
+                                          levels = 0:1,
+                                          labels = c("No",
+                                                     "Yes")),
+                  
+                  # Motor evoked potentials
+                  # baseline_MEP_right_hand = factor(tolower(dt1$baseline_MEP_right_hand)),
+                  # baseline_MEP_left_hand = factor(tolower(dt1$baseline_MEP_left_hand)),
+                  baseline_MEP_right_leg = factor(tolower(dt1$baseline_MEP_right_leg)),
+                  baseline_MEP_left_leg = factor(tolower(dt1$baseline_MEP_left_leg)),
+
+                  Intraoperative_MEP_right_hand = factor(tolower(dt1$Intraoperative_MEP_right_hand)),
+                  Intraoperative_MEP_left_hand = factor(tolower(dt1$Intraoperative_MEP_left_hand)),
+                  Intraoperative_MEP_right_leg = factor(tolower(dt1$Intraoperative_MEP_right_leg)),
+                  Intraoperative_MEP_left_leg = factor(tolower(dt1$Intraoperative_MEP_left_leg)),
+                 
+                  # Sensory evoked potentials
+                  baseline_SEP_right_hand = factor(tolower(dt1$baseline_SEP_right_hand)),
+                  baseline_SEP_left_hand = factor(tolower(dt1$baseline_SEP_left_hand)),
+                  baseline_SEP_right_leg = factor(tolower(dt1$baseline_SEP_right_leg)),
+                  baseline_SEP_left_leg = factor(tolower(dt1$baseline_SEP_left_leg)),
+
+                  Intraoperative_SEP_right_hand = factor(tolower(dt1$Intraoperative_SEP_right_hand),
+                                                         levels = c("unchanged",
+                                                                    "absent from the start of the surgery",
+                                                                    "amplitude decrease",
+                                                                    "amplitude decrease, prolonged latency",
+                                                                    "loss of response",
+                                                                    "n/a")),
+                  Intraoperative_SEP_left_hand = factor(tolower(dt1$Intraoperative_SEP_left_hand)),
+                  Intraoperative_SEP_right_foot = factor(tolower(dt1$Intraoperative_SEP_right_foot)),
+                  Intraoperative_SEP_left_foot = factor(tolower(dt1$Intraoperative_SEP_left_foot))
+)
+```
+
+# Table 1: D-wave Distal Baseline
+```{r}
+t1 <- table1(~ .| d_wave_distal_baseline,
+             data = dt2[, -c("study_id",
+                             "op_date",
+                             "surgery_date",
+                             "long_term_followup_date",
+                             "death_date")])
+
+# formatters::export_as_rtf(x = t1,
+#                           file = "t1.rtf")
+
+t1
+```
+
+# Table 2: D-wave Distal Intraoperative
+```{r}
+table1(~ .| d_wave_distal_intraoperative,
+       data = dt2[, -c("study_id",
+                       "surgery_date",
+                       "death_date",
+                       "long_term_followup_date",
+                       "op_date")])
+```
+
+```{r}
+addmargins(table(motor_pre = dt2$motor_pre,
+                 motor_3m_change = dt2$motor_3m_change,
+                 motor_long_term_change = dt2$motor_long_term_change))
+```
+
+# Figures
+## Figure 1: mMCs Scores
+```{r}
+# dt_f1 <- melt.data.table(data = dt2[, c("study_id",
+#                                         "d_wave_distal_baseline",
+#                                         "mmcs_pre",
+#                                         "mmcs_3m",
+#                                         "mmcs_long_term")],
+#                          id.vars = 1:2,
+#                          measure.vars = 3:5,
+#                          variable.name = "Followup",
+#                          value.name = "mMCs") 
+# 
+# dt_f1$study_id <- factor(dt_f1$study_id)
+# 
+# dt_f1$Followup <- factor(dt_f1$Followup,
+#                          levels = c("mmcs_pre",
+#                                     "mmcs_3m",
+#                                     "mmcs_long_term"),
+#                          labels = c("Pre-Op",
+#                                     "3 Months",
+#                                     "Long Term"))
+```
+
+```{r,fig.width=6,fig.height=3}
+# ggplot(dt_f1,
+#        aes(x = Followup,
+#            y = mMCs,
+#            group = study_id,
+#            color = study_id)) +
+#   facet_wrap(~ d_wave_distal_baseline) +
+#   geom_line(position = position_dodge(0.3)) +
+#   theme_bw() +
+#   theme(axis.text.x = element_text(angle = 45,
+#                                    hjust = 1),
+#         legend.position = "none")
+```
+
+## Figure 1: ASIA IS Scores
+```{r}
+# dt_f2 <- melt.data.table(data = dt2[, c("study_id",
+#                                         "d_wave_distal_baseline",
+#                                         "asia_is_pre",
+#                                         "asia_is_3m",
+#                                         "asia_is_long_term")],
+#                          id.vars = 1:2,
+#                          measure.vars = 3:5,
+#                          variable.name = "Followup",
+#                          value.name = "ASIA IS") 
+# 
+# dt_f2$study_id <- factor(dt_f2$study_id)
+# 
+# dt_f2$Followup <- factor(dt_f2$Followup,
+#                          levels = c("asia_is_pre",
+#                                     "asia_is_3m",
+#                                     "asia_is_long_term"),
+#                          labels = c("Pre-Op",
+#                                     "3 Months",
+#                                     "Long Term"))
+# 
+# dt_f2$`ASIA IS` <- factor(dt_f2$`ASIA IS`,
+#                           levels = LETTERS[1:5])
+```
+
+```{r,fig.width=6,fig.height=3}
+# ggplot(dt_f2,
+#        aes(x = Followup,
+#            y = `ASIA IS`,
+#            group = study_id,
+#            color = study_id)) +
+#   facet_wrap(~ d_wave_distal_baseline) +
+#   geom_line(position = position_dodge(0.3)) +
+#   scale_y_discrete(drop = FALSE) +
+#   theme_bw() +
+#   theme(axis.text.x = element_text(angle = 45,
+#                                    hjust = 1),
+#         legend.position = "none")
+```
+
+# Tests
+## Intraoperative SEP Change in Feet
+### SEP Right Foot
+```{r}
+dt2$intraop_sep_rf <- unlist(lapply(X = substr(x = tolower(dt2$Intraoperative_SEP_right_foot),
+                                                 start = 1,
+                                                 stop = 3),
+                                      FUN = function(a) {switch(a,
+                                                                "unc" = "unchanged",
+                                                                "abs" = "unchanged",
+                                                                "los" = "loss of response",
+                                                                "amplitude decrease")}))
+dt2$intraop_sep_rf <- factor(dt2$intraop_sep_rf,
+                             levels = c("unchanged",
+                                        "amplitude decrease",
+                                        "loss of response"))
+table(dt2$intraop_sep_rf)
+```
+
+### SEP Left Foot
+```{r}
+dt2$intraop_sep_lf <- unlist(lapply(X = substr(x = tolower(dt2$Intraoperative_SEP_left_foot),
+                                                 start = 1,
+                                                 stop = 3),
+                                      FUN = function(a) {switch(a,
+                                                                "unc" = "unchanged",
+                                                                "lat" = "unchanged",
+                                                                "abs" = "unchanged",
+                                                                "los" = "loss of response",
+                                                                "amplitude decrease")}))
+dt2$intraop_sep_lf <- factor(dt2$intraop_sep_lf,
+                             levels = c("unchanged",
+                                        "amplitude decrease",
+                                        "loss of response"))
+table(dt2$intraop_sep_lf)
+```
+
+### Combine left and right foot data
+```{r}
+addmargins(table(rf = dt2$intraop_sep_rf,
+                 lf = dt2$intraop_sep_lf))
+
+dt2$intraop_sep_feet <- "unchanged"
+
+dt2$intraop_sep_feet[dt2$intraop_sep_rf == "amplitude decrease" |
+                       dt2$intraop_sep_lf == "amplitude decrease"] <- "amplitude decrease"
+
+dt2$intraop_sep_feet[dt2$intraop_sep_rf == "loss of response" |
+                       dt2$intraop_sep_lf == "loss of response"] <- "loss of response"
+
+dt2$intraop_sep_feet <- factor(dt2$intraop_sep_feet,
+                               levels = c("unchanged",
+                                          "amplitude decrease",
+                                          "loss of response"))
+
+addmargins(table(dt2$intraop_sep_feet))
+```
+
+### Sensory
+#### Intraoperative SEP vs. 3-month Sensory Change
+```{r}
+addmargins(table(intraop_sep_feet = dt2$intraop_sep_feet,
+                 sensory_3m_change = dt2$sensory_3m_change))
+```
+
+```{r}
+s11 <- summary(glm((sensory_3m_change == "worse") ~ dt2$intraop_sep_feet,
+                   data = dt2,
+                   family = "binomial"))
+s11
+
+out11 <- data.table(Y = "Sensory Worse at 3 Months",
+                    X = "Intraoperative SEP Feet",
+                    Comparisons = paste(levels(dt2$intraop_sep_feet)[-1],
+                                        "vs. unchanged"),
+                    OR = round(exp(s11$coefficients[-1, 1]),
+                               2),
+                    `95% C.I.L.B.` = exp(s11$coefficients[-1, 1] - 1.96*s11$coefficients[-1, 2]),
+                    `95% C.I.U.B.` = exp(s11$coefficients[-1, 1] + 1.96*s11$coefficients[-1, 2]),
+                    `p-Value` = ifelse(s11$coefficients[-1, 4] >= 0.001,
+                                       round(s11$coefficients[-1, 4], 3),
+                                       "<0.001"),
+                    sign = ifelse(s11$coefficients[-1, 4] <= 0.05,
+                                  ifelse(s11$coefficients[-1, 4] <= 0.01,
+                                         "**",
+                                         "*"), ""))
+
+out11
+```
+
+#### Intraoperative SEP vs. Long-Term Sensory Change
+```{r}
+addmargins(table(intraop_sep_feet = dt2$intraop_sep_feet,
+                 sensory_long_term_change = dt2$sensory_long_term_change))
+```
+
+```{r}
+s12 <- summary(glm((sensory_long_term_change == "worse") ~ dt2$intraop_sep_feet,
+                   data = dt2,
+                   family = "binomial"))
+s12
+
+out12 <- data.table(Y = "Sensory Worse Long-Term",
+                    X = "Intraoperative SEP Feet",
+                    Comparisons = paste(levels(dt2$intraop_sep_feet)[-1],
+                                        "vs. unchanged"),
+                    OR = round(exp(s12$coefficients[-1, 1]),
+                               2),
+                    `95% C.I.L.B.` = exp(s12$coefficients[-1, 1] - 1.96*s12$coefficients[-1, 2]),
+                    `95% C.I.U.B.` = exp(s12$coefficients[-1, 1] + 1.96*s12$coefficients[-1, 2]),
+                    `p-Value` = ifelse(s12$coefficients[-1, 4] >= 0.001,
+                                       round(s12$coefficients[-1, 4], 3),
+                                       "<0.001"),
+                    sign = ifelse(s12$coefficients[-1, 4] <= 0.05,
+                                  ifelse(s12$coefficients[-1, 4] <= 0.01,
+                                         "**",
+                                         "*"), ""))
+
+out12
+```
+
+### McCormick Scale
+#### Intraoperative SEP vs. 3-month McCormick Scale Change
+```{r}
+addmargins(table(intraop_sep_feet = dt2$intraop_sep_feet,
+                 mmcs_3m_change = dt2$mmcs_3m_change))
+```
+
+```{r}
+s13 <- summary(glm((mmcs_3m_change == "worse") ~ dt2$intraop_sep_feet,
+                   data = dt2,
+                   family = "binomial"))
+s13
+
+out13 <- data.table(Y = "McCormick Scale Worse at 3 Months",
+                    X = "Intraoperative SEP Feet",
+                    Comparisons = paste(levels(dt2$intraop_sep_feet)[-1],
+                                        "vs. unchanged"),
+                    OR = round(exp(s13$coefficients[-1, 1]),
+                               2),
+                    `95% C.I.L.B.` = exp(s13$coefficients[-1, 1] - 1.96*s13$coefficients[-1, 2]),
+                    `95% C.I.U.B.` = exp(s13$coefficients[-1, 1] + 1.96*s13$coefficients[-1, 2]),
+                    `p-Value` = ifelse(s13$coefficients[-1, 4] >= 0.001,
+                                       round(s13$coefficients[-1, 4], 3),
+                                       "<0.001"),
+                    sign = ifelse(s13$coefficients[-1, 4] <= 0.05,
+                                  ifelse(s13$coefficients[-1, 4] <= 0.01,
+                                         "**",
+                                         "*"), ""))
+
+out13
+```
+#### Intraoperative SEP vs. Long-Term Sensory Change
+```{r}
+addmargins(table(intraop_sep_feet = dt2$intraop_sep_feet,
+                 mmcs_long_term_change = dt2$mmcs_long_term_change))
+```
+
+```{r}
+s14 <- summary(glm((mmcs_long_term_change == "worse") ~ dt2$intraop_sep_feet,
+                   data = dt2,
+                   family = "binomial"))
+s14
+
+out14 <- data.table(Y = "McCormick Scale Worse Long-Term",
+                    X = "Intraoperative SEP Feet",
+                    Comparisons = paste(levels(dt2$intraop_sep_feet)[-1],
+                                        "vs. unchanged"),
+                    OR = round(exp(s14$coefficients[-1, 1]),
+                               2),
+                    `95% C.I.L.B.` = exp(s14$coefficients[-1, 1] - 1.96*s14$coefficients[-1, 2]),
+                    `95% C.I.U.B.` = exp(s14$coefficients[-1, 1] + 1.96*s14$coefficients[-1, 2]),
+                    `p-Value` = ifelse(s14$coefficients[-1, 4] >= 0.001,
+                                       round(s14$coefficients[-1, 4], 3),
+                                       "<0.001"),
+                    sign = ifelse(s14$coefficients[-1, 4] <= 0.05,
+                                  ifelse(s14$coefficients[-1, 4] <= 0.01,
+                                         "**",
+                                         "*"), ""))
+
+out14
+```
+
+### ASIA IS
+#### Intraoperative SEP vs. 3-month ASIA IS Change
+```{r}
+addmargins(table(intraop_sep_feet = dt2$intraop_sep_feet,
+                 asia_is_3m_change = dt2$asia_is_3m_change))
+```
+
+```{r}
+s15 <- summary(glm((asia_is_3m_change == "worse") ~ intraop_sep_feet,
+                   data = dt2,
+                   family = "binomial"))
+s15
+
+out15 <- data.table(Y = "ASIA IS Worse at 3 Months",
+                    X = "Intraoperative SEP Feet",
+                    Comparisons = paste(levels(dt2$intraop_sep_feet)[-1],
+                                        "vs. unchanged"),
+                    OR = round(exp(s15$coefficients[-1, 1]),
+                               2),
+                    `95% C.I.L.B.` = exp(s15$coefficients[-1, 1] - 1.96*s15$coefficients[-1, 2]),
+                    `95% C.I.U.B.` = exp(s15$coefficients[-1, 1] + 1.96*s15$coefficients[-1, 2]),
+                    `p-Value` = ifelse(s15$coefficients[-1, 4] >= 0.001,
+                                       round(s15$coefficients[-1, 4], 3),
+                                       "<0.001"),
+                    sign = ifelse(s15$coefficients[-1, 4] <= 0.05,
+                                  ifelse(s15$coefficients[-1, 4] <= 0.01,
+                                         "**",
+                                         "*"), ""))
+
+out15
+```
+
+#### Intraoperative SEP vs. Long-Term ASIA IS Change
+```{r}
+addmargins(table(intraop_sep_feet = dt2$intraop_sep_feet,
+                 asia_is_long_term_change = dt2$asia_is_long_term_change))
+```
+
+```{r}
+s16 <- summary(glm((asia_is_long_term_change == "worse") ~ intraop_sep_feet,
+                   data = dt2,
+                   family = "binomial"))
+s16
+
+out16 <- data.table(Y = "ASIA IS Worse at Long-Term Follow-Up",
+                    X = "Intraoperative SEP Feet",
+                    Comparisons = paste(levels(dt2$intraop_sep_feet)[-1],
+                                        "vs. unchanged"),
+                    OR = round(exp(s16$coefficients[-1, 1]),
+                               2),
+                    `95% C.I.L.B.` = exp(s16$coefficients[-1, 1] - 1.96*s16$coefficients[-1, 2]),
+                    `95% C.I.U.B.` = exp(s16$coefficients[-1, 1] + 1.96*s16$coefficients[-1, 2]),
+                    `p-Value` = ifelse(s16$coefficients[-1, 4] >= 0.001,
+                                       round(s16$coefficients[-1, 4], 3),
+                                       "<0.001"),
+                    sign = ifelse(s16$coefficients[-1, 4] <= 0.05,
+                                  ifelse(s16$coefficients[-1, 4] <= 0.01,
+                                         "**",
+                                         "*"), ""))
+
+out16
+```
+
+### Pain
+#### Intraoperative SEP vs. 3-month Pain Change
+```{r}
+addmargins(table(intraop_sep_feet = dt2$intraop_sep_feet,
+                 pain_3m_change = dt2$pain_3m_change))
+```
+
+```{r}
+s17 <- summary(glm((pain_3m_change == "worse") ~ intraop_sep_feet,
+                   data = dt2,
+                   family = "binomial"))
+s17
+
+out17 <- data.table(Y = "Pain Worse at 3 Months",
+                    X = "Intraoperative SEP Feet",
+                    Comparisons = paste(levels(dt2$intraop_sep_feet)[-1],
+                                        "vs. unchanged"),
+                    OR = round(exp(s17$coefficients[-1, 1]),
+                               2),
+                    `95% C.I.L.B.` = exp(s17$coefficients[-1, 1] - 1.96*s17$coefficients[-1, 2]),
+                    `95% C.I.U.B.` = exp(s17$coefficients[-1, 1] + 1.96*s17$coefficients[-1, 2]),
+                    `p-Value` = ifelse(s17$coefficients[-1, 4] >= 0.001,
+                                       round(s17$coefficients[-1, 4], 3),
+                                       "<0.001"),
+                    sign = ifelse(s17$coefficients[-1, 4] <= 0.05,
+                                  ifelse(s17$coefficients[-1, 4] <= 0.01,
+                                         "**",
+                                         "*"), ""))
+
+out17
+```
+
+#### Intraoperative SEP vs. Long-Term Pain Change
+```{r}
+addmargins(table(intraop_sep_feet = dt2$intraop_sep_feet,
+                 pain_long_term_change = dt2$pain_long_term_change))
+```
+
+```{r}
+s18 <- summary(glm((pain_long_term_change == "worse") ~ intraop_sep_feet,
+                   data = dt2,
+                   family = "binomial"))
+s18
+
+out18 <- data.table(Y = "Pain Worse at Long-Term Follow-Up",
+                    X = "Intraoperative SEP Feet",
+                    Comparisons = paste(levels(dt2$intraop_sep_feet)[-1],
+                                        "vs. unchanged"),
+                    OR = round(exp(s18$coefficients[-1, 1]),
+                               2),
+                    `95% C.I.L.B.` = exp(s18$coefficients[-1, 1] - 1.96*s18$coefficients[-1, 2]),
+                    `95% C.I.U.B.` = exp(s18$coefficients[-1, 1] + 1.96*s18$coefficients[-1, 2]),
+                    `p-Value` = ifelse(s18$coefficients[-1, 4] >= 0.001,
+                                       round(s18$coefficients[-1, 4], 3),
+                                       "<0.001"),
+                    sign = ifelse(s18$coefficients[-1, 4] <= 0.05,
+                                  ifelse(s16$coefficients[-1, 4] <= 0.01,
+                                         "**",
+                                         "*"), ""))
+
+out18
+```
+
+## Intraoperative MEP Change in Feet
+### MEP Right Leg
+```{r}
+dt2$intraop_mep_rl <- unlist(lapply(X = substr(x = tolower(dt2$Intraoperative_MEP_right_leg),
+                                               start = 1,
+                                               stop = 3),
+                                    FUN = function(a) {switch(a,
+                                                              "unc" = "unchanged",
+                                                              "non" = "unchanged",
+                                                              "los" = "loss of response",
+                                                              "amp" = "amplitude decrease",
+                                                              "n/a")}))
+dt2$intraop_mep_rl <- factor(dt2$intraop_mep_rl,
+                             levels = c("unchanged",
+                                        "amplitude decrease",
+                                        "loss of response",
+                                        "n/a"))
+table(dt2$intraop_mep_rl)
+```
+
+### MEP Left Leg
+```{r}
+dt2$intraop_mep_ll <- unlist(lapply(X = substr(x = tolower(dt2$Intraoperative_MEP_left_leg),
+                                               start = 1,
+                                               stop = 3),
+                                    FUN = function(a) {switch(a,
+                                                              "unc" = "unchanged",
+                                                              "non" = "unchanged",
+                                                              "pro" = "unchanged",
+                                                              "los" = "loss of response",
+                                                              "amp" = "amplitude decrease",
+                                                              "n/a")}))
+dt2$intraop_mep_ll <- factor(dt2$intraop_mep_ll,
+                             levels = c("unchanged",
+                                        "amplitude decrease",
+                                        "loss of response",
+                                        "n/a"))
+table(dt2$intraop_mep_ll)
+```
+
+### Combine left and right foot data
+```{r}
+addmargins(table(rl = dt2$intraop_mep_rl,
+                 ll = dt2$intraop_mep_ll))
+
+dt2$intraop_mep_legs <- "n/a"
+
+dt2$intraop_mep_legs[dt2$intraop_mep_rl == "unchanged" |
+                       dt2$intraop_mep_ll == "unchanged"] <- "unchanged"
+
+dt2$intraop_mep_legs[dt2$intraop_mep_rl == "amplitude decrease" |
+                       dt2$intraop_mep_ll == "amplitude decrease"] <- "amplitude decrease"
+
+dt2$intraop_mep_legs[dt2$intraop_mep_rl == "loss of response" |
+                       dt2$intraop_mep_ll == "loss of response"] <- "loss of response"
+
+dt2$intraop_mep_legs <- factor(dt2$intraop_mep_legs,
+                               levels = c("unchanged",
+                                          "amplitude decrease",
+                                          "loss of response",
+                                          "n/a"))
+
+addmargins(table(dt2$intraop_mep_legs))
+```
+
+### Motor
+#### Intraoperative MEP vs. 3-month Motor Change
+```{r}
+addmargins(table(intraop_mep_legs = dt2$intraop_mep_legs,
+                 motor_3m_change = dt2$motor_3m_change))
+```
+
+#### Patients missing intraoperative MEP in legs
+Patients 18 and 62  
+```{r}
+dt2[intraop_mep_legs == "n/a", ]
+```
+
+
+```{r}
+s21 <- summary(glm((motor_3m_change == "worse") ~ intraop_mep_legs,
+                   data = dt2,
+                   family = "binomial"))
+s21
+
+out21 <- data.table(Y = "Motor Worse at 3 Months",
+                    X = "Intraoperative MEP Legs",
+                    Comparisons = paste(levels(dt2$intraop_mep_legs)[-1],
+                                        "vs. unchanged"),
+                    OR = round(exp(s21$coefficients[-1, 1]),
+                               2),
+                    `95% C.I.L.B.` = exp(s21$coefficients[-1, 1] - 1.96*s21$coefficients[-1, 2]),
+                    `95% C.I.U.B.` = exp(s21$coefficients[-1, 1] + 1.96*s21$coefficients[-1, 2]),
+                    `p-Value` = ifelse(s21$coefficients[-1, 4] >= 0.001,
+                                       round(s21$coefficients[-1, 4], 3),
+                                       "<0.001"),
+                    sign = ifelse(s21$coefficients[-1, 4] <= 0.05,
+                                  ifelse(s21$coefficients[-1, 4] <= 0.01,
+                                         "**",
+                                         "*"), ""))
+
+out21
+```
+
+#### Intraoperative MEP vs. long-term Motor Change
+```{r}
+addmargins(table(intraop_mep_legs = dt2$intraop_mep_legs,
+                 motor_long_term_change = dt2$motor_long_term_change))
+```
+
+```{r}
+s22 <- summary(glm((motor_long_term_change == "worse") ~ dt2$intraop_mep_legs,
+                   data = dt2,
+                   family = "binomial"))
+s22
+
+out22 <- data.table(Y = "Motor Worse at Long-Term",
+                    X = "Intraoperative MEP Legs",
+                    Comparisons = paste(levels(dt2$intraop_mep_legs)[-1],
+                                        "vs. unchanged"),
+                    OR = round(exp(s22$coefficients[-1, 1]),
+                               2),
+                    `95% C.I.L.B.` = exp(s22$coefficients[-1, 1] - 1.96*s22$coefficients[-1, 2]),
+                    `95% C.I.U.B.` = exp(s22$coefficients[-1, 1] + 1.96*s22$coefficients[-1, 2]),
+                    `p-Value` = ifelse(s22$coefficients[-1, 4] >= 0.001,
+                                       round(s22$coefficients[-1, 4], 3),
+                                       "<0.001"),
+                    sign = ifelse(s22$coefficients[-1, 4] <= 0.05,
+                                  ifelse(s22$coefficients[-1, 4] <= 0.01,
+                                         "**",
+                                         "*"), ""))
+
+out22
+```
+
+### McCormick Scale
+#### Intraoperative SEP vs. 3-month McCormick Scale Change
+```{r}
+addmargins(table(intraop_mep_legs = dt2$intraop_mep_legs,
+                 mmcs_3m_change = dt2$mmcs_3m_change))
+```
+
+```{r}
+s23 <- summary(glm((mmcs_3m_change == "worse") ~ dt2$intraop_mep_legs,
+                   data = dt2,
+                   family = "binomial"))
+s23
+
+out23 <- data.table(Y = "McCormick Scale Worse at 3 Months",
+                    X = "Intraoperative MEP Legs",
+                    Comparisons = paste(levels(dt2$intraop_sep_feet)[-1],
+                                        "vs. unchanged"),
+                    OR = round(exp(s23$coefficients[-1, 1]),
+                               2),
+                    `95% C.I.L.B.` = exp(s23$coefficients[-1, 1] - 1.96*s23$coefficients[-1, 2]),
+                    `95% C.I.U.B.` = exp(s23$coefficients[-1, 1] + 1.96*s23$coefficients[-1, 2]),
+                    `p-Value` = ifelse(s23$coefficients[-1, 4] >= 0.001,
+                                       round(s23$coefficients[-1, 4], 3),
+                                       "<0.001"),
+                    sign = ifelse(s23$coefficients[-1, 4] <= 0.05,
+                                  ifelse(s23$coefficients[-1, 4] <= 0.01,
+                                         "**",
+                                         "*"), ""))
+
+out23
+```
+
+#### Intraoperative SEP vs. Long-Term McCormick Scale Change
+```{r}
+addmargins(table(intraop_mep_legs = dt2$intraop_mep_legs,
+                 mmcs_long_term_change = dt2$mmcs_long_term_change))
+```
+
+```{r}
+s24 <- summary(glm((mmcs_long_term_change == "worse") ~ dt2$intraop_mep_legs,
+                   data = dt2,
+                   family = "binomial"))
+s24
+
+out24 <- data.table(Y = "McCormick Scale Worse Long-Term",
+                    X = "Intraoperative MEP Legs",
+                    Comparisons = paste(levels(dt2$intraop_sep_feet)[-1],
+                                        "vs. unchanged"),
+                    OR = round(exp(s24$coefficients[-1, 1]),
+                               2),
+                    `95% C.I.L.B.` = exp(s24$coefficients[-1, 1] - 1.96*s24$coefficients[-1, 2]),
+                    `95% C.I.U.B.` = exp(s24$coefficients[-1, 1] + 1.96*s24$coefficients[-1, 2]),
+                    `p-Value` = ifelse(s24$coefficients[-1, 4] >= 0.001,
+                                       round(s24$coefficients[-1, 4], 3),
+                                       "<0.001"),
+                    sign = ifelse(s24$coefficients[-1, 4] <= 0.05,
+                                  ifelse(s14$coefficients[-1, 4] <= 0.01,
+                                         "**",
+                                         "*"), ""))
+
+out24
+```
+
+### ASIA IS
+#### Intraoperative SEP vs. 3-month ASIA IS Change
+```{r}
+addmargins(table(intraop_mep_legs = dt2$intraop_mep_legs,
+                 asia_is_3m_change = dt2$asia_is_3m_change))
+```
+
+```{r}
+s25 <- summary(glm((asia_is_3m_change == "worse") ~ intraop_mep_legs,
+                   data = dt2,
+                   family = "binomial"))
+s25
+
+out25 <- data.table(Y = "ASIA IS Worse at 3 Months",
+                    X = "Intraoperative MEP Legs",
+                    Comparisons = paste(levels(dt2$intraop_mep_legs)[-1],
+                                        "vs. unchanged"),
+                    OR = round(exp(s25$coefficients[-1, 1]),
+                               2),
+                    `95% C.I.L.B.` = exp(s25$coefficients[-1, 1] - 1.96*s25$coefficients[-1, 2]),
+                    `95% C.I.U.B.` = exp(s25$coefficients[-1, 1] + 1.96*s25$coefficients[-1, 2]),
+                    `p-Value` = ifelse(s25$coefficients[-1, 4] >= 0.001,
+                                       round(s25$coefficients[-1, 4], 3),
+                                       "<0.001"),
+                    sign = ifelse(s25$coefficients[-1, 4] <= 0.05,
+                                  ifelse(s25$coefficients[-1, 4] <= 0.01,
+                                         "**",
+                                         "*"), ""))
+
+out25
+```
+
+
+#### Intraoperative SEP vs. Long-Term ASIA IS Change
+```{r}
+addmargins(table(intraop_mep_legs = dt2$intraop_mep_legs,
+                 asia_is_long_term_change = dt2$asia_is_long_term_change))
+```
+
+```{r}
+s26 <- summary(glm((asia_is_long_term_change == "worse") ~ intraop_mep_legs,
+                   data = dt2,
+                   family = "binomial"))
+s26
+
+out26 <- data.table(Y = "ASIA IS Worse at Long Term",
+                    X = "Intraoperative MEP Legs",
+                    Comparisons = paste(levels(dt2$intraop_mep_legs)[-1],
+                                        "vs. unchanged"),
+                    OR = round(exp(s26$coefficients[-1, 1]),
+                               2),
+                    `95% C.I.L.B.` = exp(s26$coefficients[-1, 1] - 1.96*s26$coefficients[-1, 2]),
+                    `95% C.I.U.B.` = exp(s26$coefficients[-1, 1] + 1.96*s26$coefficients[-1, 2]),
+                    `p-Value` = ifelse(s26$coefficients[-1, 4] >= 0.001,
+                                       round(s26$coefficients[-1, 4], 3),
+                                       "<0.001"),
+                    sign = ifelse(s26$coefficients[-1, 4] <= 0.05,
+                                  ifelse(s26$coefficients[-1, 4] <= 0.01,
+                                         "**",
+                                         "*"), ""))
+
+out26
+```
+
+### Bladder
+#### Intraoperative SEP vs. 3-month Bladder Change
+```{r}
+addmargins(table(intraop_mep_legs = dt2$intraop_mep_legs,
+                 bladder_3m_change = dt2$bladder_3m_change))
+```
+
+```{r}
+s27 <- summary(glm((bladder_3m_change == "worse") ~ intraop_mep_legs,
+                   data = dt2,
+                   family = "binomial"))
+s27
+
+out27 <- data.table(Y = "Bladder Worse at 3 Months",
+                    X = "Intraoperative MEP Legs",
+                    Comparisons = paste(levels(dt2$intraop_mep_legs)[-1],
+                                        "vs. unchanged"),
+                    OR = round(exp(s27$coefficients[-1, 1]),
+                               2),
+                    `95% C.I.L.B.` = exp(s27$coefficients[-1, 1] - 1.96*s27$coefficients[-1, 2]),
+                    `95% C.I.U.B.` = exp(s27$coefficients[-1, 1] + 1.96*s27$coefficients[-1, 2]),
+                    `p-Value` = ifelse(s27$coefficients[-1, 4] >= 0.001,
+                                       round(s27$coefficients[-1, 4], 3),
+                                       "<0.001"),
+                    sign = ifelse(s27$coefficients[-1, 4] <= 0.05,
+                                  ifelse(s27$coefficients[-1, 4] <= 0.01,
+                                         "**",
+                                         "*"), ""))
+
+out27
+```
+
+#### Intraoperative SEP vs. Long-Term Bladder Change
+```{r}
+addmargins(table(intraop_mep_legs = dt2$intraop_mep_legs,
+                 bladder_long_term_change = dt2$bladder_long_term_change))
+```
+
+```{r}
+s28 <- summary(glm((bladder_long_term_change == "worse") ~ intraop_mep_legs,
+                   data = dt2,
+                   family = "binomial"))
+s28
+
+out28 <- data.table(Y = "Bladder Worse at Long-Term",
+                    X = "Intraoperative MEP Legs",
+                    Comparisons = paste(levels(dt2$intraop_mep_legs)[-1],
+                                        "vs. unchanged"),
+                    OR = round(exp(s28$coefficients[-1, 1]),
+                               2),
+                    `95% C.I.L.B.` = exp(s28$coefficients[-1, 1] - 1.96*s28$coefficients[-1, 2]),
+                    `95% C.I.U.B.` = exp(s28$coefficients[-1, 1] + 1.96*s28$coefficients[-1, 2]),
+                    `p-Value` = ifelse(s28$coefficients[-1, 4] >= 0.001,
+                                       round(s28$coefficients[-1, 4], 3),
+                                       "<0.001"),
+                    sign = ifelse(s28$coefficients[-1, 4] <= 0.05,
+                                  ifelse(s28$coefficients[-1, 4] <= 0.01,
+                                         "**",
+                                         "*"), ""))
+
+out28
+```
+
+### Bowel
+#### Intraoperative SEP vs. 3-month Bowel Change
+```{r}
+addmargins(table(intraop_mep_legs = dt2$intraop_mep_legs,
+                 bowel_3m_change = dt2$bowel_3m_change))
+```
+
+```{r}
+s29 <- summary(glm((bowel_3m_change == "worse") ~ intraop_mep_legs,
+                   data = dt2,
+                   family = "binomial"))
+s29
+
+out29 <- data.table(Y = "Bowel Worse at 3 Months",
+                    X = "Intraoperative MEP Legs",
+                    Comparisons = paste(levels(dt2$intraop_mep_legs)[-1],
+                                        "vs. unchanged"),
+                    OR = round(exp(s29$coefficients[-1, 1]),
+                               2),
+                    `95% C.I.L.B.` = exp(s29$coefficients[-1, 1] - 1.96*s29$coefficients[-1, 2]),
+                    `95% C.I.U.B.` = exp(s29$coefficients[-1, 1] + 1.96*s29$coefficients[-1, 2]),
+                    `p-Value` = ifelse(s29$coefficients[-1, 4] >= 0.001,
+                                       round(s29$coefficients[-1, 4], 3),
+                                       "<0.001"),
+                    sign = ifelse(s29$coefficients[-1, 4] <= 0.05,
+                                  ifelse(s29$coefficients[-1, 4] <= 0.01,
+                                         "**",
+                                         "*"), ""))
+
+out29
+```
+
+#### Intraoperative SEP vs. Long-Term Bowel Change
+```{r}
+addmargins(table(intraop_mep_legs = dt2$intraop_mep_legs,
+                 bowel_long_term_change = dt2$bowel_long_term_change))
+```
+
+```{r}
+s210 <- summary(glm((bowel_long_term_change == "worse") ~ intraop_mep_legs,
+                   data = dt2,
+                   family = "binomial"))
+s210
+
+out210 <- data.table(Y = "Bowel Worse at Long-Term",
+                    X = "Intraoperative MEP Legs",
+                    Comparisons = paste(levels(dt2$intraop_mep_legs)[-1],
+                                        "vs. unchanged"),
+                    OR = round(exp(s210$coefficients[-1, 1]),
+                               2),
+                    `95% C.I.L.B.` = exp(s210$coefficients[-1, 1] - 1.96*s210$coefficients[-1, 2]),
+                    `95% C.I.U.B.` = exp(s210$coefficients[-1, 1] + 1.96*s210$coefficients[-1, 2]),
+                    `p-Value` = ifelse(s210$coefficients[-1, 4] >= 0.001,
+                                       round(s210$coefficients[-1, 4], 3),
+                                       "<0.001"),
+                    sign = ifelse(s210$coefficients[-1, 4] <= 0.05,
+                                  ifelse(s210$coefficients[-1, 4] <= 0.01,
+                                         "**",
+                                         "*"), ""))
+
+out210
+```
+
+## Distal Intraoperative D-Wave
+```{r}
+levels(dt2$d_wave_distal_intraoperative)
+
+# Create new variable for the analysis, merging D-wave groups
+dt2$d_wave_distal_intraoperative <- unlist(lapply(X = as.character(dt2$d_wave_distal_intraoperative),
+                                                  FUN = function(a) {switch(a,
+                                                                            "unchanged" = "unchanged",
+                                                                            "non-signif decrease" = "unchanged",
+                                                                            "signif decrease" = "signif decrease",
+                                                                            "not detected" = "signif decrease",
+                                                                            "not measured/unavailable")}))
+
+dt2$d_wave_distal_intraoperative <- factor(dt2$d_wave_distal_intraoperative,
+                                           levels = c("unchanged",
+                                                      "signif decrease",
+                                                      "not measured/unavailable"))
+
+table(dt2$d_wave_distal_intraoperative)
+```
+
+### Motor
+#### Distal Intraoperative D-Wave vs. 3-month Motor Change
+```{r}
+addmargins(table(d_wave_distal_intraoperative = dt2$d_wave_distal_intraoperative,
+                 motor_3m_change = dt2$motor_3m_change))
+```
+
+```{r}
+s31 <- summary(glm((motor_3m_change == "worse") ~ d_wave_distal_intraoperative,
+                   data = dt2,
+                   family = "binomial"))
+s31
+
+out31 <- data.table(Y = "Motor Worse at 3 Months",
+                    X = "Intraoperative D-Wave",
+                    Comparisons = paste(levels(dt2$id_wave_distal_intraoperative)[-1],
+                                        "vs. unchanged"),
+                    OR = round(exp(s31$coefficients[-1, 1]),
+                               2),
+                    `95% C.I.L.B.` = exp(s31$coefficients[-1, 1] - 1.96*s31$coefficients[-1, 2]),
+                    `95% C.I.U.B.` = exp(s31$coefficients[-1, 1] + 1.96*s31$coefficients[-1, 2]),
+                    `p-Value` = ifelse(s31$coefficients[-1, 4] >= 0.001,
+                                       round(s31$coefficients[-1, 4], 3),
+                                       "<0.001"),
+                    sign = ifelse(s31$coefficients[-1, 4] <= 0.05,
+                                  ifelse(s31$coefficients[-1, 4] <= 0.01,
+                                         "**",
+                                         "*"), ""))
+
+out31
+```
+
+#### Distal Intraoperative D-Wave vs. Long-Term Motor Change
+```{r}
+addmargins(table(d_wave_distal_intraoperative = dt2$d_wave_distal_intraoperative,
+                 motor_long_term_change = dt2$motor_long_term_change))
+```
+
+```{r}
+s32 <- summary(glm((motor_long_term_change == "worse") ~ d_wave_distal_intraoperative,
+                   data = dt2,
+                   family = "binomial"))
+s32
+
+out32 <- data.table(Y = "Motor Worse at Long-Term",
+                    X = "Intraoperative D-Wave",
+                    Comparisons = paste(levels(dt2$d_wave_distal_intraoperative)[-1],
+                                        "vs. unchanged"),
+                    OR = round(exp(s32$coefficients[-1, 1]),
+                               2),
+                    `95% C.I.L.B.` = exp(s32$coefficients[-1, 1] - 1.96*s32$coefficients[-1, 2]),
+                    `95% C.I.U.B.` = exp(s32$coefficients[-1, 1] + 1.96*s32$coefficients[-1, 2]),
+                    `p-Value` = ifelse(s32$coefficients[-1, 4] >= 0.001,
+                                       round(s32$coefficients[-1, 4], 3),
+                                       "<0.001"),
+                    sign = ifelse(s32$coefficients[-1, 4] <= 0.05,
+                                  ifelse(s32$coefficients[-1, 4] <= 0.01,
+                                         "**",
+                                         "*"), ""))
+
+out32
+```
+
+### McCormick Scale
+#### Intraoperative SEP vs. 3-month McCormick Scale Change
+```{r}
+addmargins(table(d_wave_distal_intraoperative = dt2$d_wave_distal_intraoperative,
+                 mmcs_3m_change = dt2$mmcs_3m_change))
+```
+
+```{r}
+s33 <- summary(glm((mmcs_3m_change == "worse") ~ d_wave_distal_intraoperative,
+                   data = dt2,
+                   family = "binomial"))
+s33
+
+out33 <- data.table(Y = "McCormick Scale Worse at 3 Months",
+                    X = "Intraoperative D-Wave",
+                    Comparisons = paste(levels(dt2$d_wave_distal_intraoperative)[-1],
+                                        "vs. unchanged"),
+                    OR = round(exp(s33$coefficients[-1, 1]),
+                               2),
+                    `95% C.I.L.B.` = exp(s33$coefficients[-1, 1] - 1.96*s33$coefficients[-1, 2]),
+                    `95% C.I.U.B.` = exp(s33$coefficients[-1, 1] + 1.96*s33$coefficients[-1, 2]),
+                    `p-Value` = ifelse(s33$coefficients[-1, 4] >= 0.001,
+                                       round(s33$coefficients[-1, 4], 3),
+                                       "<0.001"),
+                    sign = ifelse(s33$coefficients[-1, 4] <= 0.05,
+                                  ifelse(s33$coefficients[-1, 4] <= 0.01,
+                                         "**",
+                                         "*"), ""))
+
+out33
+```
+
+#### Intraoperative SEP vs. Long-Term McCormick Scale Change
+```{r}
+addmargins(table(d_wave_distal_intraoperative = dt2$d_wave_distal_intraoperative,
+                 mmcs_long_term_change = dt2$mmcs_long_term_change))
+```
+
+```{r}
+s34 <- summary(glm((mmcs_long_term_change == "worse") ~ d_wave_distal_intraoperative,
+                   data = dt2,
+                   family = "binomial"))
+s34
+
+out34 <- data.table(Y = "McCormick Scale Worse at Long-Term",
+                    X = "Intraoperative D-Wave",
+                    Comparisons = paste(levels(dt2$d_wave_distal_intraoperative)[-1],
+                                        "vs. unchanged"),
+                    OR = round(exp(s34$coefficients[-1, 1]),
+                               2),
+                    `95% C.I.L.B.` = exp(s34$coefficients[-1, 1] - 1.96*s34$coefficients[-1, 2]),
+                    `95% C.I.U.B.` = exp(s34$coefficients[-1, 1] + 1.96*s34$coefficients[-1, 2]),
+                    `p-Value` = ifelse(s34$coefficients[-1, 4] >= 0.001,
+                                       round(s34$coefficients[-1, 4], 3),
+                                       "<0.001"),
+                    sign = ifelse(s34$coefficients[-1, 4] <= 0.05,
+                                  ifelse(s34$coefficients[-1, 4] <= 0.01,
+                                         "**",
+                                         "*"), ""))
+
+out34
+```
+
+### ASIA IS
+#### Intraoperative SEP vs. 3-month ASIA IS Change
+```{r}
+addmargins(table(d_wave_distal_intraoperative = dt2$d_wave_distal_intraoperative,
+                 asia_is_3m_change = dt2$asia_is_3m_change))
+```
+
+```{r}
+s35 <- summary(glm((asia_is_3m_change == "worse") ~ d_wave_distal_intraoperative,
+                   data = dt2,
+                   family = "binomial"))
+s35
+
+out35 <- data.table(Y = "ASIA IS Worse at 3 Months",
+                    X = "Intraoperative D-Wave",
+                    Comparisons = paste(levels(dt2$d_wave_distal_intraoperative)[-1],
+                                        "vs. unchanged"),
+                    OR = round(exp(s35$coefficients[-1, 1]),
+                               2),
+                    `95% C.I.L.B.` = exp(s35$coefficients[-1, 1] - 1.96*s35$coefficients[-1, 2]),
+                    `95% C.I.U.B.` = exp(s35$coefficients[-1, 1] + 1.96*s35$coefficients[-1, 2]),
+                    `p-Value` = ifelse(s35$coefficients[-1, 4] >= 0.001,
+                                       round(s35$coefficients[-1, 4], 3),
+                                       "<0.001"),
+                    sign = ifelse(s35$coefficients[-1, 4] <= 0.05,
+                                  ifelse(s35$coefficients[-1, 4] <= 0.01,
+                                         "**",
+                                         "*"), ""))
+
+out35
+```
+
+#### Intraoperative SEP vs. Long-Term ASIA IS Change
+```{r}
+addmargins(table(d_wave_distal_intraoperative = dt2$d_wave_distal_intraoperative,
+                 asia_is_long_term_change = dt2$asia_is_long_term_change))
+```
+
+```{r}
+s36 <- summary(glm((asia_is_long_term_change == "worse") ~ d_wave_distal_intraoperative,
+                   data = dt2,
+                   family = "binomial"))
+s36
+
+out36 <- data.table(Y = "ASIA IS Worse at Long-Term",
+                    X = "Intraoperative D-Wave",
+                    Comparisons = paste(levels(dt2$d_wave_distal_intraoperative)[-1],
+                                        "vs. unchanged"),
+                    OR = round(exp(s36$coefficients[-1, 1]),
+                               2),
+                    `95% C.I.L.B.` = exp(s36$coefficients[-1, 1] - 1.96*s36$coefficients[-1, 2]),
+                    `95% C.I.U.B.` = exp(s36$coefficients[-1, 1] + 1.96*s36$coefficients[-1, 2]),
+                    `p-Value` = ifelse(s36$coefficients[-1, 4] >= 0.001,
+                                       round(s36$coefficients[-1, 4], 3),
+                                       "<0.001"),
+                    sign = ifelse(s36$coefficients[-1, 4] <= 0.05,
+                                  ifelse(s36$coefficients[-1, 4] <= 0.01,
+                                         "**",
+                                         "*"), ""))
+
+out36
+```
+
+### Pain
+#### Distal Intraoperative D-Wave vs. 3-month Pain Change
+```{r}
+addmargins(table(d_wave_distal_intraoperative = dt2$d_wave_distal_intraoperative,
+                 pain_3m_change = dt2$pain_3m_change))
+```
+
+```{r}
+s37 <- summary(glm((pain_3m_change == "worse") ~ d_wave_distal_intraoperative,
+                   data = dt2,
+                   family = "binomial"))
+s37
+
+out37 <- data.table(Y = "Pain Worse at 3 Months",
+                    X = "Intraoperative D-Wave",
+                    Comparisons = paste(levels(dt2$d_wave_distal_intraoperative)[-1],
+                                        "vs. unchanged"),
+                    OR = round(exp(s37$coefficients[-1, 1]),
+                               2),
+                    `95% C.I.L.B.` = exp(s37$coefficients[-1, 1] - 1.96*s37$coefficients[-1, 2]),
+                    `95% C.I.U.B.` = exp(s37$coefficients[-1, 1] + 1.96*s37$coefficients[-1, 2]),
+                    `p-Value` = ifelse(s37$coefficients[-1, 4] >= 0.001,
+                                       round(s37$coefficients[-1, 4], 3),
+                                       "<0.001"),
+                    sign = ifelse(s37$coefficients[-1, 4] <= 0.05,
+                                  ifelse(s37$coefficients[-1, 4] <= 0.01,
+                                         "**",
+                                         "*"), ""))
+
+out37
+```
+
+#### Distal Intraoperative D-Wave vs. Long-Term Pain Change
+```{r}
+addmargins(table(d_wave_distal_intraoperative = dt2$d_wave_distal_intraoperative,
+                 pain_long_term_change = dt2$pain_long_term_change))
+```
+
+```{r}
+s38 <- summary(glm((pain_long_term_change == "worse") ~ d_wave_distal_intraoperative,
+                   data = dt2,
+                   family = "binomial"))
+s38
+
+out38 <- data.table(Y = "Pain Worse at Long-Term",
+                    X = "Intraoperative D-Wave",
+                    Comparisons = paste(levels(dt2$d_wave_distal_intraoperative)[-1],
+                                        "vs. unchanged"),
+                    OR = round(exp(s38$coefficients[-1, 1]),
+                               2),
+                    `95% C.I.L.B.` = exp(s38$coefficients[-1, 1] - 1.96*s38$coefficients[-1, 2]),
+                    `95% C.I.U.B.` = exp(s38$coefficients[-1, 1] + 1.96*s38$coefficients[-1, 2]),
+                    `p-Value` = ifelse(s38$coefficients[-1, 4] >= 0.001,
+                                       round(s38$coefficients[-1, 4], 3),
+                                       "<0.001"),
+                    sign = ifelse(s38$coefficients[-1, 4] <= 0.05,
+                                  ifelse(s38$coefficients[-1, 4] <= 0.01,
+                                         "**",
+                                         "*"), ""))
+
+out38
+```
+
+### Bladder
+#### Distal Intraoperative D-Wave vs. 3-month Pain Change
+```{r}
+addmargins(table(d_wave_distal_intraoperative = dt2$d_wave_distal_intraoperative,
+                 bladder_3m_change = dt2$bladder_3m_change))
+```
+
+```{r}
+s39 <- summary(glm((bladder_3m_change == "worse") ~ d_wave_distal_intraoperative,
+                   data = dt2,
+                   family = "binomial"))
+s39
+
+out39 <- data.table(Y = "Bladder Worse at 3 Months",
+                    X = "Intraoperative D-Wave",
+                    Comparisons = paste(levels(dt2$d_wave_distal_intraoperative)[-1],
+                                        "vs. unchanged"),
+                    OR = round(exp(s39$coefficients[-1, 1]),
+                               2),
+                    `95% C.I.L.B.` = exp(s39$coefficients[-1, 1] - 1.96*s39$coefficients[-1, 2]),
+                    `95% C.I.U.B.` = exp(s39$coefficients[-1, 1] + 1.96*s39$coefficients[-1, 2]),
+                    `p-Value` = ifelse(s39$coefficients[-1, 4] >= 0.001,
+                                       round(s39$coefficients[-1, 4], 3),
+                                       "<0.001"),
+                    sign = ifelse(s39$coefficients[-1, 4] <= 0.05,
+                                  ifelse(s39$coefficients[-1, 4] <= 0.01,
+                                         "**",
+                                         "*"), ""))
+
+out39
+```
+
+#### Distal Intraoperative D-Wave vs. Long-Term Pain Change
+```{r}
+addmargins(table(d_wave_distal_intraoperative = dt2$d_wave_distal_intraoperative,
+                 bladder_long_term_change = dt2$bladder_long_term_change))
+```
+
+```{r}
+s310 <- summary(glm((bladder_long_term_change == "worse") ~ d_wave_distal_intraoperative,
+                   data = dt2,
+                   family = "binomial"))
+s310
+
+out310 <- data.table(Y = "Bladder Worse at Long-Term",
+                    X = "Intraoperative D-Wave",
+                    Comparisons = paste(levels(dt2$d_wave_distal_intraoperative)[-1],
+                                        "vs. unchanged"),
+                    OR = round(exp(s310$coefficients[-1, 1]),
+                               2),
+                    `95% C.I.L.B.` = exp(s310$coefficients[-1, 1] - 1.96*s310$coefficients[-1, 2]),
+                    `95% C.I.U.B.` = exp(s310$coefficients[-1, 1] + 1.96*s310$coefficients[-1, 2]),
+                    `p-Value` = ifelse(s310$coefficients[-1, 4] >= 0.001,
+                                       round(s310$coefficients[-1, 4], 3),
+                                       "<0.001"),
+                    sign = ifelse(s310$coefficients[-1, 4] <= 0.05,
+                                  ifelse(s310$coefficients[-1, 4] <= 0.01,
+                                         "**",
+                                         "*"), ""))
+
+out310
+```
+
+### Bowel
+#### Distal Intraoperative D-Wave vs. 3-month Pain Change
+```{r}
+addmargins(table(d_wave_distal_intraoperative = dt2$d_wave_distal_intraoperative,
+                 bowel_3m_change = dt2$bowel_3m_change))
+```
+
+```{r}
+s311 <- summary(glm((bowel_3m_change == "worse") ~ d_wave_distal_intraoperative,
+                   data = dt2,
+                   family = "binomial"))
+s311
+
+out311 <- data.table(Y = "Bowel Worse at 3 Months",
+                    X = "Intraoperative D-Wave",
+                    Comparisons = paste(levels(dt2$d_wave_distal_intraoperative)[-1],
+                                        "vs. unchanged"),
+                    OR = round(exp(s311$coefficients[-1, 1]),
+                               2),
+                    `95% C.I.L.B.` = exp(s311$coefficients[-1, 1] - 1.96*s311$coefficients[-1, 2]),
+                    `95% C.I.U.B.` = exp(s311$coefficients[-1, 1] + 1.96*s311$coefficients[-1, 2]),
+                    `p-Value` = ifelse(s311$coefficients[-1, 4] >= 0.001,
+                                       round(s311$coefficients[-1, 4], 3),
+                                       "<0.001"),
+                    sign = ifelse(s311$coefficients[-1, 4] <= 0.05,
+                                  ifelse(s311$coefficients[-1, 4] <= 0.01,
+                                         "**",
+                                         "*"), ""))
+
+out311
+```
+
+#### Distal Intraoperative D-Wave vs. Long-Term Pain Change
+```{r}
+addmargins(table(d_wave_distal_intraoperative = dt2$d_wave_distal_intraoperative,
+                 bowel_long_term_change = dt2$bowel_long_term_change))
+```
+
+```{r}
+s312 <- summary(glm((bowel_long_term_change == "worse") ~ d_wave_distal_intraoperative,
+                   data = dt2,
+                   family = "binomial"))
+s312
+
+out312 <- data.table(Y = "Bowel Worse at Long-Term",
+                    X = "Intraoperative D-Wave",
+                    Comparisons = paste(levels(dt2$d_wave_distal_intraoperative)[-1],
+                                        "vs. unchanged"),
+                    OR = round(exp(s312$coefficients[-1, 1]),
+                               2),
+                    `95% C.I.L.B.` = exp(s312$coefficients[-1, 1] - 1.96*s312$coefficients[-1, 2]),
+                    `95% C.I.U.B.` = exp(s312$coefficients[-1, 1] + 1.96*s312$coefficients[-1, 2]),
+                    `p-Value` = ifelse(s312$coefficients[-1, 4] >= 0.001,
+                                       round(s312$coefficients[-1, 4], 3),
+                                       "<0.001"),
+                    sign = ifelse(s312$coefficients[-1, 4] <= 0.05,
+                                  ifelse(s312$coefficients[-1, 4] <= 0.01,
+                                         "**",
+                                         "*"), ""))
+
+out312
+```
+
+## Save ORs
+```{r}
+write.csv(rbind(out11,
+                out12,
+                out13,
+                out14,
+                out15,
+                out16,
+                out17,
+                out18,
+                
+                out21,
+                out22,
+                out23,
+                out24,
+                out25,
+                out26,
+                out27,
+                out28,
+                out29,
+                out210,
+                
+                out31,
+                out32,
+                out33,
+                out34,
+                out35,
+                out36,
+                out37,
+                out38,
+                out39,
+                out310,
+                out311,
+                out312),
+          file = "tmp/out.csv")
+```
+
+# Save data
+```{r}
+save(dt2,
+     file = "tmp/gayane_data_11192023.RData")
+```
+
+# Session
+```{r}
+sessionInfo()
+```

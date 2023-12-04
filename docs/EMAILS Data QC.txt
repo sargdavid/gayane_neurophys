@@ -1,0 +1,79 @@
+From: Adrian Elmi Terander <adrian.elmi.terander@gmail.com>
+Date: October 20, 2023 at 15:25:48 GMT+2
+To: Gayane Margaryan <gayane.margaryan@stud.ki.se>
+Cc: Alexander Fletcher-Sandersjöö <alexander.fletcher-sandersjoo@ki.se>, Erik Edstrom <cegedstrom@gmail.com>, Aman Singh <aman.gill.singh99@gmail.com>, Henrik Frisk <henrik.frisk@ki.se>
+Subject: Re: Clinical data
+
+﻿
+Hi,
+
+I think I need some clarification:
+
+When is "pre-operative" status assessed?
+
+You see, we are talking about intranedullary tumors. Many of them are worse directly after surgery. Many of these recover, at least partially during the first 3 months. Some do not. And some have deficits even at long-term. 
+
+The interesting thing is to look at the pre-op Clinical status and the baseline intra-op neurophysiology. 
+And then the last intra-op neurophysiology and Clinical status at 3 months and long-term. 
+In the few cases with a post-op neurophysiology,  that would be very interesting to see changes compared to the last intra-op and the Clinical status at the time of last neurophysiology. 
+
+It is not strange if some patients deteriorate by time.
+
+Best regards Adrian 
+
+Den fre 20 okt. 2023 01:46Gayane Margaryan <gayane.margaryan@stud.ki.se> skrev:
+
+
+﻿
+Hi Alexander,
+
+As we are looking at the 3m and longterm postoperative changes, for the patients who had no preoperative deficit and whose status remained unchanged after the surgery, I believe “unchanged “ would be the right category rather than introducing the fourth category “no-preoperative deficit”.
+
+There are patients in the table who had  no preoperative deficit and became worse after the surgery.
+
+A couple of discrepancies: 
+a) Patient (study number 32), with a  premotor deficit (1), whos 3m change is marked as “better” and the long term change is marked as “no-preop. deficit”. 
+There should be a mistake here, as at the long term patient status would have been perhaps better or unchanged?
+
+b) Patient (study number 13) with no preop. bowel deficit ( pre-bowel 0) is marked as “worse” with 3m bowel change and “no preop. deficit” at the longterm change.
+This makes little sense too and longterm change is to be verified.
+
+The same patient had no preoperative motor and sensory deficits  (pre-motor and pre-sensory were 0) but they both became worse at the 3m and longterm.
+This is an actual postoperative change that happened for a patient with no preop. deficit. 
+Same situation for patient the 40 (pre-motor 0 becoming worse at 3m and longterm) showing that no preoperative deficit is not a guarantee for no change postoperatively.
+
+I think it’s important to double check with the source data and mark the changes as unchanged, worse and better, as after the statistical analysis we will not be able to go back and make changes in our table.
+
+Thank you.
+Kind regards,
+Gayane
+
+On Oct 20, 2023, at 09:11, Alexander Fletcher-Sandersjöö <alexander.fletcher-sandersjoo@ki.se> wrote:
+
+﻿
+Not sure I understand. If a patient didn’t have any pre-operative deficit, how can the postoperative result be labled as ”better”, ”worse” or ”unchanged”?
+Från: Gayane Margaryan <gayane.margaryan@stud.ki.se>
+Skickat: Friday, October 20, 2023 7:57:50 AM
+Till: adrian.elmi.terander <adrian.elmi.terander@gmail.com>; Erik Edstrom <cegedstrom@gmail.com>
+Kopia: Aman Singh <aman.gill.singh99@gmail.com>; Alexander Fletcher-Sandersjöö <alexander.fletcher-sandersjoo@ki.se>; Henrik Frisk <henrik.frisk@ki.se>
+Ämne: Clinical data
+ 
+
+﻿
+Dear All,
+
+We have some discrepancies in the clinical data, which impeded David to proceed with statistical analysis. I have discussed this with Aman during the zoom meeting.
+
+Essentially, in the columns indicating 3m and long term changes (sensory, motor, pain, bowel, bladder etc.) apart from criteria, such as  “better, worse and unchanged” there’s a criterion “no-preop. deficit”, which should be replaced with either better, worse or unchanged.
+Apparently, this was due to different terminologies used by different persons while inserting the data in the table.
+
+At first I thought that I could change them one by one, according to the logistics that Aman proposed. However, I think it’s not correct for me as a third person to introduce changes in the clinical data when I have no access to the source data, to double check and verify if the changes I make are correct and correspond to the patient status.
+
+Therefore, I think it’s important that changes are made carefully (double checking with the source data) by the same persons who filled in the table.
+
+As soon as the data is changed and complete, David will starr the statistical analysis.
+
+Thank you.
+
+Kind regards,
+Gayane

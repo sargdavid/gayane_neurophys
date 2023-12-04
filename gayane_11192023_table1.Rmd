@@ -1,0 +1,187 @@
+---
+title: "Tables"
+output:
+  html_notebook:
+    code_folding: "hide"
+---
+
+# Setup
+```{r}
+require(data.table)
+require(table1)
+```
+
+# Data
+```{r}
+load("tmp/gayane_data_11192023.RData")
+```
+
+# Table 1: Intraoperative Sensory Evoked Potentials in Right or Left Foot vs. All
+```{r}
+table1(~ .| intraop_sep_feet,
+       data = dt2[, c("intraop_sep_feet",
+                      "sex",
+                      "age",
+                      "dead",
+                      "dead_spinal_pathology",   
+                      "d_wave_distal_baseline",
+                      "d_wave_distal_intraoperative",
+                      "pad",
+                      "myelomalacia",
+                      "contrast_enhancing_tumor",
+                      "syrinx",
+                      "who",
+                      "symptom_duration_mo",
+                      
+                      "motor_pre",
+                      "motor_3m",
+                      "motor_3m_change",
+                      "motor_long_term",
+                      "motor_long_term_change",
+                      
+                      "sensory_pre",
+                      "sensory_3m",
+                      "sensory_3m_change",
+                      "sensory_long_term",
+                      "sensory_long_term_change",
+                      
+                      "pain_pre",
+                      "pain_3m",
+                      "pain_3m_change",
+                      "pain_long_term",
+                      "pain_long_term_change",
+                      
+                      "bowel_pre",
+                      "bowel_3m",
+                      "bowel_3m_change",
+                      "bowel_long_term",
+                      "bowel_long_term_change",
+                      
+                      "bladder_pre",
+                      "bladder_3m",
+                      "bladder_3m_change",
+                      "bladder_long_term",
+                      "bladder_long_term_change",
+                      
+                      "mmcs_pre",
+                      "mmcs_3m",
+                      "mmcs_3m_change",
+                      "mmcs_long_term",
+                      "mmcs_long_term_change",
+                      
+                      "asia_is_pre",
+                      "asia_is_3m",
+                      "asia_is_3m_change",
+                      "asia_is_long_term",
+                      "asia_is_long_term_change",
+                      
+                      "bcr_baseline",
+                      "bcr_intraoperative",
+                      
+                      "spinal_segment",
+                      "surgical_radicality",
+                      "adjuvent_radio",
+                      "adjuvant_chemo",
+                      
+                      "baseline_MEP_right_leg",
+                      "baseline_MEP_left_leg",
+                      "Intraoperative_MEP_right_hand",
+                      "Intraoperative_MEP_left_hand",
+                      "Intraoperative_MEP_right_leg",
+                      "Intraoperative_MEP_left_leg",
+                      
+                      "baseline_SEP_right_hand",
+                      "baseline_SEP_left_hand",
+                      "baseline_SEP_right_leg",
+                      "baseline_SEP_left_leg",
+                      "Intraoperative_SEP_right_hand",
+                      "Intraoperative_SEP_left_hand",
+                      "Intraoperative_SEP_right_foot",
+                      "Intraoperative_SEP_left_foot"
+       )])
+```
+
+# Table 2: Intraoperative Motor Evoked Potentials in Right or Left Leg vs. All
+```{r}
+table1(~ .| intraop_mep_legs,
+       data = dt2[, c("intraop_mep_legs",
+                      "sex",
+                      "age",
+                      "dead",
+                      "dead_spinal_pathology",   
+                      "d_wave_distal_baseline",
+                      "d_wave_distal_intraoperative",
+                      "pad",
+                      "myelomalacia",
+                      "contrast_enhancing_tumor",
+                      "syrinx",
+                      "who",
+                      "symptom_duration_mo",
+                      
+                      "motor_pre",
+                      "motor_3m",
+                      "motor_3m_change",
+                      "motor_long_term",
+                      "motor_long_term_change",
+                      
+                      "sensory_pre",
+                      "sensory_3m",
+                      "sensory_3m_change",
+                      "sensory_long_term",
+                      "sensory_long_term_change",
+                      
+                      "pain_pre",
+                      "pain_3m",
+                      "pain_3m_change",
+                      "pain_long_term",
+                      "pain_long_term_change",
+                      
+                      "bowel_pre",
+                      "bowel_3m",
+                      "bowel_3m_change",
+                      "bowel_long_term",
+                      "bowel_long_term_change",
+                      
+                      "bladder_pre",
+                      "bladder_3m",
+                      "bladder_3m_change",
+                      "bladder_long_term",
+                      "bladder_long_term_change",
+                      
+                      "mmcs_pre",
+                      "mmcs_3m",
+                      "mmcs_3m_change",
+                      "mmcs_long_term",
+                      "mmcs_long_term_change",
+                      
+                      "asia_is_pre",
+                      "asia_is_3m",
+                      "asia_is_3m_change",
+                      "asia_is_long_term",
+                      "asia_is_long_term_change",
+                      
+                      "bcr_baseline",
+                      "bcr_intraoperative",
+                      
+                      "spinal_segment",
+                      "surgical_radicality",
+                      "adjuvent_radio",
+                      "adjuvant_chemo",
+                      
+                      "baseline_MEP_right_leg",
+                      "baseline_MEP_left_leg",
+                      "Intraoperative_MEP_right_hand",
+                      "Intraoperative_MEP_left_hand",
+                      "Intraoperative_MEP_right_leg",
+                      "Intraoperative_MEP_left_leg",
+                      
+                      "baseline_SEP_right_hand",
+                      "baseline_SEP_left_hand",
+                      "baseline_SEP_right_leg",
+                      "baseline_SEP_left_leg",
+                      "Intraoperative_SEP_right_hand",
+                      "Intraoperative_SEP_left_hand",
+                      "Intraoperative_SEP_right_foot",
+                      "Intraoperative_SEP_left_foot"
+       )])
+```
