@@ -7879,9 +7879,2502 @@ vs. All</h1>
 <!-- rnb-htmlwidget-end -->
 
 <!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="detailed-7-cases" class="section level1">
+<h1>Detailed 7 cases</h1>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZHQzIDwtIGZyZWFkKFwiZGF0YS9kZXRhaWxlZF83X2Nhc2VzLmNzdlwiKVxuXG5kdDQgPC0gbWVsdC5kYXRhLnRhYmxlKGR0MyxcbiAgICAgICAgICAgICAgICAgICAgICAgaWQudmFycyA9IDE6MyxcbiAgICAgICAgICAgICAgICAgICAgICAgbWVhc3VyZS52YXJzID0gNDo4LFxuICAgICAgICAgICAgICAgICAgICAgICB2YXJpYWJsZS5uYW1lID0gXCJSZWFkb3V0XCIsXG4gICAgICAgICAgICAgICAgICAgICAgIHZhbHVlLm5hbWUgPSBcIlBvdGVudGlhbFwiKVxuXG5kdDRcbmBgYCJ9 -->
+<pre class="r"><code>dt3 &lt;- fread(&quot;data/detailed_7_cases.csv&quot;)
+
+dt4 &lt;- melt.data.table(dt3,
+                       id.vars = 1:3,
+                       measure.vars = 4:8,
+                       variable.name = &quot;Readout&quot;,
+                       value.name = &quot;Potential&quot;)
+
+dt4</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEudGFibGUiLCJkYXRhLmZyYW1lIl0sIm5yb3ciOjcwLCJuY29sIjo1LCJzdW1tYXJ5Ijp7IkRlc2NyaXB0aW9uIjpbImR0IFs3MCDDlyA1XSJdfX0sInJkZiI6Ikg0c0lBQUFBQUFBQUJ1MVhRWXZUUUJTZUpNMTJHNmhkMlpPZ1VBVkJEKzFGQlBlaWRPbVc5U0NzdXhXSzRHRnNwdHZnZEJLVDZhNGVoRDE2RmNHVGYwQVFCSThpK2lPRS9RZml2OWo0VFdmU05CVXZQY2lDQ1h6TWU5OTdNKy9seldUYXQ5OGQzUElHSGlIRUlSWGJKbzRMa2JpUCtyM1dIUUlHaWtVcXBLYkdGM0RhVkZhZ0R2U0FCckFPYkFHWGdPdkFQZUQyZjI3Ym1OVkhGNjcrWUdldjJabEVQSkJUbjVWa1NaWmtTWmJrZVNlTHQvajZOazBZRHdUN1IvcUYrMExHTkl4WVRHVndkSjdZc2hKbEpjcEtsSlg0TzB1Y3JEK3dWb1M5SXB3VlVWa1I3bW9vTkZacm5CMHhuaEQ5ZStObSt4d0hoMlBaN0hlS2VtZlg2RlhPUmd0bXJjNnQ5VzZRU01xYjNkWXhWUnRTQ09nT09VMnllUE1zUm5Rb3d4alNHY243dXdQZ0dweStZWHlIVW1HRy9WTnpmencvZ0VDTDFrZjQzb0J3RXlQQ1c1OEpxVjJFL0IzY0x2QUorR0I4bjJETmh4QWVHKzRWMHIyTDhUMXNLcmJLWXdEdUY4WXJXS09TaDdSZUcrRU41Rk9NeU0xNWkvVyt3cjl1NXArYTNKNGIzN0cyelo2cmFoOVB0S3o2dWNaSnZ2aGx3REc2VzdRVnlsbUx3K08yb0JPV21NTFp5akZOMHkvYTBVbVhTdTM1Vk5MMktNYVU1WjNKbHRrZ0N5ZmhBSDlIWGpaRm5Pazd3by9DUU1nc2ZqK1lzRVdpdXMrb0gwN245cjFRTWlFRHl2WG1GaUpXdzBnR29VQk1PK3Z0RjFPMTRpV2lNUlVxUjc4MUhFL0ZzNWJxZFQyaXYxbGlYbC9KdlFYWm5IYzNYWHF2TlNZTzgzdk01ZlFwNDltRmdwTE9TdEdPNHZ5OVBMQkpXNFk0MkJrekRIbkc2SU43OWh2REd2S00waEFBQUE9PSJ9 -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["Study nr"],"name":[1],"type":["int"],"align":["right"]},{"label":["Endpoint"],"name":[2],"type":["chr"],"align":["left"]},{"label":["Timepoint"],"name":[3],"type":["chr"],"align":["left"]},{"label":["Readout"],"name":[4],"type":["fctr"],"align":["left"]},{"label":["Potential"],"name":[5],"type":["int"],"align":["right"]}],"data":[{"1":"15","2":"MEP Amplitude","3":"Baseline","4":"right TA","5":"83"},{"1":"8","2":"MEP Amplitude","3":"Baseline","4":"right TA","5":"34"},{"1":"57","2":"MEP Amplitude","3":"Baseline","4":"right TA","5":"446"},{"1":"25","2":"MEP Amplitude","3":"Baseline","4":"right TA","5":"150"},{"1":"37","2":"MEP Amplitude","3":"Baseline","4":"right TA","5":"784"},{"1":"63","2":"MEP Amplitude","3":"Baseline","4":"right TA","5":"741"},{"1":"53","2":"MEP Amplitude","3":"Baseline","4":"right TA","5":"34"},{"1":"15","2":"MEP Amplitude","3":"Intraoperative","4":"right TA","5":"0"},{"1":"8","2":"MEP Amplitude","3":"Intraoperative","4":"right TA","5":"0"},{"1":"57","2":"MEP Amplitude","3":"Intraoperative","4":"right TA","5":"0"},{"1":"25","2":"MEP Amplitude","3":"Intraoperative","4":"right TA","5":"0"},{"1":"37","2":"MEP Amplitude","3":"Intraoperative","4":"right TA","5":"211"},{"1":"63","2":"MEP Amplitude","3":"Intraoperative","4":"right TA","5":"105"},{"1":"53","2":"MEP Amplitude","3":"Intraoperative","4":"right TA","5":"0"},{"1":"15","2":"MEP Amplitude","3":"Baseline","4":"right AH","5":"428"},{"1":"8","2":"MEP Amplitude","3":"Baseline","4":"right AH","5":"808"},{"1":"57","2":"MEP Amplitude","3":"Baseline","4":"right AH","5":"41"},{"1":"25","2":"MEP Amplitude","3":"Baseline","4":"right AH","5":"869"},{"1":"37","2":"MEP Amplitude","3":"Baseline","4":"right AH","5":"434"},{"1":"63","2":"MEP Amplitude","3":"Baseline","4":"right AH","5":"2321"},{"1":"53","2":"MEP Amplitude","3":"Baseline","4":"right AH","5":"959"},{"1":"15","2":"MEP Amplitude","3":"Intraoperative","4":"right AH","5":"72"},{"1":"8","2":"MEP Amplitude","3":"Intraoperative","4":"right AH","5":"175"},{"1":"57","2":"MEP Amplitude","3":"Intraoperative","4":"right AH","5":"169"},{"1":"25","2":"MEP Amplitude","3":"Intraoperative","4":"right AH","5":"0"},{"1":"37","2":"MEP Amplitude","3":"Intraoperative","4":"right AH","5":"349"},{"1":"63","2":"MEP Amplitude","3":"Intraoperative","4":"right AH","5":"593"},{"1":"53","2":"MEP Amplitude","3":"Intraoperative","4":"right AH","5":"90"},{"1":"15","2":"MEP Amplitude","3":"Baseline","4":"left TA","5":"169"},{"1":"8","2":"MEP Amplitude","3":"Baseline","4":"left TA","5":"125"},{"1":"57","2":"MEP Amplitude","3":"Baseline","4":"left TA","5":"1086"},{"1":"25","2":"MEP Amplitude","3":"Baseline","4":"left TA","5":"156"},{"1":"37","2":"MEP Amplitude","3":"Baseline","4":"left TA","5":"290"},{"1":"63","2":"MEP Amplitude","3":"Baseline","4":"left TA","5":"326"},{"1":"53","2":"MEP Amplitude","3":"Baseline","4":"left TA","5":"88"},{"1":"15","2":"MEP Amplitude","3":"Intraoperative","4":"left TA","5":"1255"},{"1":"8","2":"MEP Amplitude","3":"Intraoperative","4":"left TA","5":"29"},{"1":"57","2":"MEP Amplitude","3":"Intraoperative","4":"left TA","5":"772"},{"1":"25","2":"MEP Amplitude","3":"Intraoperative","4":"left TA","5":"0"},{"1":"37","2":"MEP Amplitude","3":"Intraoperative","4":"left TA","5":"0"},{"1":"63","2":"MEP Amplitude","3":"Intraoperative","4":"left TA","5":"392"},{"1":"53","2":"MEP Amplitude","3":"Intraoperative","4":"left TA","5":"0"},{"1":"15","2":"MEP Amplitude","3":"Baseline","4":"left AH","5":"145"},{"1":"8","2":"MEP Amplitude","3":"Baseline","4":"left AH","5":"470"},{"1":"57","2":"MEP Amplitude","3":"Baseline","4":"left AH","5":"229"},{"1":"25","2":"MEP Amplitude","3":"Baseline","4":"left AH","5":"915"},{"1":"37","2":"MEP Amplitude","3":"Baseline","4":"left AH","5":"700"},{"1":"63","2":"MEP Amplitude","3":"Baseline","4":"left AH","5":"1037"},{"1":"53","2":"MEP Amplitude","3":"Baseline","4":"left AH","5":"290"},{"1":"15","2":"MEP Amplitude","3":"Intraoperative","4":"left AH","5":"470"},{"1":"8","2":"MEP Amplitude","3":"Intraoperative","4":"left AH","5":"211"},{"1":"57","2":"MEP Amplitude","3":"Intraoperative","4":"left AH","5":"113"},{"1":"25","2":"MEP Amplitude","3":"Intraoperative","4":"left AH","5":"0"},{"1":"37","2":"MEP Amplitude","3":"Intraoperative","4":"left AH","5":"104"},{"1":"63","2":"MEP Amplitude","3":"Intraoperative","4":"left AH","5":"1037"},{"1":"53","2":"MEP Amplitude","3":"Intraoperative","4":"left AH","5":"0"},{"1":"15","2":"MEP Amplitude","3":"Baseline","4":"Distal D-wave","5":"33"},{"1":"8","2":"MEP Amplitude","3":"Baseline","4":"Distal D-wave","5":"4"},{"1":"57","2":"MEP Amplitude","3":"Baseline","4":"Distal D-wave","5":"NA"},{"1":"25","2":"MEP Amplitude","3":"Baseline","4":"Distal D-wave","5":"15"},{"1":"37","2":"MEP Amplitude","3":"Baseline","4":"Distal D-wave","5":"15"},{"1":"63","2":"MEP Amplitude","3":"Baseline","4":"Distal D-wave","5":"NA"},{"1":"53","2":"MEP Amplitude","3":"Baseline","4":"Distal D-wave","5":"0"},{"1":"15","2":"MEP Amplitude","3":"Intraoperative","4":"Distal D-wave","5":"28"},{"1":"8","2":"MEP Amplitude","3":"Intraoperative","4":"Distal D-wave","5":"3"},{"1":"57","2":"MEP Amplitude","3":"Intraoperative","4":"Distal D-wave","5":"NA"},{"1":"25","2":"MEP Amplitude","3":"Intraoperative","4":"Distal D-wave","5":"5"},{"1":"37","2":"MEP Amplitude","3":"Intraoperative","4":"Distal D-wave","5":"15"},{"1":"63","2":"MEP Amplitude","3":"Intraoperative","4":"Distal D-wave","5":"NA"},{"1":"53","2":"MEP Amplitude","3":"Intraoperative","4":"Distal D-wave","5":"0"}],"options":{"columns":{"min":{},"max":[10],"total":[5]},"rows":{"min":[10],"max":[10],"total":[70]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5kdDQkYFN0dWR5IG5yYCA8LSBmYWN0b3IoZHQ0JGBTdHVkeSBucmApXG5kdDQkVGltZXBvaW50IDwtIGZhY3RvcihkdDQkVGltZXBvaW50LFxuICAgICAgICAgICAgICAgICAgICAgICAgbGV2ZWxzID0gdW5pcXVlKGR0NCRUaW1lcG9pbnQpKVxuZHQ0JFJlYWRvdXQgPC0gZmFjdG9yKGR0NCRSZWFkb3V0LFxuICAgICAgICAgICAgICAgICAgICAgIGxldmVscyA9IHVuaXF1ZShkdDQkUmVhZG91dCkpXG5cbmBgYCJ9 -->
+<pre class="r"><code>
+dt4$`Study nr` &lt;- factor(dt4$`Study nr`)
+dt4$Timepoint &lt;- factor(dt4$Timepoint,
+                        levels = unique(dt4$Timepoint))
+dt4$Readout &lt;- factor(dt4$Readout,
+                      levels = unique(dt4$Readout))
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<div id="table-1-for-the-7-cases" class="section level2">
+<h2>Table 1 for the 7 cases</h2>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudGFibGUxKH4gLnwgc2V4LCAjaW50cmFvcF9zZXBfZmVldCxcbiAgICAgICBkYXRhID0gZHQyW2FzLmNoYXJhY3RlcihkdDIkc3R1ZHlfaWQpICVpbiUgXG4gICAgICAgICAgICAgICAgICAgIHVuaXF1ZShhcy5jaGFyYWN0ZXIoZHQ0JGBTdHVkeSBucmApKSwgXG4gICAgICAgICAgICAgICAgICBjKFwiaW50cmFvcF9zZXBfZmVldFwiLFxuICAgICAgICAgICAgICAgICAgICAgIFwic2V4XCIsXG4gICAgICAgICAgICAgICAgICAgICAgXCJhZ2VcIixcbiAgICAgICAgICAgICAgICAgICAgICBcImRlYWRcIixcbiAgICAgICAgICAgICAgICAgICAgICBcImRlYWRfc3BpbmFsX3BhdGhvbG9neVwiLCAgIFxuICAgICAgICAgICAgICAgICAgICAgIFwiZF93YXZlX2Rpc3RhbF9iYXNlbGluZVwiLFxuICAgICAgICAgICAgICAgICAgICAgIFwiZF93YXZlX2Rpc3RhbF9pbnRyYW9wZXJhdGl2ZVwiLFxuICAgICAgICAgICAgICAgICAgICAgIFwicGFkXCIsXG4gICAgICAgICAgICAgICAgICAgICAgXCJteWVsb21hbGFjaWFcIixcbiAgICAgICAgICAgICAgICAgICAgICBcImNvbnRyYXN0X2VuaGFuY2luZ190dW1vclwiLFxuICAgICAgICAgICAgICAgICAgICAgIFwic3lyaW54XCIsXG4gICAgICAgICAgICAgICAgICAgICAgXCJ3aG9cIixcbiAgICAgICAgICAgICAgICAgICAgICBcInN5bXB0b21fZHVyYXRpb25fbW9cIixcbiAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAgICAgICAgICAgICAgICBcIm1vdG9yX3ByZVwiLFxuICAgICAgICAgICAgICAgICAgICAgIFwibW90b3JfM21cIixcbiAgICAgICAgICAgICAgICAgICAgICBcIm1vdG9yXzNtX2NoYW5nZVwiLFxuICAgICAgICAgICAgICAgICAgICAgIFwibW90b3JfbG9uZ190ZXJtXCIsXG4gICAgICAgICAgICAgICAgICAgICAgXCJtb3Rvcl9sb25nX3Rlcm1fY2hhbmdlXCIsXG4gICAgICAgICAgICAgICAgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgXCJzZW5zb3J5X3ByZVwiLFxuICAgICAgICAgICAgICAgICAgICAgIFwic2Vuc29yeV8zbVwiLFxuICAgICAgICAgICAgICAgICAgICAgIFwic2Vuc29yeV8zbV9jaGFuZ2VcIixcbiAgICAgICAgICAgICAgICAgICAgICBcInNlbnNvcnlfbG9uZ190ZXJtXCIsXG4gICAgICAgICAgICAgICAgICAgICAgXCJzZW5zb3J5X2xvbmdfdGVybV9jaGFuZ2VcIixcbiAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAgICAgICAgICAgICAgICBcInBhaW5fcHJlXCIsXG4gICAgICAgICAgICAgICAgICAgICAgXCJwYWluXzNtXCIsXG4gICAgICAgICAgICAgICAgICAgICAgXCJwYWluXzNtX2NoYW5nZVwiLFxuICAgICAgICAgICAgICAgICAgICAgIFwicGFpbl9sb25nX3Rlcm1cIixcbiAgICAgICAgICAgICAgICAgICAgICBcInBhaW5fbG9uZ190ZXJtX2NoYW5nZVwiLFxuICAgICAgICAgICAgICAgICAgICAgIFxuICAgICAgICAgICAgICAgICAgICAgIFwiYm93ZWxfcHJlXCIsXG4gICAgICAgICAgICAgICAgICAgICAgXCJib3dlbF8zbVwiLFxuICAgICAgICAgICAgICAgICAgICAgIFwiYm93ZWxfM21fY2hhbmdlXCIsXG4gICAgICAgICAgICAgICAgICAgICAgXCJib3dlbF9sb25nX3Rlcm1cIixcbiAgICAgICAgICAgICAgICAgICAgICBcImJvd2VsX2xvbmdfdGVybV9jaGFuZ2VcIixcbiAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAgICAgICAgICAgICAgICBcImJsYWRkZXJfcHJlXCIsXG4gICAgICAgICAgICAgICAgICAgICAgXCJibGFkZGVyXzNtXCIsXG4gICAgICAgICAgICAgICAgICAgICAgXCJibGFkZGVyXzNtX2NoYW5nZVwiLFxuICAgICAgICAgICAgICAgICAgICAgIFwiYmxhZGRlcl9sb25nX3Rlcm1cIixcbiAgICAgICAgICAgICAgICAgICAgICBcImJsYWRkZXJfbG9uZ190ZXJtX2NoYW5nZVwiLFxuICAgICAgICAgICAgICAgICAgICAgIFxuICAgICAgICAgICAgICAgICAgICAgIFwibW1jc19wcmVcIixcbiAgICAgICAgICAgICAgICAgICAgICBcIm1tY3NfM21cIixcbiAgICAgICAgICAgICAgICAgICAgICBcIm1tY3NfM21fY2hhbmdlXCIsXG4gICAgICAgICAgICAgICAgICAgICAgXCJtbWNzX2xvbmdfdGVybVwiLFxuICAgICAgICAgICAgICAgICAgICAgIFwibW1jc19sb25nX3Rlcm1fY2hhbmdlXCIsXG4gICAgICAgICAgICAgICAgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgXCJhc2lhX2lzX3ByZVwiLFxuICAgICAgICAgICAgICAgICAgICAgIFwiYXNpYV9pc18zbVwiLFxuICAgICAgICAgICAgICAgICAgICAgIFwiYXNpYV9pc18zbV9jaGFuZ2VcIixcbiAgICAgICAgICAgICAgICAgICAgICBcImFzaWFfaXNfbG9uZ190ZXJtXCIsXG4gICAgICAgICAgICAgICAgICAgICAgXCJhc2lhX2lzX2xvbmdfdGVybV9jaGFuZ2VcIixcbiAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAgICAgICAgICAgICAgICBcImJjcl9iYXNlbGluZVwiLFxuICAgICAgICAgICAgICAgICAgICAgIFwiYmNyX2ludHJhb3BlcmF0aXZlXCIsXG4gICAgICAgICAgICAgICAgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgXCJzcGluYWxfc2VnbWVudFwiLFxuICAgICAgICAgICAgICAgICAgICAgIFwic3VyZ2ljYWxfcmFkaWNhbGl0eVwiLFxuICAgICAgICAgICAgICAgICAgICAgIFwiYWRqdXZlbnRfcmFkaW9cIixcbiAgICAgICAgICAgICAgICAgICAgICBcImFkanV2YW50X2NoZW1vXCIsXG4gICAgICAgICAgICAgICAgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgXCJiYXNlbGluZV9NRVBfcmlnaHRfbGVnXCIsXG4gICAgICAgICAgICAgICAgICAgICAgXCJiYXNlbGluZV9NRVBfbGVmdF9sZWdcIixcbiAgICAgICAgICAgICAgICAgICAgICBcIkludHJhb3BlcmF0aXZlX01FUF9yaWdodF9oYW5kXCIsXG4gICAgICAgICAgICAgICAgICAgICAgXCJJbnRyYW9wZXJhdGl2ZV9NRVBfbGVmdF9oYW5kXCIsXG4gICAgICAgICAgICAgICAgICAgICAgXCJJbnRyYW9wZXJhdGl2ZV9NRVBfcmlnaHRfbGVnXCIsXG4gICAgICAgICAgICAgICAgICAgICAgXCJJbnRyYW9wZXJhdGl2ZV9NRVBfbGVmdF9sZWdcIixcbiAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAgICAgICAgICAgICAgICBcImJhc2VsaW5lX1NFUF9yaWdodF9oYW5kXCIsXG4gICAgICAgICAgICAgICAgICAgICAgXCJiYXNlbGluZV9TRVBfbGVmdF9oYW5kXCIsXG4gICAgICAgICAgICAgICAgICAgICAgXCJiYXNlbGluZV9TRVBfcmlnaHRfbGVnXCIsXG4gICAgICAgICAgICAgICAgICAgICAgXCJiYXNlbGluZV9TRVBfbGVmdF9sZWdcIixcbiAgICAgICAgICAgICAgICAgICAgICBcIkludHJhb3BlcmF0aXZlX1NFUF9yaWdodF9oYW5kXCIsXG4gICAgICAgICAgICAgICAgICAgICAgXCJJbnRyYW9wZXJhdGl2ZV9TRVBfbGVmdF9oYW5kXCIsXG4gICAgICAgICAgICAgICAgICAgICAgXCJJbnRyYW9wZXJhdGl2ZV9TRVBfcmlnaHRfZm9vdFwiLFxuICAgICAgICAgICAgICAgICAgICAgIFwiSW50cmFvcGVyYXRpdmVfU0VQX2xlZnRfZm9vdFwiXG4gICAgICAgKV0pXG5gYGAifQ== -->
+<pre class="r"><code>table1(~ .| sex, #intraop_sep_feet,
+       data = dt2[as.character(dt2$study_id) %in% 
+                    unique(as.character(dt4$`Study nr`)), 
+                  c(&quot;intraop_sep_feet&quot;,
+                      &quot;sex&quot;,
+                      &quot;age&quot;,
+                      &quot;dead&quot;,
+                      &quot;dead_spinal_pathology&quot;,   
+                      &quot;d_wave_distal_baseline&quot;,
+                      &quot;d_wave_distal_intraoperative&quot;,
+                      &quot;pad&quot;,
+                      &quot;myelomalacia&quot;,
+                      &quot;contrast_enhancing_tumor&quot;,
+                      &quot;syrinx&quot;,
+                      &quot;who&quot;,
+                      &quot;symptom_duration_mo&quot;,
+                      
+                      &quot;motor_pre&quot;,
+                      &quot;motor_3m&quot;,
+                      &quot;motor_3m_change&quot;,
+                      &quot;motor_long_term&quot;,
+                      &quot;motor_long_term_change&quot;,
+                      
+                      &quot;sensory_pre&quot;,
+                      &quot;sensory_3m&quot;,
+                      &quot;sensory_3m_change&quot;,
+                      &quot;sensory_long_term&quot;,
+                      &quot;sensory_long_term_change&quot;,
+                      
+                      &quot;pain_pre&quot;,
+                      &quot;pain_3m&quot;,
+                      &quot;pain_3m_change&quot;,
+                      &quot;pain_long_term&quot;,
+                      &quot;pain_long_term_change&quot;,
+                      
+                      &quot;bowel_pre&quot;,
+                      &quot;bowel_3m&quot;,
+                      &quot;bowel_3m_change&quot;,
+                      &quot;bowel_long_term&quot;,
+                      &quot;bowel_long_term_change&quot;,
+                      
+                      &quot;bladder_pre&quot;,
+                      &quot;bladder_3m&quot;,
+                      &quot;bladder_3m_change&quot;,
+                      &quot;bladder_long_term&quot;,
+                      &quot;bladder_long_term_change&quot;,
+                      
+                      &quot;mmcs_pre&quot;,
+                      &quot;mmcs_3m&quot;,
+                      &quot;mmcs_3m_change&quot;,
+                      &quot;mmcs_long_term&quot;,
+                      &quot;mmcs_long_term_change&quot;,
+                      
+                      &quot;asia_is_pre&quot;,
+                      &quot;asia_is_3m&quot;,
+                      &quot;asia_is_3m_change&quot;,
+                      &quot;asia_is_long_term&quot;,
+                      &quot;asia_is_long_term_change&quot;,
+                      
+                      &quot;bcr_baseline&quot;,
+                      &quot;bcr_intraoperative&quot;,
+                      
+                      &quot;spinal_segment&quot;,
+                      &quot;surgical_radicality&quot;,
+                      &quot;adjuvent_radio&quot;,
+                      &quot;adjuvant_chemo&quot;,
+                      
+                      &quot;baseline_MEP_right_leg&quot;,
+                      &quot;baseline_MEP_left_leg&quot;,
+                      &quot;Intraoperative_MEP_right_hand&quot;,
+                      &quot;Intraoperative_MEP_left_hand&quot;,
+                      &quot;Intraoperative_MEP_right_leg&quot;,
+                      &quot;Intraoperative_MEP_left_leg&quot;,
+                      
+                      &quot;baseline_SEP_right_hand&quot;,
+                      &quot;baseline_SEP_left_hand&quot;,
+                      &quot;baseline_SEP_right_leg&quot;,
+                      &quot;baseline_SEP_left_leg&quot;,
+                      &quot;Intraoperative_SEP_right_hand&quot;,
+                      &quot;Intraoperative_SEP_left_hand&quot;,
+                      &quot;Intraoperative_SEP_right_foot&quot;,
+                      &quot;Intraoperative_SEP_left_foot&quot;
+       )])</code></pre>
+<!-- rnb-source-end -->
+
+<!-- rnb-htmlwidget-begin eyJkZXBlbmRlbmNpZXMiOlt7Im5hbWUiOiJ0YWJsZTEiLCJ2ZXJzaW9uIjoiMS4wIiwic3JjIjp7ImZpbGUiOiJDOi9SL1ItNC4yLjIvbGlicmFyeS90YWJsZTEvdGFibGUxX2RlZmF1bHRzXzEuMCJ9LCJtZXRhIjpbXSwic2NyaXB0IjpbXSwic3R5bGVzaGVldCI6InRhYmxlMV9kZWZhdWx0cy5jc3MiLCJoZWFkIjpbXSwiYXR0YWNobWVudCI6W10sInBhY2thZ2UiOltdLCJhbGxfZmlsZXMiOnRydWV9XSwibWV0YWRhdGEiOnsiY2xhc3NlcyI6WyJzaGlueS50YWciXSwic2l6aW5nUG9saWN5IjpbXX19 -->
+
+<div class="Rtable1"><table class="Rtable1">
+<thead>
+<tr>
+<th class="rowlabel firstrow lastrow"></th>
+<th class="firstrow lastrow"><span class="stratlabel">Female<br><span class="stratn">(N=2)</span></span></th>
+<th class="firstrow lastrow"><span class="stratlabel">Male<br><span class="stratn">(N=5)</span></span></th>
+<th class="firstrow lastrow"><span class="stratlabel">Overall<br><span class="stratn">(N=7)</span></span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="rowlabel firstrow">intraop_sep_feet</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">unchanged</td>
+<td>1 (50.0%)</td>
+<td>3 (60.0%)</td>
+<td>4 (57.1%)</td>
+</tr>
+<tr>
+<td class="rowlabel">amplitude decrease</td>
+<td>1 (50.0%)</td>
+<td>1 (20.0%)</td>
+<td>2 (28.6%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">loss of response</td>
+<td class="lastrow">0 (0%)</td>
+<td class="lastrow">1 (20.0%)</td>
+<td class="lastrow">1 (14.3%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow">age</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">Mean (SD)</td>
+<td>56.5 (16.3)</td>
+<td>40.4 (19.0)</td>
+<td>45.0 (18.6)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">Median [Min, Max]</td>
+<td class="lastrow">56.5 [45.0, 68.0]</td>
+<td class="lastrow">34.0 [24.0, 67.0]</td>
+<td class="lastrow">45.0 [24.0, 68.0]</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow">dead</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">Yes</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">No</td>
+<td class="lastrow">2 (100%)</td>
+<td class="lastrow">5 (100%)</td>
+<td class="lastrow">7 (100%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow">dead_spinal_pathology</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">Yes</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">No</td>
+<td class="lastrow">2 (100%)</td>
+<td class="lastrow">5 (100%)</td>
+<td class="lastrow">7 (100%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow">d_wave_distal_baseline</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">normal</td>
+<td>2 (100%)</td>
+<td>4 (80.0%)</td>
+<td>6 (85.7%)</td>
+</tr>
+<tr>
+<td class="rowlabel">low amplitude</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">not detected</td>
+<td class="lastrow">0 (0%)</td>
+<td class="lastrow">1 (20.0%)</td>
+<td class="lastrow">1 (14.3%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow">d_wave_distal_intraoperative</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">unchanged</td>
+<td>2 (100%)</td>
+<td>1 (20.0%)</td>
+<td>3 (42.9%)</td>
+</tr>
+<tr>
+<td class="rowlabel">signif decrease</td>
+<td>0 (0%)</td>
+<td>2 (40.0%)</td>
+<td>2 (28.6%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">not measured/unavailable</td>
+<td class="lastrow">0 (0%)</td>
+<td class="lastrow">2 (40.0%)</td>
+<td class="lastrow">2 (28.6%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow">pad</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">Astrocytoma</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">Cavernoma</td>
+<td>1 (50.0%)</td>
+<td>1 (20.0%)</td>
+<td>2 (28.6%)</td>
+</tr>
+<tr>
+<td class="rowlabel">Dermoid tumor</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">Diffuse glioma</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">Ependymal cyst (ventriculus terminale cyst)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">Ependymoma</td>
+<td>1 (50.0%)</td>
+<td>3 (60.0%)</td>
+<td>4 (57.1%)</td>
+</tr>
+<tr>
+<td class="rowlabel">Ependymoma (myxopapillary)</td>
+<td>0 (0%)</td>
+<td>1 (20.0%)</td>
+<td>1 (14.3%)</td>
+</tr>
+<tr>
+<td class="rowlabel">Hemangioblastoma</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">Intramedullar tumor (inconclusive PAD)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">Lipoma</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">Lymphoma</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">malignant neuroectodemal tumor (Ewings tumor/PNET)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">Melanocytoma</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">Metastasis (adenocarcinoma)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">Schwannoma</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">Subependymoma</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">Syringohydromyelia</td>
+<td class="lastrow">0 (0%)</td>
+<td class="lastrow">0 (0%)</td>
+<td class="lastrow">0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow">myelomalacia</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">No</td>
+<td>0 (0%)</td>
+<td>1 (20.0%)</td>
+<td>1 (14.3%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">Yes</td>
+<td class="lastrow">2 (100%)</td>
+<td class="lastrow">4 (80.0%)</td>
+<td class="lastrow">6 (85.7%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow">contrast_enhancing_tumor</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">No</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">Yes</td>
+<td class="lastrow">2 (100%)</td>
+<td class="lastrow">5 (100%)</td>
+<td class="lastrow">7 (100%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow">syrinx</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">No</td>
+<td>1 (50.0%)</td>
+<td>3 (60.0%)</td>
+<td>4 (57.1%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">Yes</td>
+<td class="lastrow">1 (50.0%)</td>
+<td class="lastrow">2 (40.0%)</td>
+<td class="lastrow">3 (42.9%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow">who</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">Mean (SD)</td>
+<td>1.50 (0.707)</td>
+<td>1.60 (0.548)</td>
+<td>1.57 (0.535)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">Median [Min, Max]</td>
+<td class="lastrow">1.50 [1.00, 2.00]</td>
+<td class="lastrow">2.00 [1.00, 2.00]</td>
+<td class="lastrow">2.00 [1.00, 2.00]</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow">symptom_duration_mo</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">Mean (SD)</td>
+<td>11.0 (1.41)</td>
+<td>6.60 (4.51)</td>
+<td>7.86 (4.30)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">Median [Min, Max]</td>
+<td class="lastrow">11.0 [10.0, 12.0]</td>
+<td class="lastrow">8.00 [1.00, 12.0]</td>
+<td class="lastrow">9.00 [1.00, 12.0]</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow">motor_pre</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">No</td>
+<td>1 (50.0%)</td>
+<td>2 (40.0%)</td>
+<td>3 (42.9%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">Yes</td>
+<td class="lastrow">1 (50.0%)</td>
+<td class="lastrow">3 (60.0%)</td>
+<td class="lastrow">4 (57.1%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow">motor_3m</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">No</td>
+<td>0 (0%)</td>
+<td>1 (20.0%)</td>
+<td>1 (14.3%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">Yes</td>
+<td class="lastrow">2 (100%)</td>
+<td class="lastrow">4 (80.0%)</td>
+<td class="lastrow">6 (85.7%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow">motor_3m_change</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">unchanged</td>
+<td>0 (0%)</td>
+<td>3 (60.0%)</td>
+<td>3 (42.9%)</td>
+</tr>
+<tr>
+<td class="rowlabel">worse</td>
+<td>2 (100%)</td>
+<td>1 (20.0%)</td>
+<td>3 (42.9%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">better</td>
+<td class="lastrow">0 (0%)</td>
+<td class="lastrow">1 (20.0%)</td>
+<td class="lastrow">1 (14.3%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow">motor_long_term</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">No</td>
+<td>0 (0%)</td>
+<td>2 (40.0%)</td>
+<td>2 (28.6%)</td>
+</tr>
+<tr>
+<td class="rowlabel">Yes</td>
+<td>2 (100%)</td>
+<td>3 (60.0%)</td>
+<td>5 (71.4%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">n/a</td>
+<td class="lastrow">0 (0%)</td>
+<td class="lastrow">0 (0%)</td>
+<td class="lastrow">0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow">motor_long_term_change</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">unchanged</td>
+<td>0 (0%)</td>
+<td>2 (40.0%)</td>
+<td>2 (28.6%)</td>
+</tr>
+<tr>
+<td class="rowlabel">worse</td>
+<td>2 (100%)</td>
+<td>1 (20.0%)</td>
+<td>3 (42.9%)</td>
+</tr>
+<tr>
+<td class="rowlabel">better</td>
+<td>0 (0%)</td>
+<td>2 (40.0%)</td>
+<td>2 (28.6%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">n/a</td>
+<td class="lastrow">0 (0%)</td>
+<td class="lastrow">0 (0%)</td>
+<td class="lastrow">0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow">sensory_pre</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">No</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">Yes</td>
+<td class="lastrow">2 (100%)</td>
+<td class="lastrow">5 (100%)</td>
+<td class="lastrow">7 (100%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow">sensory_3m</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">No</td>
+<td>0 (0%)</td>
+<td>1 (20.0%)</td>
+<td>1 (14.3%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">Yes</td>
+<td class="lastrow">2 (100%)</td>
+<td class="lastrow">4 (80.0%)</td>
+<td class="lastrow">6 (85.7%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow">sensory_3m_change</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">unchanged</td>
+<td>1 (50.0%)</td>
+<td>2 (40.0%)</td>
+<td>3 (42.9%)</td>
+</tr>
+<tr>
+<td class="rowlabel">worse</td>
+<td>1 (50.0%)</td>
+<td>1 (20.0%)</td>
+<td>2 (28.6%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">better</td>
+<td class="lastrow">0 (0%)</td>
+<td class="lastrow">2 (40.0%)</td>
+<td class="lastrow">2 (28.6%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow">sensory_long_term</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">No</td>
+<td>0 (0%)</td>
+<td>2 (40.0%)</td>
+<td>2 (28.6%)</td>
+</tr>
+<tr>
+<td class="rowlabel">Yes</td>
+<td>2 (100%)</td>
+<td>3 (60.0%)</td>
+<td>5 (71.4%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">n/a</td>
+<td class="lastrow">0 (0%)</td>
+<td class="lastrow">0 (0%)</td>
+<td class="lastrow">0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow">sensory_long_term_change</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">unchanged</td>
+<td>1 (50.0%)</td>
+<td>2 (40.0%)</td>
+<td>3 (42.9%)</td>
+</tr>
+<tr>
+<td class="rowlabel">worse</td>
+<td>1 (50.0%)</td>
+<td>1 (20.0%)</td>
+<td>2 (28.6%)</td>
+</tr>
+<tr>
+<td class="rowlabel">better</td>
+<td>0 (0%)</td>
+<td>2 (40.0%)</td>
+<td>2 (28.6%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">n/a</td>
+<td class="lastrow">0 (0%)</td>
+<td class="lastrow">0 (0%)</td>
+<td class="lastrow">0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow">pain_pre</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">No</td>
+<td>1 (50.0%)</td>
+<td>1 (20.0%)</td>
+<td>2 (28.6%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">Yes</td>
+<td class="lastrow">1 (50.0%)</td>
+<td class="lastrow">4 (80.0%)</td>
+<td class="lastrow">5 (71.4%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow">pain_3m</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">No</td>
+<td>0 (0%)</td>
+<td>3 (60.0%)</td>
+<td>3 (42.9%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">Yes</td>
+<td class="lastrow">2 (100%)</td>
+<td class="lastrow">2 (40.0%)</td>
+<td class="lastrow">4 (57.1%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow">pain_3m_change</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">unchanged</td>
+<td>0 (0%)</td>
+<td>1 (20.0%)</td>
+<td>1 (14.3%)</td>
+</tr>
+<tr>
+<td class="rowlabel">worse</td>
+<td>2 (100%)</td>
+<td>1 (20.0%)</td>
+<td>3 (42.9%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">better</td>
+<td class="lastrow">0 (0%)</td>
+<td class="lastrow">3 (60.0%)</td>
+<td class="lastrow">3 (42.9%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow">pain_long_term</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">No</td>
+<td>0 (0%)</td>
+<td>3 (60.0%)</td>
+<td>3 (42.9%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">Yes</td>
+<td class="lastrow">2 (100%)</td>
+<td class="lastrow">2 (40.0%)</td>
+<td class="lastrow">4 (57.1%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow">pain_long_term_change</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">unchanged</td>
+<td>0 (0%)</td>
+<td>1 (20.0%)</td>
+<td>1 (14.3%)</td>
+</tr>
+<tr>
+<td class="rowlabel">worse</td>
+<td>2 (100%)</td>
+<td>1 (20.0%)</td>
+<td>3 (42.9%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">better</td>
+<td class="lastrow">0 (0%)</td>
+<td class="lastrow">3 (60.0%)</td>
+<td class="lastrow">3 (42.9%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow">bowel_pre</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">No</td>
+<td>2 (100%)</td>
+<td>4 (80.0%)</td>
+<td>6 (85.7%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">Yes</td>
+<td class="lastrow">0 (0%)</td>
+<td class="lastrow">1 (20.0%)</td>
+<td class="lastrow">1 (14.3%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow">bowel_3m</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">No</td>
+<td>2 (100%)</td>
+<td>4 (80.0%)</td>
+<td>6 (85.7%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">Yes</td>
+<td class="lastrow">0 (0%)</td>
+<td class="lastrow">1 (20.0%)</td>
+<td class="lastrow">1 (14.3%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow">bowel_3m_change</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">unchanged</td>
+<td>2 (100%)</td>
+<td>3 (60.0%)</td>
+<td>5 (71.4%)</td>
+</tr>
+<tr>
+<td class="rowlabel">worse</td>
+<td>0 (0%)</td>
+<td>1 (20.0%)</td>
+<td>1 (14.3%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">better</td>
+<td class="lastrow">0 (0%)</td>
+<td class="lastrow">1 (20.0%)</td>
+<td class="lastrow">1 (14.3%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow">bowel_long_term</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">No</td>
+<td>2 (100%)</td>
+<td>4 (80.0%)</td>
+<td>6 (85.7%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">Yes</td>
+<td class="lastrow">0 (0%)</td>
+<td class="lastrow">1 (20.0%)</td>
+<td class="lastrow">1 (14.3%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow">bowel_long_term_change</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">unchanged</td>
+<td>2 (100%)</td>
+<td>3 (60.0%)</td>
+<td>5 (71.4%)</td>
+</tr>
+<tr>
+<td class="rowlabel">worse</td>
+<td>0 (0%)</td>
+<td>1 (20.0%)</td>
+<td>1 (14.3%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">better</td>
+<td class="lastrow">0 (0%)</td>
+<td class="lastrow">1 (20.0%)</td>
+<td class="lastrow">1 (14.3%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow">bladder_pre</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">No</td>
+<td>2 (100%)</td>
+<td>3 (60.0%)</td>
+<td>5 (71.4%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">Yes</td>
+<td class="lastrow">0 (0%)</td>
+<td class="lastrow">2 (40.0%)</td>
+<td class="lastrow">2 (28.6%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow">bladder_3m</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">No</td>
+<td>2 (100%)</td>
+<td>4 (80.0%)</td>
+<td>6 (85.7%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">Yes</td>
+<td class="lastrow">0 (0%)</td>
+<td class="lastrow">1 (20.0%)</td>
+<td class="lastrow">1 (14.3%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow">bladder_3m_change</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">unchanged</td>
+<td>2 (100%)</td>
+<td>2 (40.0%)</td>
+<td>4 (57.1%)</td>
+</tr>
+<tr>
+<td class="rowlabel">worse</td>
+<td>0 (0%)</td>
+<td>1 (20.0%)</td>
+<td>1 (14.3%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">better</td>
+<td class="lastrow">0 (0%)</td>
+<td class="lastrow">2 (40.0%)</td>
+<td class="lastrow">2 (28.6%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow">bladder_long_term</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">No</td>
+<td>2 (100%)</td>
+<td>4 (80.0%)</td>
+<td>6 (85.7%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">Yes</td>
+<td class="lastrow">0 (0%)</td>
+<td class="lastrow">1 (20.0%)</td>
+<td class="lastrow">1 (14.3%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow">bladder_long_term_change</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">unchanged</td>
+<td>2 (100%)</td>
+<td>2 (40.0%)</td>
+<td>4 (57.1%)</td>
+</tr>
+<tr>
+<td class="rowlabel">worse</td>
+<td>0 (0%)</td>
+<td>1 (20.0%)</td>
+<td>1 (14.3%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">better</td>
+<td class="lastrow">0 (0%)</td>
+<td class="lastrow">2 (40.0%)</td>
+<td class="lastrow">2 (28.6%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow">mmcs_pre</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">1</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">2</td>
+<td>1 (50.0%)</td>
+<td>4 (80.0%)</td>
+<td>5 (71.4%)</td>
+</tr>
+<tr>
+<td class="rowlabel">3</td>
+<td>1 (50.0%)</td>
+<td>1 (20.0%)</td>
+<td>2 (28.6%)</td>
+</tr>
+<tr>
+<td class="rowlabel">4</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">5</td>
+<td class="lastrow">0 (0%)</td>
+<td class="lastrow">0 (0%)</td>
+<td class="lastrow">0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow">mmcs_3m</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">1</td>
+<td>0 (0%)</td>
+<td>1 (20.0%)</td>
+<td>1 (14.3%)</td>
+</tr>
+<tr>
+<td class="rowlabel">2</td>
+<td>1 (50.0%)</td>
+<td>1 (20.0%)</td>
+<td>2 (28.6%)</td>
+</tr>
+<tr>
+<td class="rowlabel">3</td>
+<td>1 (50.0%)</td>
+<td>2 (40.0%)</td>
+<td>3 (42.9%)</td>
+</tr>
+<tr>
+<td class="rowlabel">4</td>
+<td>0 (0%)</td>
+<td>1 (20.0%)</td>
+<td>1 (14.3%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">5</td>
+<td class="lastrow">0 (0%)</td>
+<td class="lastrow">0 (0%)</td>
+<td class="lastrow">0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow">mmcs_3m_change</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">unchanged</td>
+<td>2 (100%)</td>
+<td>2 (40.0%)</td>
+<td>4 (57.1%)</td>
+</tr>
+<tr>
+<td class="rowlabel">worse</td>
+<td>0 (0%)</td>
+<td>2 (40.0%)</td>
+<td>2 (28.6%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">better</td>
+<td class="lastrow">0 (0%)</td>
+<td class="lastrow">1 (20.0%)</td>
+<td class="lastrow">1 (14.3%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow">mmcs_long_term</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">1</td>
+<td>0 (0%)</td>
+<td>2 (40.0%)</td>
+<td>2 (28.6%)</td>
+</tr>
+<tr>
+<td class="rowlabel">2</td>
+<td>1 (50.0%)</td>
+<td>1 (20.0%)</td>
+<td>2 (28.6%)</td>
+</tr>
+<tr>
+<td class="rowlabel">3</td>
+<td>1 (50.0%)</td>
+<td>1 (20.0%)</td>
+<td>2 (28.6%)</td>
+</tr>
+<tr>
+<td class="rowlabel">4</td>
+<td>0 (0%)</td>
+<td>1 (20.0%)</td>
+<td>1 (14.3%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">5</td>
+<td class="lastrow">0 (0%)</td>
+<td class="lastrow">0 (0%)</td>
+<td class="lastrow">0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow">mmcs_long_term_change</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">unchanged</td>
+<td>2 (100%)</td>
+<td>1 (20.0%)</td>
+<td>3 (42.9%)</td>
+</tr>
+<tr>
+<td class="rowlabel">worse</td>
+<td>0 (0%)</td>
+<td>2 (40.0%)</td>
+<td>2 (28.6%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">better</td>
+<td class="lastrow">0 (0%)</td>
+<td class="lastrow">2 (40.0%)</td>
+<td class="lastrow">2 (28.6%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow">asia_is_pre</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">A</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">B</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">C</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">D</td>
+<td>2 (100%)</td>
+<td>5 (100%)</td>
+<td>7 (100%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">E</td>
+<td class="lastrow">0 (0%)</td>
+<td class="lastrow">0 (0%)</td>
+<td class="lastrow">0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow">asia_is_3m</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">A</td>
+<td>0 (0%)</td>
+<td>1 (20.0%)</td>
+<td>1 (14.3%)</td>
+</tr>
+<tr>
+<td class="rowlabel">B</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">C</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">D</td>
+<td>2 (100%)</td>
+<td>3 (60.0%)</td>
+<td>5 (71.4%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">E</td>
+<td class="lastrow">0 (0%)</td>
+<td class="lastrow">1 (20.0%)</td>
+<td class="lastrow">1 (14.3%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow">asia_is_3m_change</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">unchanged</td>
+<td>2 (100%)</td>
+<td>3 (60.0%)</td>
+<td>5 (71.4%)</td>
+</tr>
+<tr>
+<td class="rowlabel">worse</td>
+<td>0 (0%)</td>
+<td>1 (20.0%)</td>
+<td>1 (14.3%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">better</td>
+<td class="lastrow">0 (0%)</td>
+<td class="lastrow">1 (20.0%)</td>
+<td class="lastrow">1 (14.3%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow">asia_is_long_term</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">A</td>
+<td>0 (0%)</td>
+<td>1 (20.0%)</td>
+<td>1 (14.3%)</td>
+</tr>
+<tr>
+<td class="rowlabel">B</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">C</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">D</td>
+<td>2 (100%)</td>
+<td>2 (40.0%)</td>
+<td>4 (57.1%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">E</td>
+<td class="lastrow">0 (0%)</td>
+<td class="lastrow">2 (40.0%)</td>
+<td class="lastrow">2 (28.6%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow">asia_is_long_term_change</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">unchanged</td>
+<td>2 (100%)</td>
+<td>2 (40.0%)</td>
+<td>4 (57.1%)</td>
+</tr>
+<tr>
+<td class="rowlabel">worse</td>
+<td>0 (0%)</td>
+<td>1 (20.0%)</td>
+<td>1 (14.3%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">better</td>
+<td class="lastrow">0 (0%)</td>
+<td class="lastrow">2 (40.0%)</td>
+<td class="lastrow">2 (28.6%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow">bcr_baseline</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">not detected</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">no response (sph sin)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">normal</td>
+<td>0 (0%)</td>
+<td>1 (20.0%)</td>
+<td>1 (14.3%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">n/a</td>
+<td class="lastrow">2 (100%)</td>
+<td class="lastrow">4 (80.0%)</td>
+<td class="lastrow">6 (85.7%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow">bcr_intraoperative</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">unchanged</td>
+<td>0 (0%)</td>
+<td>1 (20.0%)</td>
+<td>1 (14.3%)</td>
+</tr>
+<tr>
+<td class="rowlabel">amplitude decrease (sph dx)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">not detected</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">n/a</td>
+<td class="lastrow">2 (100%)</td>
+<td class="lastrow">4 (80.0%)</td>
+<td class="lastrow">6 (85.7%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow">spinal_segment</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">C1</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">C2</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">C2- C3</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">C2- C6</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">C2-3</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">C2-C5</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">C3</td>
+<td>0 (0%)</td>
+<td>1 (20.0%)</td>
+<td>1 (14.3%)</td>
+</tr>
+<tr>
+<td class="rowlabel">C3- C4</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">C3-4</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">C3-5</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">C3-6</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">C3-C4</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">C3-C7</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">C4</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">C4-5</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">C4-6</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">C4-7</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">C4-T1</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">C5</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">C5- C6</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">C5- Th1</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">C5- Th2</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">C5-C6</td>
+<td>1 (50.0%)</td>
+<td>0 (0%)</td>
+<td>1 (14.3%)</td>
+</tr>
+<tr>
+<td class="rowlabel">C5-C7</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">C5-T1</td>
+<td>0 (0%)</td>
+<td>1 (20.0%)</td>
+<td>1 (14.3%)</td>
+</tr>
+<tr>
+<td class="rowlabel">C5-T4</td>
+<td>0 (0%)</td>
+<td>1 (20.0%)</td>
+<td>1 (14.3%)</td>
+</tr>
+<tr>
+<td class="rowlabel">C5-T6</td>
+<td>0 (0%)</td>
+<td>1 (20.0%)</td>
+<td>1 (14.3%)</td>
+</tr>
+<tr>
+<td class="rowlabel">C6</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">C6- Th1</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">C6- Th4</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">C6-7</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">C6-T2</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">C6-T2 + T6</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">C7</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">L2</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">L2- S2</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">L2-3</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">L2-4</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">L4- S3</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">L4-L5</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">L4-S1</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">T1-8</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">T1-L2</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">T11</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">T11-T12</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">T12-L1</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">T12-L2</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">T12-S2</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">T3-4</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">T4-6</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">T9-10</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">T9-12</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">Th1- Th5</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">Th11- L4</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">Th11- Th12</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">Th12- L1</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">Th12- L2</td>
+<td>0 (0%)</td>
+<td>1 (20.0%)</td>
+<td>1 (14.3%)</td>
+</tr>
+<tr>
+<td class="rowlabel">Th6- Th7</td>
+<td>1 (50.0%)</td>
+<td>0 (0%)</td>
+<td>1 (14.3%)</td>
+</tr>
+<tr>
+<td class="rowlabel">Th7- Th8</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">Th9- Th10</td>
+<td class="lastrow">0 (0%)</td>
+<td class="lastrow">0 (0%)</td>
+<td class="lastrow">0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow">surgical_radicality</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">Biopsy</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">GTR</td>
+<td>2 (100%)</td>
+<td>2 (40.0%)</td>
+<td>4 (57.1%)</td>
+</tr>
+<tr>
+<td class="rowlabel">Partial</td>
+<td>0 (0%)</td>
+<td>3 (60.0%)</td>
+<td>3 (42.9%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">Syringosubarachnoid shunt</td>
+<td class="lastrow">0 (0%)</td>
+<td class="lastrow">0 (0%)</td>
+<td class="lastrow">0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow">adjuvent_radio</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">No</td>
+<td>2 (100%)</td>
+<td>4 (80.0%)</td>
+<td>6 (85.7%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">Yes</td>
+<td class="lastrow">0 (0%)</td>
+<td class="lastrow">1 (20.0%)</td>
+<td class="lastrow">1 (14.3%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow">adjuvant_chemo</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">No</td>
+<td>2 (100%)</td>
+<td>5 (100%)</td>
+<td>7 (100%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">Yes</td>
+<td class="lastrow">0 (0%)</td>
+<td class="lastrow">0 (0%)</td>
+<td class="lastrow">0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow">baseline_MEP_right_leg</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel"></td>
+<td>2 (100%)</td>
+<td>3 (60.0%)</td>
+<td>5 (71.4%)</td>
+</tr>
+<tr>
+<td class="rowlabel">loss of response (ta), prolonged latency (ah)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">low amplitude (gastro and ah)</td>
+<td>0 (0%)</td>
+<td>1 (20.0%)</td>
+<td>1 (14.3%)</td>
+</tr>
+<tr>
+<td class="rowlabel">low amplitude (ta and ah)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">low amplitude (ta)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">prolonged latency</td>
+<td class="lastrow">0 (0%)</td>
+<td class="lastrow">1 (20.0%)</td>
+<td class="lastrow">1 (14.3%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow">baseline_MEP_left_leg</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel"></td>
+<td>1 (50.0%)</td>
+<td>4 (80.0%)</td>
+<td>5 (71.4%)</td>
+</tr>
+<tr>
+<td class="rowlabel">loss of response (psoas, add, vastus, ta, gastro), low amplitude (ah)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">low amplitude</td>
+<td>1 (50.0%)</td>
+<td>0 (0%)</td>
+<td>1 (14.3%)</td>
+</tr>
+<tr>
+<td class="rowlabel">low amplitude (ah)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">prolonged latency</td>
+<td>0 (0%)</td>
+<td>1 (20.0%)</td>
+<td>1 (14.3%)</td>
+</tr>
+<tr>
+<td class="rowlabel">prolonged latency (ta and ah)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">prolonged latency, low amplitude (ta)</td>
+<td class="lastrow">0 (0%)</td>
+<td class="lastrow">0 (0%)</td>
+<td class="lastrow">0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow">Intraoperative_MEP_right_hand</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">loss of response</td>
+<td>0 (0%)</td>
+<td>1 (20.0%)</td>
+<td>1 (14.3%)</td>
+</tr>
+<tr>
+<td class="rowlabel">n/a</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">non-significant amplitude decrease</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">prolonged  latency (adm)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">unchanged</td>
+<td class="lastrow">2 (100%)</td>
+<td class="lastrow">4 (80.0%)</td>
+<td class="lastrow">6 (85.7%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow">Intraoperative_MEP_left_hand</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">amplitude decrease</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">amplitude decrease (adm)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">n/a</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">temporary amplitude decrease</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">unchanged</td>
+<td class="lastrow">2 (100%)</td>
+<td class="lastrow">5 (100%)</td>
+<td class="lastrow">7 (100%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow">Intraoperative_MEP_right_leg</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">amplitude decrease</td>
+<td>0 (0%)</td>
+<td>1 (20.0%)</td>
+<td>1 (14.3%)</td>
+</tr>
+<tr>
+<td class="rowlabel">amplitude decrease (ta and ah)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">amplitude decrease (vl)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">loss of response</td>
+<td>1 (50.0%)</td>
+<td>1 (20.0%)</td>
+<td>2 (28.6%)</td>
+</tr>
+<tr>
+<td class="rowlabel">loss of response (ah, ta)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">loss of response (ta and  ah)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">loss of response (ta and gastroc.)</td>
+<td>0 (0%)</td>
+<td>1 (20.0%)</td>
+<td>1 (14.3%)</td>
+</tr>
+<tr>
+<td class="rowlabel">loss of response (ta)</td>
+<td>0 (0%)</td>
+<td>1 (20.0%)</td>
+<td>1 (14.3%)</td>
+</tr>
+<tr>
+<td class="rowlabel">loss of response (ta), amplitude decrease and prolonged latency (ah)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">loss of response (ta, ah)</td>
+<td>0 (0%)</td>
+<td>1 (20.0%)</td>
+<td>1 (14.3%)</td>
+</tr>
+<tr>
+<td class="rowlabel">n/a</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">non-significant amplitude decresase</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">unchanged</td>
+<td class="lastrow">1 (50.0%)</td>
+<td class="lastrow">0 (0%)</td>
+<td class="lastrow">1 (14.3%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow">Intraoperative_MEP_left_leg</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">amplitude decrease</td>
+<td>1 (50.0%)</td>
+<td>0 (0%)</td>
+<td>1 (14.3%)</td>
+</tr>
+<tr>
+<td class="rowlabel">amplitude decrease (ta, ah)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">loss of response</td>
+<td>1 (50.0%)</td>
+<td>0 (0%)</td>
+<td>1 (14.3%)</td>
+</tr>
+<tr>
+<td class="rowlabel">loss of response (ah, ta)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">loss of response (psoas, add, vastus, ta, gastro) low amplitude (ah)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">loss of response (ta and  ah)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">loss of response (ta), amplitude decrease (ah)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">loss of response (ta. ah)</td>
+<td>0 (0%)</td>
+<td>1 (20.0%)</td>
+<td>1 (14.3%)</td>
+</tr>
+<tr>
+<td class="rowlabel">n/a</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">non-significant amplitude decresase</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">non-significant amplitude decresase (ta)</td>
+<td>0 (0%)</td>
+<td>1 (20.0%)</td>
+<td>1 (14.3%)</td>
+</tr>
+<tr>
+<td class="rowlabel">prolonged latency  (ta)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">unchanged</td>
+<td class="lastrow">0 (0%)</td>
+<td class="lastrow">3 (60.0%)</td>
+<td class="lastrow">3 (42.9%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow">baseline_SEP_right_hand</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel"></td>
+<td>2 (100%)</td>
+<td>5 (100%)</td>
+<td>7 (100%)</td>
+</tr>
+<tr>
+<td class="rowlabel">low amplitude</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">no response</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">prolonged latency</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">prolonged latency, low amplitude</td>
+<td class="lastrow">0 (0%)</td>
+<td class="lastrow">0 (0%)</td>
+<td class="lastrow">0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow">baseline_SEP_left_hand</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel"></td>
+<td>2 (100%)</td>
+<td>5 (100%)</td>
+<td>7 (100%)</td>
+</tr>
+<tr>
+<td class="rowlabel">low amplitude, prolonged latency</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">prolonged latency</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">prolonged latency, low amplitude</td>
+<td class="lastrow">0 (0%)</td>
+<td class="lastrow">0 (0%)</td>
+<td class="lastrow">0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow">baseline_SEP_right_leg</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel"></td>
+<td>1 (50.0%)</td>
+<td>3 (60.0%)</td>
+<td>4 (57.1%)</td>
+</tr>
+<tr>
+<td class="rowlabel">absent from the start of surg.</td>
+<td>0 (0%)</td>
+<td>1 (20.0%)</td>
+<td>1 (14.3%)</td>
+</tr>
+<tr>
+<td class="rowlabel">low amplitude</td>
+<td>1 (50.0%)</td>
+<td>1 (20.0%)</td>
+<td>2 (28.6%)</td>
+</tr>
+<tr>
+<td class="rowlabel">low amplitude, prolonged latency</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">non-significant low amplitude</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">non-significant prolonged latency</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">prolonged latency</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">prolongedlatency</td>
+<td class="lastrow">0 (0%)</td>
+<td class="lastrow">0 (0%)</td>
+<td class="lastrow">0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow">baseline_SEP_left_leg</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel"></td>
+<td>1 (50.0%)</td>
+<td>3 (60.0%)</td>
+<td>4 (57.1%)</td>
+</tr>
+<tr>
+<td class="rowlabel">absent from the start of surg.</td>
+<td>0 (0%)</td>
+<td>1 (20.0%)</td>
+<td>1 (14.3%)</td>
+</tr>
+<tr>
+<td class="rowlabel">amplitude decrease</td>
+<td>1 (50.0%)</td>
+<td>0 (0%)</td>
+<td>1 (14.3%)</td>
+</tr>
+<tr>
+<td class="rowlabel">latency prolonged</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">low amplitude</td>
+<td>0 (0%)</td>
+<td>1 (20.0%)</td>
+<td>1 (14.3%)</td>
+</tr>
+<tr>
+<td class="rowlabel">low amplitude, prolonged latency</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">no response</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">non-significant prolonged latency</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">prolonged latency</td>
+<td class="lastrow">0 (0%)</td>
+<td class="lastrow">0 (0%)</td>
+<td class="lastrow">0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow">Intraoperative_SEP_right_hand</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">unchanged</td>
+<td>2 (100%)</td>
+<td>4 (80.0%)</td>
+<td>6 (85.7%)</td>
+</tr>
+<tr>
+<td class="rowlabel">absent from the start of the surgery</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">amplitude decrease</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">amplitude decrease, prolonged latency</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">loss of response</td>
+<td>0 (0%)</td>
+<td>1 (20.0%)</td>
+<td>1 (14.3%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">n/a</td>
+<td class="lastrow">0 (0%)</td>
+<td class="lastrow">0 (0%)</td>
+<td class="lastrow">0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow">Intraoperative_SEP_left_hand</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">amplitude decrease</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">loss of response</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">n/a</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">non-significant amplitude decrease without latency change</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">unchanged</td>
+<td class="lastrow">2 (100%)</td>
+<td class="lastrow">5 (100%)</td>
+<td class="lastrow">7 (100%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow">Intraoperative_SEP_right_foot</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">amplitude decrease</td>
+<td>1 (50.0%)</td>
+<td>0 (0%)</td>
+<td>1 (14.3%)</td>
+</tr>
+<tr>
+<td class="rowlabel">amplitude decrease, prolonged latency </td>
+<td>0 (0%)</td>
+<td>1 (20.0%)</td>
+<td>1 (14.3%)</td>
+</tr>
+<tr>
+<td class="rowlabel">loss of response</td>
+<td>0 (0%)</td>
+<td>1 (20.0%)</td>
+<td>1 (14.3%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">unchanged</td>
+<td class="lastrow">1 (50.0%)</td>
+<td class="lastrow">3 (60.0%)</td>
+<td class="lastrow">4 (57.1%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow">Intraoperative_SEP_left_foot</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">amplitude decrease</td>
+<td>1 (50.0%)</td>
+<td>0 (0%)</td>
+<td>1 (14.3%)</td>
+</tr>
+<tr>
+<td class="rowlabel">amplitude decrease, prolonged latency</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">loss of response</td>
+<td>0 (0%)</td>
+<td>1 (20.0%)</td>
+<td>1 (14.3%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">unchanged</td>
+<td class="lastrow">1 (50.0%)</td>
+<td class="lastrow">4 (80.0%)</td>
+<td class="lastrow">5 (71.4%)</td>
+</tr>
+</tbody>
+</table>
 </div>
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIlRhYmxlcyINCm91dHB1dDoNCiAgaHRtbF9ub3RlYm9vazoNCiAgICBjb2RlX2ZvbGRpbmc6ICJoaWRlIg0KLS0tDQoNCiMgU2V0dXANCmBgYHtyfQ0KcmVxdWlyZShkYXRhLnRhYmxlKQ0KcmVxdWlyZSh0YWJsZTEpDQpgYGANCg0KIyBEYXRhDQpgYGB7cn0NCmxvYWQoInRtcC9nYXlhbmVfZGF0YV8xMTE5MjAyMy5SRGF0YSIpDQpgYGANCg0KIyBUYWJsZSAxOiBJbnRyYW9wZXJhdGl2ZSBTZW5zb3J5IEV2b2tlZCBQb3RlbnRpYWxzIGluIFJpZ2h0IG9yIExlZnQgRm9vdCB2cy4gQWxsDQpgYGB7cn0NCnRhYmxlMSh+IC58IGludHJhb3Bfc2VwX2ZlZXQsDQogICAgICAgZGF0YSA9IGR0MlssIGMoImludHJhb3Bfc2VwX2ZlZXQiLA0KICAgICAgICAgICAgICAgICAgICAgICJzZXgiLA0KICAgICAgICAgICAgICAgICAgICAgICJhZ2UiLA0KICAgICAgICAgICAgICAgICAgICAgICJkZWFkIiwNCiAgICAgICAgICAgICAgICAgICAgICAiZGVhZF9zcGluYWxfcGF0aG9sb2d5IiwgICANCiAgICAgICAgICAgICAgICAgICAgICAiZF93YXZlX2Rpc3RhbF9iYXNlbGluZSIsDQogICAgICAgICAgICAgICAgICAgICAgImRfd2F2ZV9kaXN0YWxfaW50cmFvcGVyYXRpdmUiLA0KICAgICAgICAgICAgICAgICAgICAgICJwYWQiLA0KICAgICAgICAgICAgICAgICAgICAgICJteWVsb21hbGFjaWEiLA0KICAgICAgICAgICAgICAgICAgICAgICJjb250cmFzdF9lbmhhbmNpbmdfdHVtb3IiLA0KICAgICAgICAgICAgICAgICAgICAgICJzeXJpbngiLA0KICAgICAgICAgICAgICAgICAgICAgICJ3aG8iLA0KICAgICAgICAgICAgICAgICAgICAgICJzeW1wdG9tX2R1cmF0aW9uX21vIiwNCiAgICAgICAgICAgICAgICAgICAgICANCiAgICAgICAgICAgICAgICAgICAgICAibW90b3JfcHJlIiwNCiAgICAgICAgICAgICAgICAgICAgICAibW90b3JfM20iLA0KICAgICAgICAgICAgICAgICAgICAgICJtb3Rvcl8zbV9jaGFuZ2UiLA0KICAgICAgICAgICAgICAgICAgICAgICJtb3Rvcl9sb25nX3Rlcm0iLA0KICAgICAgICAgICAgICAgICAgICAgICJtb3Rvcl9sb25nX3Rlcm1fY2hhbmdlIiwNCiAgICAgICAgICAgICAgICAgICAgICANCiAgICAgICAgICAgICAgICAgICAgICAic2Vuc29yeV9wcmUiLA0KICAgICAgICAgICAgICAgICAgICAgICJzZW5zb3J5XzNtIiwNCiAgICAgICAgICAgICAgICAgICAgICAic2Vuc29yeV8zbV9jaGFuZ2UiLA0KICAgICAgICAgICAgICAgICAgICAgICJzZW5zb3J5X2xvbmdfdGVybSIsDQogICAgICAgICAgICAgICAgICAgICAgInNlbnNvcnlfbG9uZ190ZXJtX2NoYW5nZSIsDQogICAgICAgICAgICAgICAgICAgICAgDQogICAgICAgICAgICAgICAgICAgICAgInBhaW5fcHJlIiwNCiAgICAgICAgICAgICAgICAgICAgICAicGFpbl8zbSIsDQogICAgICAgICAgICAgICAgICAgICAgInBhaW5fM21fY2hhbmdlIiwNCiAgICAgICAgICAgICAgICAgICAgICAicGFpbl9sb25nX3Rlcm0iLA0KICAgICAgICAgICAgICAgICAgICAgICJwYWluX2xvbmdfdGVybV9jaGFuZ2UiLA0KICAgICAgICAgICAgICAgICAgICAgIA0KICAgICAgICAgICAgICAgICAgICAgICJib3dlbF9wcmUiLA0KICAgICAgICAgICAgICAgICAgICAgICJib3dlbF8zbSIsDQogICAgICAgICAgICAgICAgICAgICAgImJvd2VsXzNtX2NoYW5nZSIsDQogICAgICAgICAgICAgICAgICAgICAgImJvd2VsX2xvbmdfdGVybSIsDQogICAgICAgICAgICAgICAgICAgICAgImJvd2VsX2xvbmdfdGVybV9jaGFuZ2UiLA0KICAgICAgICAgICAgICAgICAgICAgIA0KICAgICAgICAgICAgICAgICAgICAgICJibGFkZGVyX3ByZSIsDQogICAgICAgICAgICAgICAgICAgICAgImJsYWRkZXJfM20iLA0KICAgICAgICAgICAgICAgICAgICAgICJibGFkZGVyXzNtX2NoYW5nZSIsDQogICAgICAgICAgICAgICAgICAgICAgImJsYWRkZXJfbG9uZ190ZXJtIiwNCiAgICAgICAgICAgICAgICAgICAgICAiYmxhZGRlcl9sb25nX3Rlcm1fY2hhbmdlIiwNCiAgICAgICAgICAgICAgICAgICAgICANCiAgICAgICAgICAgICAgICAgICAgICAibW1jc19wcmUiLA0KICAgICAgICAgICAgICAgICAgICAgICJtbWNzXzNtIiwNCiAgICAgICAgICAgICAgICAgICAgICAibW1jc18zbV9jaGFuZ2UiLA0KICAgICAgICAgICAgICAgICAgICAgICJtbWNzX2xvbmdfdGVybSIsDQogICAgICAgICAgICAgICAgICAgICAgIm1tY3NfbG9uZ190ZXJtX2NoYW5nZSIsDQogICAgICAgICAgICAgICAgICAgICAgDQogICAgICAgICAgICAgICAgICAgICAgImFzaWFfaXNfcHJlIiwNCiAgICAgICAgICAgICAgICAgICAgICAiYXNpYV9pc18zbSIsDQogICAgICAgICAgICAgICAgICAgICAgImFzaWFfaXNfM21fY2hhbmdlIiwNCiAgICAgICAgICAgICAgICAgICAgICAiYXNpYV9pc19sb25nX3Rlcm0iLA0KICAgICAgICAgICAgICAgICAgICAgICJhc2lhX2lzX2xvbmdfdGVybV9jaGFuZ2UiLA0KICAgICAgICAgICAgICAgICAgICAgIA0KICAgICAgICAgICAgICAgICAgICAgICJiY3JfYmFzZWxpbmUiLA0KICAgICAgICAgICAgICAgICAgICAgICJiY3JfaW50cmFvcGVyYXRpdmUiLA0KICAgICAgICAgICAgICAgICAgICAgIA0KICAgICAgICAgICAgICAgICAgICAgICJzcGluYWxfc2VnbWVudCIsDQogICAgICAgICAgICAgICAgICAgICAgInN1cmdpY2FsX3JhZGljYWxpdHkiLA0KICAgICAgICAgICAgICAgICAgICAgICJhZGp1dmVudF9yYWRpbyIsDQogICAgICAgICAgICAgICAgICAgICAgImFkanV2YW50X2NoZW1vIiwNCiAgICAgICAgICAgICAgICAgICAgICANCiAgICAgICAgICAgICAgICAgICAgICAiYmFzZWxpbmVfTUVQX3JpZ2h0X2xlZyIsDQogICAgICAgICAgICAgICAgICAgICAgImJhc2VsaW5lX01FUF9sZWZ0X2xlZyIsDQogICAgICAgICAgICAgICAgICAgICAgIkludHJhb3BlcmF0aXZlX01FUF9yaWdodF9oYW5kIiwNCiAgICAgICAgICAgICAgICAgICAgICAiSW50cmFvcGVyYXRpdmVfTUVQX2xlZnRfaGFuZCIsDQogICAgICAgICAgICAgICAgICAgICAgIkludHJhb3BlcmF0aXZlX01FUF9yaWdodF9sZWciLA0KICAgICAgICAgICAgICAgICAgICAgICJJbnRyYW9wZXJhdGl2ZV9NRVBfbGVmdF9sZWciLA0KICAgICAgICAgICAgICAgICAgICAgIA0KICAgICAgICAgICAgICAgICAgICAgICJiYXNlbGluZV9TRVBfcmlnaHRfaGFuZCIsDQogICAgICAgICAgICAgICAgICAgICAgImJhc2VsaW5lX1NFUF9sZWZ0X2hhbmQiLA0KICAgICAgICAgICAgICAgICAgICAgICJiYXNlbGluZV9TRVBfcmlnaHRfbGVnIiwNCiAgICAgICAgICAgICAgICAgICAgICAiYmFzZWxpbmVfU0VQX2xlZnRfbGVnIiwNCiAgICAgICAgICAgICAgICAgICAgICAiSW50cmFvcGVyYXRpdmVfU0VQX3JpZ2h0X2hhbmQiLA0KICAgICAgICAgICAgICAgICAgICAgICJJbnRyYW9wZXJhdGl2ZV9TRVBfbGVmdF9oYW5kIiwNCiAgICAgICAgICAgICAgICAgICAgICAiSW50cmFvcGVyYXRpdmVfU0VQX3JpZ2h0X2Zvb3QiLA0KICAgICAgICAgICAgICAgICAgICAgICJJbnRyYW9wZXJhdGl2ZV9TRVBfbGVmdF9mb290Ig0KICAgICAgICldKQ0KYGBgDQoNCiMgVGFibGUgMjogSW50cmFvcGVyYXRpdmUgTW90b3IgRXZva2VkIFBvdGVudGlhbHMgaW4gUmlnaHQgb3IgTGVmdCBMZWcgdnMuIEFsbA0KYGBge3J9DQp0YWJsZTEofiAufCBpbnRyYW9wX21lcF9sZWdzLA0KICAgICAgIGRhdGEgPSBkdDJbLCBjKCJpbnRyYW9wX21lcF9sZWdzIiwNCiAgICAgICAgICAgICAgICAgICAgICAic2V4IiwNCiAgICAgICAgICAgICAgICAgICAgICAiYWdlIiwNCiAgICAgICAgICAgICAgICAgICAgICAiZGVhZCIsDQogICAgICAgICAgICAgICAgICAgICAgImRlYWRfc3BpbmFsX3BhdGhvbG9neSIsICAgDQogICAgICAgICAgICAgICAgICAgICAgImRfd2F2ZV9kaXN0YWxfYmFzZWxpbmUiLA0KICAgICAgICAgICAgICAgICAgICAgICJkX3dhdmVfZGlzdGFsX2ludHJhb3BlcmF0aXZlIiwNCiAgICAgICAgICAgICAgICAgICAgICAicGFkIiwNCiAgICAgICAgICAgICAgICAgICAgICAibXllbG9tYWxhY2lhIiwNCiAgICAgICAgICAgICAgICAgICAgICAiY29udHJhc3RfZW5oYW5jaW5nX3R1bW9yIiwNCiAgICAgICAgICAgICAgICAgICAgICAic3lyaW54IiwNCiAgICAgICAgICAgICAgICAgICAgICAid2hvIiwNCiAgICAgICAgICAgICAgICAgICAgICAic3ltcHRvbV9kdXJhdGlvbl9tbyIsDQogICAgICAgICAgICAgICAgICAgICAgDQogICAgICAgICAgICAgICAgICAgICAgIm1vdG9yX3ByZSIsDQogICAgICAgICAgICAgICAgICAgICAgIm1vdG9yXzNtIiwNCiAgICAgICAgICAgICAgICAgICAgICAibW90b3JfM21fY2hhbmdlIiwNCiAgICAgICAgICAgICAgICAgICAgICAibW90b3JfbG9uZ190ZXJtIiwNCiAgICAgICAgICAgICAgICAgICAgICAibW90b3JfbG9uZ190ZXJtX2NoYW5nZSIsDQogICAgICAgICAgICAgICAgICAgICAgDQogICAgICAgICAgICAgICAgICAgICAgInNlbnNvcnlfcHJlIiwNCiAgICAgICAgICAgICAgICAgICAgICAic2Vuc29yeV8zbSIsDQogICAgICAgICAgICAgICAgICAgICAgInNlbnNvcnlfM21fY2hhbmdlIiwNCiAgICAgICAgICAgICAgICAgICAgICAic2Vuc29yeV9sb25nX3Rlcm0iLA0KICAgICAgICAgICAgICAgICAgICAgICJzZW5zb3J5X2xvbmdfdGVybV9jaGFuZ2UiLA0KICAgICAgICAgICAgICAgICAgICAgIA0KICAgICAgICAgICAgICAgICAgICAgICJwYWluX3ByZSIsDQogICAgICAgICAgICAgICAgICAgICAgInBhaW5fM20iLA0KICAgICAgICAgICAgICAgICAgICAgICJwYWluXzNtX2NoYW5nZSIsDQogICAgICAgICAgICAgICAgICAgICAgInBhaW5fbG9uZ190ZXJtIiwNCiAgICAgICAgICAgICAgICAgICAgICAicGFpbl9sb25nX3Rlcm1fY2hhbmdlIiwNCiAgICAgICAgICAgICAgICAgICAgICANCiAgICAgICAgICAgICAgICAgICAgICAiYm93ZWxfcHJlIiwNCiAgICAgICAgICAgICAgICAgICAgICAiYm93ZWxfM20iLA0KICAgICAgICAgICAgICAgICAgICAgICJib3dlbF8zbV9jaGFuZ2UiLA0KICAgICAgICAgICAgICAgICAgICAgICJib3dlbF9sb25nX3Rlcm0iLA0KICAgICAgICAgICAgICAgICAgICAgICJib3dlbF9sb25nX3Rlcm1fY2hhbmdlIiwNCiAgICAgICAgICAgICAgICAgICAgICANCiAgICAgICAgICAgICAgICAgICAgICAiYmxhZGRlcl9wcmUiLA0KICAgICAgICAgICAgICAgICAgICAgICJibGFkZGVyXzNtIiwNCiAgICAgICAgICAgICAgICAgICAgICAiYmxhZGRlcl8zbV9jaGFuZ2UiLA0KICAgICAgICAgICAgICAgICAgICAgICJibGFkZGVyX2xvbmdfdGVybSIsDQogICAgICAgICAgICAgICAgICAgICAgImJsYWRkZXJfbG9uZ190ZXJtX2NoYW5nZSIsDQogICAgICAgICAgICAgICAgICAgICAgDQogICAgICAgICAgICAgICAgICAgICAgIm1tY3NfcHJlIiwNCiAgICAgICAgICAgICAgICAgICAgICAibW1jc18zbSIsDQogICAgICAgICAgICAgICAgICAgICAgIm1tY3NfM21fY2hhbmdlIiwNCiAgICAgICAgICAgICAgICAgICAgICAibW1jc19sb25nX3Rlcm0iLA0KICAgICAgICAgICAgICAgICAgICAgICJtbWNzX2xvbmdfdGVybV9jaGFuZ2UiLA0KICAgICAgICAgICAgICAgICAgICAgIA0KICAgICAgICAgICAgICAgICAgICAgICJhc2lhX2lzX3ByZSIsDQogICAgICAgICAgICAgICAgICAgICAgImFzaWFfaXNfM20iLA0KICAgICAgICAgICAgICAgICAgICAgICJhc2lhX2lzXzNtX2NoYW5nZSIsDQogICAgICAgICAgICAgICAgICAgICAgImFzaWFfaXNfbG9uZ190ZXJtIiwNCiAgICAgICAgICAgICAgICAgICAgICAiYXNpYV9pc19sb25nX3Rlcm1fY2hhbmdlIiwNCiAgICAgICAgICAgICAgICAgICAgICANCiAgICAgICAgICAgICAgICAgICAgICAiYmNyX2Jhc2VsaW5lIiwNCiAgICAgICAgICAgICAgICAgICAgICAiYmNyX2ludHJhb3BlcmF0aXZlIiwNCiAgICAgICAgICAgICAgICAgICAgICANCiAgICAgICAgICAgICAgICAgICAgICAic3BpbmFsX3NlZ21lbnQiLA0KICAgICAgICAgICAgICAgICAgICAgICJzdXJnaWNhbF9yYWRpY2FsaXR5IiwNCiAgICAgICAgICAgICAgICAgICAgICAiYWRqdXZlbnRfcmFkaW8iLA0KICAgICAgICAgICAgICAgICAgICAgICJhZGp1dmFudF9jaGVtbyIsDQogICAgICAgICAgICAgICAgICAgICAgDQogICAgICAgICAgICAgICAgICAgICAgImJhc2VsaW5lX01FUF9yaWdodF9sZWciLA0KICAgICAgICAgICAgICAgICAgICAgICJiYXNlbGluZV9NRVBfbGVmdF9sZWciLA0KICAgICAgICAgICAgICAgICAgICAgICJJbnRyYW9wZXJhdGl2ZV9NRVBfcmlnaHRfaGFuZCIsDQogICAgICAgICAgICAgICAgICAgICAgIkludHJhb3BlcmF0aXZlX01FUF9sZWZ0X2hhbmQiLA0KICAgICAgICAgICAgICAgICAgICAgICJJbnRyYW9wZXJhdGl2ZV9NRVBfcmlnaHRfbGVnIiwNCiAgICAgICAgICAgICAgICAgICAgICAiSW50cmFvcGVyYXRpdmVfTUVQX2xlZnRfbGVnIiwNCiAgICAgICAgICAgICAgICAgICAgICANCiAgICAgICAgICAgICAgICAgICAgICAiYmFzZWxpbmVfU0VQX3JpZ2h0X2hhbmQiLA0KICAgICAgICAgICAgICAgICAgICAgICJiYXNlbGluZV9TRVBfbGVmdF9oYW5kIiwNCiAgICAgICAgICAgICAgICAgICAgICAiYmFzZWxpbmVfU0VQX3JpZ2h0X2xlZyIsDQogICAgICAgICAgICAgICAgICAgICAgImJhc2VsaW5lX1NFUF9sZWZ0X2xlZyIsDQogICAgICAgICAgICAgICAgICAgICAgIkludHJhb3BlcmF0aXZlX1NFUF9yaWdodF9oYW5kIiwNCiAgICAgICAgICAgICAgICAgICAgICAiSW50cmFvcGVyYXRpdmVfU0VQX2xlZnRfaGFuZCIsDQogICAgICAgICAgICAgICAgICAgICAgIkludHJhb3BlcmF0aXZlX1NFUF9yaWdodF9mb290IiwNCiAgICAgICAgICAgICAgICAgICAgICAiSW50cmFvcGVyYXRpdmVfU0VQX2xlZnRfZm9vdCINCiAgICAgICApXSkNCmBgYA==</div>
+<!-- rnb-htmlwidget-end -->
+
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+</div>
+<div id="session" class="section level1">
+<h1>Session</h1>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc2Vzc2lvbkluZm8oKVxuYGBgIn0= -->
+<pre class="r"><code>sessionInfo()</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiUiB2ZXJzaW9uIDQuMi4yICgyMDIyLTEwLTMxIHVjcnQpXG5QbGF0Zm9ybTogeDg2XzY0LXc2NC1taW5ndzMyL3g2NCAoNjQtYml0KVxuUnVubmluZyB1bmRlcjogV2luZG93cyAxMCB4NjQgKGJ1aWxkIDIyNjIxKVxuXG5NYXRyaXggcHJvZHVjdHM6IGRlZmF1bHRcblxubG9jYWxlOlxuWzFdIExDX0NPTExBVEU9RW5nbGlzaF9Vbml0ZWQgU3RhdGVzLnV0ZjggIExDX0NUWVBFPUVuZ2xpc2hfVW5pdGVkIFN0YXRlcy51dGY4ICAgIExDX01PTkVUQVJZPUVuZ2xpc2hfVW5pdGVkIFN0YXRlcy51dGY4XG5bNF0gTENfTlVNRVJJQz1DICAgICAgICAgICAgICAgICAgICAgICAgICAgTENfVElNRT1FbmdsaXNoX1VuaXRlZCBTdGF0ZXMudXRmOCAgICBcblxuYXR0YWNoZWQgYmFzZSBwYWNrYWdlczpcblsxXSBzdGF0cyAgICAgZ3JhcGhpY3MgIGdyRGV2aWNlcyB1dGlscyAgICAgZGF0YXNldHMgIG1ldGhvZHMgICBiYXNlICAgICBcblxub3RoZXIgYXR0YWNoZWQgcGFja2FnZXM6XG5bMV0gZm9ybWF0dGVyc18wLjUuNSAgdGFibGUxXzEuNC4yICAgICAgZ2dwbG90Ml8zLjQuNCAgICAgZGF0YS50YWJsZV8xLjE0LjZcblxubG9hZGVkIHZpYSBhIG5hbWVzcGFjZSAoYW5kIG5vdCBhdHRhY2hlZCk6XG4gWzFdIGJzbGliXzAuNC4xICAgICAganF1ZXJ5bGliXzAuMS40ICBwaWxsYXJfMS45LjAgICAgIGNvbXBpbGVyXzQuMi4yICAgdG9vbHNfNC4yLjIgICAgICBkaWdlc3RfMC42LjMwICAgIGpzb25saXRlXzEuOC4zICBcbiBbOF0gZXZhbHVhdGVfMC4xOCAgICBsaWZlY3ljbGVfMS4wLjMgIHRpYmJsZV8zLjIuMSAgICAgZ3RhYmxlXzAuMy4xICAgICBjaGVja21hdGVfMi4xLjAgIHBrZ2NvbmZpZ18yLjAuMyAgcmxhbmdfMS4xLjMgICAgIFxuWzE1XSBjbGlfMy40LjEgICAgICAgIHJzdHVkaW9hcGlfMC4xNCAgeWFtbF8yLjMuNiAgICAgICB4ZnVuXzAuMzUgICAgICAgIGZhc3RtYXBfMS4xLjAgICAgc3RyaW5ncl8xLjQuMSAgICB3aXRocl8yLjUuMCAgICAgXG5bMjJdIGRwbHlyXzEuMS40ICAgICAga25pdHJfMS40MSAgICAgICBzYXNzXzAuNC44ICAgICAgIGdlbmVyaWNzXzAuMS4zICAgdmN0cnNfMC42LjUgICAgICBncmlkXzQuMi4yICAgICAgIHRpZHlzZWxlY3RfMS4yLjBcblsyOV0gZ2x1ZV8xLjYuMiAgICAgICBSNl8yLjUuMSAgICAgICAgIGZhbnNpXzEuMC4zICAgICAgcm1hcmtkb3duXzIuMTggICBGb3JtdWxhXzEuMi00ICAgIGZhcnZlcl8yLjEuMSAgICAgbWFncml0dHJfMi4wLjMgIFxuWzM2XSBzY2FsZXNfMS4yLjEgICAgIGJhY2twb3J0c18xLjQuMSAgaHRtbHRvb2xzXzAuNS4zICBjb2xvcnNwYWNlXzIuMC0zIGxhYmVsaW5nXzAuNC4yICAgdXRmOF8xLjIuMiAgICAgICBzdHJpbmdpXzEuNy44ICAgXG5bNDNdIG11bnNlbGxfMC41LjAgICAgY2FjaGVtXzEuMC42ICAgIFxuIn0= -->
+<pre><code>R version 4.2.2 (2022-10-31 ucrt)
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+Running under: Windows 10 x64 (build 22621)
+
+Matrix products: default
+
+locale:
+[1] LC_COLLATE=English_United States.utf8  LC_CTYPE=English_United States.utf8    LC_MONETARY=English_United States.utf8
+[4] LC_NUMERIC=C                           LC_TIME=English_United States.utf8    
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] formatters_0.5.5  table1_1.4.2      ggplot2_3.4.4     data.table_1.14.6
+
+loaded via a namespace (and not attached):
+ [1] bslib_0.4.1      jquerylib_0.1.4  pillar_1.9.0     compiler_4.2.2   tools_4.2.2      digest_0.6.30    jsonlite_1.8.3  
+ [8] evaluate_0.18    lifecycle_1.0.3  tibble_3.2.1     gtable_0.3.1     checkmate_2.1.0  pkgconfig_2.0.3  rlang_1.1.3     
+[15] cli_3.4.1        rstudioapi_0.14  yaml_2.3.6       xfun_0.35        fastmap_1.1.0    stringr_1.4.1    withr_2.5.0     
+[22] dplyr_1.1.4      knitr_1.41       sass_0.4.8       generics_0.1.3   vctrs_0.6.5      grid_4.2.2       tidyselect_1.2.0
+[29] glue_1.6.2       R6_2.5.1         fansi_1.0.3      rmarkdown_2.18   Formula_1.2-4    farver_2.1.1     magrittr_2.0.3  
+[36] scales_1.2.1     backports_1.4.1  htmltools_0.5.3  colorspace_2.0-3 labeling_0.4.2   utf8_1.2.2       stringi_1.7.8   
+[43] munsell_0.5.0    cachem_1.0.6    </code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+</div>
+
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIlRhYmxlcyINCm91dHB1dDoNCiAgaHRtbF9ub3RlYm9vazoNCiAgICBjb2RlX2ZvbGRpbmc6ICJoaWRlIg0KLS0tDQoNCiMgU2V0dXANCmBgYHtyfQ0KcmVxdWlyZShkYXRhLnRhYmxlKQ0KcmVxdWlyZSh0YWJsZTEpDQpgYGANCg0KIyBEYXRhDQpgYGB7cn0NCmxvYWQoInRtcC9nYXlhbmVfZGF0YV8xMTE5MjAyMy5SRGF0YSIpDQpgYGANCg0KIyBUYWJsZSAxOiBJbnRyYW9wZXJhdGl2ZSBTZW5zb3J5IEV2b2tlZCBQb3RlbnRpYWxzIGluIFJpZ2h0IG9yIExlZnQgRm9vdCB2cy4gQWxsDQpgYGB7cn0NCnRhYmxlMSh+IC58IGludHJhb3Bfc2VwX2ZlZXQsDQogICAgICAgZGF0YSA9IGR0MlssIGMoImludHJhb3Bfc2VwX2ZlZXQiLA0KICAgICAgICAgICAgICAgICAgICAgICJzZXgiLA0KICAgICAgICAgICAgICAgICAgICAgICJhZ2UiLA0KICAgICAgICAgICAgICAgICAgICAgICJkZWFkIiwNCiAgICAgICAgICAgICAgICAgICAgICAiZGVhZF9zcGluYWxfcGF0aG9sb2d5IiwgICANCiAgICAgICAgICAgICAgICAgICAgICAiZF93YXZlX2Rpc3RhbF9iYXNlbGluZSIsDQogICAgICAgICAgICAgICAgICAgICAgImRfd2F2ZV9kaXN0YWxfaW50cmFvcGVyYXRpdmUiLA0KICAgICAgICAgICAgICAgICAgICAgICJwYWQiLA0KICAgICAgICAgICAgICAgICAgICAgICJteWVsb21hbGFjaWEiLA0KICAgICAgICAgICAgICAgICAgICAgICJjb250cmFzdF9lbmhhbmNpbmdfdHVtb3IiLA0KICAgICAgICAgICAgICAgICAgICAgICJzeXJpbngiLA0KICAgICAgICAgICAgICAgICAgICAgICJ3aG8iLA0KICAgICAgICAgICAgICAgICAgICAgICJzeW1wdG9tX2R1cmF0aW9uX21vIiwNCiAgICAgICAgICAgICAgICAgICAgICANCiAgICAgICAgICAgICAgICAgICAgICAibW90b3JfcHJlIiwNCiAgICAgICAgICAgICAgICAgICAgICAibW90b3JfM20iLA0KICAgICAgICAgICAgICAgICAgICAgICJtb3Rvcl8zbV9jaGFuZ2UiLA0KICAgICAgICAgICAgICAgICAgICAgICJtb3Rvcl9sb25nX3Rlcm0iLA0KICAgICAgICAgICAgICAgICAgICAgICJtb3Rvcl9sb25nX3Rlcm1fY2hhbmdlIiwNCiAgICAgICAgICAgICAgICAgICAgICANCiAgICAgICAgICAgICAgICAgICAgICAic2Vuc29yeV9wcmUiLA0KICAgICAgICAgICAgICAgICAgICAgICJzZW5zb3J5XzNtIiwNCiAgICAgICAgICAgICAgICAgICAgICAic2Vuc29yeV8zbV9jaGFuZ2UiLA0KICAgICAgICAgICAgICAgICAgICAgICJzZW5zb3J5X2xvbmdfdGVybSIsDQogICAgICAgICAgICAgICAgICAgICAgInNlbnNvcnlfbG9uZ190ZXJtX2NoYW5nZSIsDQogICAgICAgICAgICAgICAgICAgICAgDQogICAgICAgICAgICAgICAgICAgICAgInBhaW5fcHJlIiwNCiAgICAgICAgICAgICAgICAgICAgICAicGFpbl8zbSIsDQogICAgICAgICAgICAgICAgICAgICAgInBhaW5fM21fY2hhbmdlIiwNCiAgICAgICAgICAgICAgICAgICAgICAicGFpbl9sb25nX3Rlcm0iLA0KICAgICAgICAgICAgICAgICAgICAgICJwYWluX2xvbmdfdGVybV9jaGFuZ2UiLA0KICAgICAgICAgICAgICAgICAgICAgIA0KICAgICAgICAgICAgICAgICAgICAgICJib3dlbF9wcmUiLA0KICAgICAgICAgICAgICAgICAgICAgICJib3dlbF8zbSIsDQogICAgICAgICAgICAgICAgICAgICAgImJvd2VsXzNtX2NoYW5nZSIsDQogICAgICAgICAgICAgICAgICAgICAgImJvd2VsX2xvbmdfdGVybSIsDQogICAgICAgICAgICAgICAgICAgICAgImJvd2VsX2xvbmdfdGVybV9jaGFuZ2UiLA0KICAgICAgICAgICAgICAgICAgICAgIA0KICAgICAgICAgICAgICAgICAgICAgICJibGFkZGVyX3ByZSIsDQogICAgICAgICAgICAgICAgICAgICAgImJsYWRkZXJfM20iLA0KICAgICAgICAgICAgICAgICAgICAgICJibGFkZGVyXzNtX2NoYW5nZSIsDQogICAgICAgICAgICAgICAgICAgICAgImJsYWRkZXJfbG9uZ190ZXJtIiwNCiAgICAgICAgICAgICAgICAgICAgICAiYmxhZGRlcl9sb25nX3Rlcm1fY2hhbmdlIiwNCiAgICAgICAgICAgICAgICAgICAgICANCiAgICAgICAgICAgICAgICAgICAgICAibW1jc19wcmUiLA0KICAgICAgICAgICAgICAgICAgICAgICJtbWNzXzNtIiwNCiAgICAgICAgICAgICAgICAgICAgICAibW1jc18zbV9jaGFuZ2UiLA0KICAgICAgICAgICAgICAgICAgICAgICJtbWNzX2xvbmdfdGVybSIsDQogICAgICAgICAgICAgICAgICAgICAgIm1tY3NfbG9uZ190ZXJtX2NoYW5nZSIsDQogICAgICAgICAgICAgICAgICAgICAgDQogICAgICAgICAgICAgICAgICAgICAgImFzaWFfaXNfcHJlIiwNCiAgICAgICAgICAgICAgICAgICAgICAiYXNpYV9pc18zbSIsDQogICAgICAgICAgICAgICAgICAgICAgImFzaWFfaXNfM21fY2hhbmdlIiwNCiAgICAgICAgICAgICAgICAgICAgICAiYXNpYV9pc19sb25nX3Rlcm0iLA0KICAgICAgICAgICAgICAgICAgICAgICJhc2lhX2lzX2xvbmdfdGVybV9jaGFuZ2UiLA0KICAgICAgICAgICAgICAgICAgICAgIA0KICAgICAgICAgICAgICAgICAgICAgICJiY3JfYmFzZWxpbmUiLA0KICAgICAgICAgICAgICAgICAgICAgICJiY3JfaW50cmFvcGVyYXRpdmUiLA0KICAgICAgICAgICAgICAgICAgICAgIA0KICAgICAgICAgICAgICAgICAgICAgICJzcGluYWxfc2VnbWVudCIsDQogICAgICAgICAgICAgICAgICAgICAgInN1cmdpY2FsX3JhZGljYWxpdHkiLA0KICAgICAgICAgICAgICAgICAgICAgICJhZGp1dmVudF9yYWRpbyIsDQogICAgICAgICAgICAgICAgICAgICAgImFkanV2YW50X2NoZW1vIiwNCiAgICAgICAgICAgICAgICAgICAgICANCiAgICAgICAgICAgICAgICAgICAgICAiYmFzZWxpbmVfTUVQX3JpZ2h0X2xlZyIsDQogICAgICAgICAgICAgICAgICAgICAgImJhc2VsaW5lX01FUF9sZWZ0X2xlZyIsDQogICAgICAgICAgICAgICAgICAgICAgIkludHJhb3BlcmF0aXZlX01FUF9yaWdodF9oYW5kIiwNCiAgICAgICAgICAgICAgICAgICAgICAiSW50cmFvcGVyYXRpdmVfTUVQX2xlZnRfaGFuZCIsDQogICAgICAgICAgICAgICAgICAgICAgIkludHJhb3BlcmF0aXZlX01FUF9yaWdodF9sZWciLA0KICAgICAgICAgICAgICAgICAgICAgICJJbnRyYW9wZXJhdGl2ZV9NRVBfbGVmdF9sZWciLA0KICAgICAgICAgICAgICAgICAgICAgIA0KICAgICAgICAgICAgICAgICAgICAgICJiYXNlbGluZV9TRVBfcmlnaHRfaGFuZCIsDQogICAgICAgICAgICAgICAgICAgICAgImJhc2VsaW5lX1NFUF9sZWZ0X2hhbmQiLA0KICAgICAgICAgICAgICAgICAgICAgICJiYXNlbGluZV9TRVBfcmlnaHRfbGVnIiwNCiAgICAgICAgICAgICAgICAgICAgICAiYmFzZWxpbmVfU0VQX2xlZnRfbGVnIiwNCiAgICAgICAgICAgICAgICAgICAgICAiSW50cmFvcGVyYXRpdmVfU0VQX3JpZ2h0X2hhbmQiLA0KICAgICAgICAgICAgICAgICAgICAgICJJbnRyYW9wZXJhdGl2ZV9TRVBfbGVmdF9oYW5kIiwNCiAgICAgICAgICAgICAgICAgICAgICAiSW50cmFvcGVyYXRpdmVfU0VQX3JpZ2h0X2Zvb3QiLA0KICAgICAgICAgICAgICAgICAgICAgICJJbnRyYW9wZXJhdGl2ZV9TRVBfbGVmdF9mb290Ig0KICAgICAgICldKQ0KYGBgDQoNCiMgVGFibGUgMjogSW50cmFvcGVyYXRpdmUgTW90b3IgRXZva2VkIFBvdGVudGlhbHMgaW4gUmlnaHQgb3IgTGVmdCBMZWcgdnMuIEFsbA0KYGBge3J9DQp0YWJsZTEofiAufCBpbnRyYW9wX21lcF9sZWdzLA0KICAgICAgIGRhdGEgPSBkdDJbLCBjKCJpbnRyYW9wX21lcF9sZWdzIiwNCiAgICAgICAgICAgICAgICAgICAgICAic2V4IiwNCiAgICAgICAgICAgICAgICAgICAgICAiYWdlIiwNCiAgICAgICAgICAgICAgICAgICAgICAiZGVhZCIsDQogICAgICAgICAgICAgICAgICAgICAgImRlYWRfc3BpbmFsX3BhdGhvbG9neSIsICAgDQogICAgICAgICAgICAgICAgICAgICAgImRfd2F2ZV9kaXN0YWxfYmFzZWxpbmUiLA0KICAgICAgICAgICAgICAgICAgICAgICJkX3dhdmVfZGlzdGFsX2ludHJhb3BlcmF0aXZlIiwNCiAgICAgICAgICAgICAgICAgICAgICAicGFkIiwNCiAgICAgICAgICAgICAgICAgICAgICAibXllbG9tYWxhY2lhIiwNCiAgICAgICAgICAgICAgICAgICAgICAiY29udHJhc3RfZW5oYW5jaW5nX3R1bW9yIiwNCiAgICAgICAgICAgICAgICAgICAgICAic3lyaW54IiwNCiAgICAgICAgICAgICAgICAgICAgICAid2hvIiwNCiAgICAgICAgICAgICAgICAgICAgICAic3ltcHRvbV9kdXJhdGlvbl9tbyIsDQogICAgICAgICAgICAgICAgICAgICAgDQogICAgICAgICAgICAgICAgICAgICAgIm1vdG9yX3ByZSIsDQogICAgICAgICAgICAgICAgICAgICAgIm1vdG9yXzNtIiwNCiAgICAgICAgICAgICAgICAgICAgICAibW90b3JfM21fY2hhbmdlIiwNCiAgICAgICAgICAgICAgICAgICAgICAibW90b3JfbG9uZ190ZXJtIiwNCiAgICAgICAgICAgICAgICAgICAgICAibW90b3JfbG9uZ190ZXJtX2NoYW5nZSIsDQogICAgICAgICAgICAgICAgICAgICAgDQogICAgICAgICAgICAgICAgICAgICAgInNlbnNvcnlfcHJlIiwNCiAgICAgICAgICAgICAgICAgICAgICAic2Vuc29yeV8zbSIsDQogICAgICAgICAgICAgICAgICAgICAgInNlbnNvcnlfM21fY2hhbmdlIiwNCiAgICAgICAgICAgICAgICAgICAgICAic2Vuc29yeV9sb25nX3Rlcm0iLA0KICAgICAgICAgICAgICAgICAgICAgICJzZW5zb3J5X2xvbmdfdGVybV9jaGFuZ2UiLA0KICAgICAgICAgICAgICAgICAgICAgIA0KICAgICAgICAgICAgICAgICAgICAgICJwYWluX3ByZSIsDQogICAgICAgICAgICAgICAgICAgICAgInBhaW5fM20iLA0KICAgICAgICAgICAgICAgICAgICAgICJwYWluXzNtX2NoYW5nZSIsDQogICAgICAgICAgICAgICAgICAgICAgInBhaW5fbG9uZ190ZXJtIiwNCiAgICAgICAgICAgICAgICAgICAgICAicGFpbl9sb25nX3Rlcm1fY2hhbmdlIiwNCiAgICAgICAgICAgICAgICAgICAgICANCiAgICAgICAgICAgICAgICAgICAgICAiYm93ZWxfcHJlIiwNCiAgICAgICAgICAgICAgICAgICAgICAiYm93ZWxfM20iLA0KICAgICAgICAgICAgICAgICAgICAgICJib3dlbF8zbV9jaGFuZ2UiLA0KICAgICAgICAgICAgICAgICAgICAgICJib3dlbF9sb25nX3Rlcm0iLA0KICAgICAgICAgICAgICAgICAgICAgICJib3dlbF9sb25nX3Rlcm1fY2hhbmdlIiwNCiAgICAgICAgICAgICAgICAgICAgICANCiAgICAgICAgICAgICAgICAgICAgICAiYmxhZGRlcl9wcmUiLA0KICAgICAgICAgICAgICAgICAgICAgICJibGFkZGVyXzNtIiwNCiAgICAgICAgICAgICAgICAgICAgICAiYmxhZGRlcl8zbV9jaGFuZ2UiLA0KICAgICAgICAgICAgICAgICAgICAgICJibGFkZGVyX2xvbmdfdGVybSIsDQogICAgICAgICAgICAgICAgICAgICAgImJsYWRkZXJfbG9uZ190ZXJtX2NoYW5nZSIsDQogICAgICAgICAgICAgICAgICAgICAgDQogICAgICAgICAgICAgICAgICAgICAgIm1tY3NfcHJlIiwNCiAgICAgICAgICAgICAgICAgICAgICAibW1jc18zbSIsDQogICAgICAgICAgICAgICAgICAgICAgIm1tY3NfM21fY2hhbmdlIiwNCiAgICAgICAgICAgICAgICAgICAgICAibW1jc19sb25nX3Rlcm0iLA0KICAgICAgICAgICAgICAgICAgICAgICJtbWNzX2xvbmdfdGVybV9jaGFuZ2UiLA0KICAgICAgICAgICAgICAgICAgICAgIA0KICAgICAgICAgICAgICAgICAgICAgICJhc2lhX2lzX3ByZSIsDQogICAgICAgICAgICAgICAgICAgICAgImFzaWFfaXNfM20iLA0KICAgICAgICAgICAgICAgICAgICAgICJhc2lhX2lzXzNtX2NoYW5nZSIsDQogICAgICAgICAgICAgICAgICAgICAgImFzaWFfaXNfbG9uZ190ZXJtIiwNCiAgICAgICAgICAgICAgICAgICAgICAiYXNpYV9pc19sb25nX3Rlcm1fY2hhbmdlIiwNCiAgICAgICAgICAgICAgICAgICAgICANCiAgICAgICAgICAgICAgICAgICAgICAiYmNyX2Jhc2VsaW5lIiwNCiAgICAgICAgICAgICAgICAgICAgICAiYmNyX2ludHJhb3BlcmF0aXZlIiwNCiAgICAgICAgICAgICAgICAgICAgICANCiAgICAgICAgICAgICAgICAgICAgICAic3BpbmFsX3NlZ21lbnQiLA0KICAgICAgICAgICAgICAgICAgICAgICJzdXJnaWNhbF9yYWRpY2FsaXR5IiwNCiAgICAgICAgICAgICAgICAgICAgICAiYWRqdXZlbnRfcmFkaW8iLA0KICAgICAgICAgICAgICAgICAgICAgICJhZGp1dmFudF9jaGVtbyIsDQogICAgICAgICAgICAgICAgICAgICAgDQogICAgICAgICAgICAgICAgICAgICAgImJhc2VsaW5lX01FUF9yaWdodF9sZWciLA0KICAgICAgICAgICAgICAgICAgICAgICJiYXNlbGluZV9NRVBfbGVmdF9sZWciLA0KICAgICAgICAgICAgICAgICAgICAgICJJbnRyYW9wZXJhdGl2ZV9NRVBfcmlnaHRfaGFuZCIsDQogICAgICAgICAgICAgICAgICAgICAgIkludHJhb3BlcmF0aXZlX01FUF9sZWZ0X2hhbmQiLA0KICAgICAgICAgICAgICAgICAgICAgICJJbnRyYW9wZXJhdGl2ZV9NRVBfcmlnaHRfbGVnIiwNCiAgICAgICAgICAgICAgICAgICAgICAiSW50cmFvcGVyYXRpdmVfTUVQX2xlZnRfbGVnIiwNCiAgICAgICAgICAgICAgICAgICAgICANCiAgICAgICAgICAgICAgICAgICAgICAiYmFzZWxpbmVfU0VQX3JpZ2h0X2hhbmQiLA0KICAgICAgICAgICAgICAgICAgICAgICJiYXNlbGluZV9TRVBfbGVmdF9oYW5kIiwNCiAgICAgICAgICAgICAgICAgICAgICAiYmFzZWxpbmVfU0VQX3JpZ2h0X2xlZyIsDQogICAgICAgICAgICAgICAgICAgICAgImJhc2VsaW5lX1NFUF9sZWZ0X2xlZyIsDQogICAgICAgICAgICAgICAgICAgICAgIkludHJhb3BlcmF0aXZlX1NFUF9yaWdodF9oYW5kIiwNCiAgICAgICAgICAgICAgICAgICAgICAiSW50cmFvcGVyYXRpdmVfU0VQX2xlZnRfaGFuZCIsDQogICAgICAgICAgICAgICAgICAgICAgIkludHJhb3BlcmF0aXZlX1NFUF9yaWdodF9mb290IiwNCiAgICAgICAgICAgICAgICAgICAgICAiSW50cmFvcGVyYXRpdmVfU0VQX2xlZnRfZm9vdCINCiAgICAgICApXSkNCmBgYA0KDQojIERldGFpbGVkIDcgY2FzZXMNCmBgYHtyfQ0KZHQzIDwtIGZyZWFkKCJkYXRhL2RldGFpbGVkXzdfY2FzZXMuY3N2IikNCg0KZHQ0IDwtIG1lbHQuZGF0YS50YWJsZShkdDMsDQogICAgICAgICAgICAgICAgICAgICAgIGlkLnZhcnMgPSAxOjMsDQogICAgICAgICAgICAgICAgICAgICAgIG1lYXN1cmUudmFycyA9IDQ6OCwNCiAgICAgICAgICAgICAgICAgICAgICAgdmFyaWFibGUubmFtZSA9ICJSZWFkb3V0IiwNCiAgICAgICAgICAgICAgICAgICAgICAgdmFsdWUubmFtZSA9ICJQb3RlbnRpYWwiKQ0KDQpkdDQNCg0KZHQ0JGBTdHVkeSBucmAgPC0gZmFjdG9yKGR0NCRgU3R1ZHkgbnJgKQ0KZHQ0JFRpbWVwb2ludCA8LSBmYWN0b3IoZHQ0JFRpbWVwb2ludCwNCiAgICAgICAgICAgICAgICAgICAgICAgIGxldmVscyA9IHVuaXF1ZShkdDQkVGltZXBvaW50KSkNCmR0NCRSZWFkb3V0IDwtIGZhY3RvcihkdDQkUmVhZG91dCwNCiAgICAgICAgICAgICAgICAgICAgICBsZXZlbHMgPSB1bmlxdWUoZHQ0JFJlYWRvdXQpKQ0KDQpgYGANCg0KIyMgVGFibGUgMSBmb3IgdGhlIDcgY2FzZXMNCmBgYHtyfQ0KdGFibGUxKH4gLnwgc2V4LCAjaW50cmFvcF9zZXBfZmVldCwNCiAgICAgICBkYXRhID0gZHQyW2FzLmNoYXJhY3RlcihkdDIkc3R1ZHlfaWQpICVpbiUgDQogICAgICAgICAgICAgICAgICAgIHVuaXF1ZShhcy5jaGFyYWN0ZXIoZHQ0JGBTdHVkeSBucmApKSwgDQogICAgICAgICAgICAgICAgICBjKCJpbnRyYW9wX3NlcF9mZWV0IiwNCiAgICAgICAgICAgICAgICAgICAgICAic2V4IiwNCiAgICAgICAgICAgICAgICAgICAgICAiYWdlIiwNCiAgICAgICAgICAgICAgICAgICAgICAiZGVhZCIsDQogICAgICAgICAgICAgICAgICAgICAgImRlYWRfc3BpbmFsX3BhdGhvbG9neSIsICAgDQogICAgICAgICAgICAgICAgICAgICAgImRfd2F2ZV9kaXN0YWxfYmFzZWxpbmUiLA0KICAgICAgICAgICAgICAgICAgICAgICJkX3dhdmVfZGlzdGFsX2ludHJhb3BlcmF0aXZlIiwNCiAgICAgICAgICAgICAgICAgICAgICAicGFkIiwNCiAgICAgICAgICAgICAgICAgICAgICAibXllbG9tYWxhY2lhIiwNCiAgICAgICAgICAgICAgICAgICAgICAiY29udHJhc3RfZW5oYW5jaW5nX3R1bW9yIiwNCiAgICAgICAgICAgICAgICAgICAgICAic3lyaW54IiwNCiAgICAgICAgICAgICAgICAgICAgICAid2hvIiwNCiAgICAgICAgICAgICAgICAgICAgICAic3ltcHRvbV9kdXJhdGlvbl9tbyIsDQogICAgICAgICAgICAgICAgICAgICAgDQogICAgICAgICAgICAgICAgICAgICAgIm1vdG9yX3ByZSIsDQogICAgICAgICAgICAgICAgICAgICAgIm1vdG9yXzNtIiwNCiAgICAgICAgICAgICAgICAgICAgICAibW90b3JfM21fY2hhbmdlIiwNCiAgICAgICAgICAgICAgICAgICAgICAibW90b3JfbG9uZ190ZXJtIiwNCiAgICAgICAgICAgICAgICAgICAgICAibW90b3JfbG9uZ190ZXJtX2NoYW5nZSIsDQogICAgICAgICAgICAgICAgICAgICAgDQogICAgICAgICAgICAgICAgICAgICAgInNlbnNvcnlfcHJlIiwNCiAgICAgICAgICAgICAgICAgICAgICAic2Vuc29yeV8zbSIsDQogICAgICAgICAgICAgICAgICAgICAgInNlbnNvcnlfM21fY2hhbmdlIiwNCiAgICAgICAgICAgICAgICAgICAgICAic2Vuc29yeV9sb25nX3Rlcm0iLA0KICAgICAgICAgICAgICAgICAgICAgICJzZW5zb3J5X2xvbmdfdGVybV9jaGFuZ2UiLA0KICAgICAgICAgICAgICAgICAgICAgIA0KICAgICAgICAgICAgICAgICAgICAgICJwYWluX3ByZSIsDQogICAgICAgICAgICAgICAgICAgICAgInBhaW5fM20iLA0KICAgICAgICAgICAgICAgICAgICAgICJwYWluXzNtX2NoYW5nZSIsDQogICAgICAgICAgICAgICAgICAgICAgInBhaW5fbG9uZ190ZXJtIiwNCiAgICAgICAgICAgICAgICAgICAgICAicGFpbl9sb25nX3Rlcm1fY2hhbmdlIiwNCiAgICAgICAgICAgICAgICAgICAgICANCiAgICAgICAgICAgICAgICAgICAgICAiYm93ZWxfcHJlIiwNCiAgICAgICAgICAgICAgICAgICAgICAiYm93ZWxfM20iLA0KICAgICAgICAgICAgICAgICAgICAgICJib3dlbF8zbV9jaGFuZ2UiLA0KICAgICAgICAgICAgICAgICAgICAgICJib3dlbF9sb25nX3Rlcm0iLA0KICAgICAgICAgICAgICAgICAgICAgICJib3dlbF9sb25nX3Rlcm1fY2hhbmdlIiwNCiAgICAgICAgICAgICAgICAgICAgICANCiAgICAgICAgICAgICAgICAgICAgICAiYmxhZGRlcl9wcmUiLA0KICAgICAgICAgICAgICAgICAgICAgICJibGFkZGVyXzNtIiwNCiAgICAgICAgICAgICAgICAgICAgICAiYmxhZGRlcl8zbV9jaGFuZ2UiLA0KICAgICAgICAgICAgICAgICAgICAgICJibGFkZGVyX2xvbmdfdGVybSIsDQogICAgICAgICAgICAgICAgICAgICAgImJsYWRkZXJfbG9uZ190ZXJtX2NoYW5nZSIsDQogICAgICAgICAgICAgICAgICAgICAgDQogICAgICAgICAgICAgICAgICAgICAgIm1tY3NfcHJlIiwNCiAgICAgICAgICAgICAgICAgICAgICAibW1jc18zbSIsDQogICAgICAgICAgICAgICAgICAgICAgIm1tY3NfM21fY2hhbmdlIiwNCiAgICAgICAgICAgICAgICAgICAgICAibW1jc19sb25nX3Rlcm0iLA0KICAgICAgICAgICAgICAgICAgICAgICJtbWNzX2xvbmdfdGVybV9jaGFuZ2UiLA0KICAgICAgICAgICAgICAgICAgICAgIA0KICAgICAgICAgICAgICAgICAgICAgICJhc2lhX2lzX3ByZSIsDQogICAgICAgICAgICAgICAgICAgICAgImFzaWFfaXNfM20iLA0KICAgICAgICAgICAgICAgICAgICAgICJhc2lhX2lzXzNtX2NoYW5nZSIsDQogICAgICAgICAgICAgICAgICAgICAgImFzaWFfaXNfbG9uZ190ZXJtIiwNCiAgICAgICAgICAgICAgICAgICAgICAiYXNpYV9pc19sb25nX3Rlcm1fY2hhbmdlIiwNCiAgICAgICAgICAgICAgICAgICAgICANCiAgICAgICAgICAgICAgICAgICAgICAiYmNyX2Jhc2VsaW5lIiwNCiAgICAgICAgICAgICAgICAgICAgICAiYmNyX2ludHJhb3BlcmF0aXZlIiwNCiAgICAgICAgICAgICAgICAgICAgICANCiAgICAgICAgICAgICAgICAgICAgICAic3BpbmFsX3NlZ21lbnQiLA0KICAgICAgICAgICAgICAgICAgICAgICJzdXJnaWNhbF9yYWRpY2FsaXR5IiwNCiAgICAgICAgICAgICAgICAgICAgICAiYWRqdXZlbnRfcmFkaW8iLA0KICAgICAgICAgICAgICAgICAgICAgICJhZGp1dmFudF9jaGVtbyIsDQogICAgICAgICAgICAgICAgICAgICAgDQogICAgICAgICAgICAgICAgICAgICAgImJhc2VsaW5lX01FUF9yaWdodF9sZWciLA0KICAgICAgICAgICAgICAgICAgICAgICJiYXNlbGluZV9NRVBfbGVmdF9sZWciLA0KICAgICAgICAgICAgICAgICAgICAgICJJbnRyYW9wZXJhdGl2ZV9NRVBfcmlnaHRfaGFuZCIsDQogICAgICAgICAgICAgICAgICAgICAgIkludHJhb3BlcmF0aXZlX01FUF9sZWZ0X2hhbmQiLA0KICAgICAgICAgICAgICAgICAgICAgICJJbnRyYW9wZXJhdGl2ZV9NRVBfcmlnaHRfbGVnIiwNCiAgICAgICAgICAgICAgICAgICAgICAiSW50cmFvcGVyYXRpdmVfTUVQX2xlZnRfbGVnIiwNCiAgICAgICAgICAgICAgICAgICAgICANCiAgICAgICAgICAgICAgICAgICAgICAiYmFzZWxpbmVfU0VQX3JpZ2h0X2hhbmQiLA0KICAgICAgICAgICAgICAgICAgICAgICJiYXNlbGluZV9TRVBfbGVmdF9oYW5kIiwNCiAgICAgICAgICAgICAgICAgICAgICAiYmFzZWxpbmVfU0VQX3JpZ2h0X2xlZyIsDQogICAgICAgICAgICAgICAgICAgICAgImJhc2VsaW5lX1NFUF9sZWZ0X2xlZyIsDQogICAgICAgICAgICAgICAgICAgICAgIkludHJhb3BlcmF0aXZlX1NFUF9yaWdodF9oYW5kIiwNCiAgICAgICAgICAgICAgICAgICAgICAiSW50cmFvcGVyYXRpdmVfU0VQX2xlZnRfaGFuZCIsDQogICAgICAgICAgICAgICAgICAgICAgIkludHJhb3BlcmF0aXZlX1NFUF9yaWdodF9mb290IiwNCiAgICAgICAgICAgICAgICAgICAgICAiSW50cmFvcGVyYXRpdmVfU0VQX2xlZnRfZm9vdCINCiAgICAgICApXSkNCmBgYA0KDQojIFNlc3Npb24NCmBgYHtyfQ0Kc2Vzc2lvbkluZm8oKQ0KYGBgDQoNCg==</div>
 
 
 
