@@ -4,20 +4,20 @@ output: html_notebook
 ---
 
 Date: 11/19/2023  
-Last Updated: 12/3/2023  
-  
+Last Updated: 10/26/2024  
+
 # Definitions
 Correlation of intraoperative changes in SEP, MEP and D-wave vs. Clinical Variables at 3 months and long-term
 .Sensory Evoked Potentials (SEP)  
 .Motor Evoked Potentials (MEP)  
 .McCormick Scale(mMCs): clinical classification scale to evaluate patients with intramedulary spinal cord tumors to categorize patient's mobility and sensory statuses.  
 .The American Spinal Injury Association Impairment Scale (ASIA IS): standardized neurological examination used by the rehabilitation team to assess the sensory and motor levels which were affected by the spinal cord injury  
-  
+
 # Primary Hypotheses 
 .SEP vs. Sensory, McCormick, ASIA IS and Pain change (3 months and long term)  
 .MEP vs. Motor, McCormick, ASIA IS, Bladder and Bowel change (3m and long term)    
 .D-wave vs. Motor, Sensory, Pain, Bladder, Bowel, McCormick and ASIA IS (3 months and long term)  
-  
+
 # Setup
 ```{r}
 require(data.table)
@@ -53,7 +53,6 @@ gc()
 dt1$detailed_data <- FALSE
 dt1$detailed_data[dt1$`Study nr`%in% c(8, 15, 25, 37, 53, 57, 63)] <- TRUE
 ```
-
 
 ## Format outcomes
 ```{r}
@@ -94,13 +93,13 @@ addmargins(table(interop_d_distal = dt1$interop_d_distal,
 
 ## Errata
 Patient study_id = 18, additional data from Aman, 12/1/2023. NO need to code this, changed the CSV file entries in "Combined data Slutgiltig Clinical data11192023.csv"  
-  
+
 dt1$`Long-term motor`[dt1$`Study nr` == 18] <- "1"  
 dt1$`Long-term motor change`[dt1$`Study nr` == 18] <- "worse"   
-  
+
 dt1$`Long-term sensory`[dt1$`Study nr` == 18] <- "1"  
 dt1$`Long-term sensory change`[dt1$`Study nr` == 18] <- "worse"  
-  
+
 ## Format other variables
 ```{r}
 dt2 <- data.table(study_id = dt1$`Study nr`,
@@ -273,13 +272,13 @@ dt2 <- data.table(study_id = dt1$`Study nr`,
                   mmcs_pre = factor(dt1$`pre mMCs`,
                                     levels = 1:5),
                   mmcs_3m = factor(dt1$`3m mMCs`,
-                                    levels = 1:5),
+                                   levels = 1:5),
                   mmcs_3m_change = factor(tolower(dt1$`3m mMCs change`),
                                           levels = c("unchanged",
                                                      "worse",
                                                      "better")),
                   mmcs_long_term  = factor(dt1$`Long-term mMCs`,
-                                    levels = 1:5),
+                                           levels = 1:5),
                   mmcs_long_term_change = factor(tolower(dt1$`Long-term mMCs change`),
                                                  levels = c("unchanged",
                                                             "worse",
@@ -289,14 +288,14 @@ dt2 <- data.table(study_id = dt1$`Study nr`,
                   asia_is_pre = factor(dt1$`pre ASIA IS`,
                                        levels = LETTERS[1:5]),
                   asia_is_3m = factor(dt1$`3m ASIA IS`,
-                                       levels = LETTERS[1:5]),
+                                      levels = LETTERS[1:5]),
                   asia_is_3m_change = factor(tolower(dt1$`3m ASIA IS change`),
                                              levels = c("unchanged",
                                                         "worse",
                                                         "better")),
                   
                   asia_is_long_term = factor(dt1$`Long-term ASIA IS`,
-                                       levels = LETTERS[1:5]),
+                                             levels = LETTERS[1:5]),
                   asia_is_long_term_change = factor(tolower(dt1$`Long-term ASIA IS change`),
                                                     levels = c("unchanged",
                                                                "worse",
@@ -331,18 +330,18 @@ dt2 <- data.table(study_id = dt1$`Study nr`,
                   # baseline_MEP_left_hand = factor(tolower(dt1$baseline_MEP_left_hand)),
                   baseline_MEP_right_leg = factor(tolower(dt1$baseline_MEP_right_leg)),
                   baseline_MEP_left_leg = factor(tolower(dt1$baseline_MEP_left_leg)),
-
+                  
                   Intraoperative_MEP_right_hand = factor(tolower(dt1$Intraoperative_MEP_right_hand)),
                   Intraoperative_MEP_left_hand = factor(tolower(dt1$Intraoperative_MEP_left_hand)),
                   Intraoperative_MEP_right_leg = factor(tolower(dt1$Intraoperative_MEP_right_leg)),
                   Intraoperative_MEP_left_leg = factor(tolower(dt1$Intraoperative_MEP_left_leg)),
-                 
+                  
                   # Sensory evoked potentials
                   baseline_SEP_right_hand = factor(tolower(dt1$baseline_SEP_right_hand)),
                   baseline_SEP_left_hand = factor(tolower(dt1$baseline_SEP_left_hand)),
                   baseline_SEP_right_leg = factor(tolower(dt1$baseline_SEP_right_leg)),
                   baseline_SEP_left_leg = factor(tolower(dt1$baseline_SEP_left_leg)),
-
+                  
                   Intraoperative_SEP_right_hand = factor(tolower(dt1$Intraoperative_SEP_right_hand),
                                                          levels = c("unchanged",
                                                                     "absent from the start of the surgery",
@@ -359,7 +358,6 @@ dt2 <- data.table(study_id = dt1$`Study nr`,
 ```{r}
 dt2[detailed_data == TRUE, ]
 ```
-
 
 # Table 1: D-wave Distal Baseline
 ```{r}
@@ -476,13 +474,13 @@ addmargins(table(motor_pre = dt2$motor_pre,
 ### SEP Right Foot
 ```{r}
 dt2$intraop_sep_rf <- unlist(lapply(X = substr(x = tolower(dt2$Intraoperative_SEP_right_foot),
-                                                 start = 1,
-                                                 stop = 3),
-                                      FUN = function(a) {switch(a,
-                                                                "unc" = "unchanged",
-                                                                "abs" = "unchanged",
-                                                                "los" = "loss of response",
-                                                                "amplitude decrease")}))
+                                               start = 1,
+                                               stop = 3),
+                                    FUN = function(a) {switch(a,
+                                                              "unc" = "unchanged",
+                                                              "abs" = "unchanged",
+                                                              "los" = "loss of response",
+                                                              "amplitude decrease")}))
 dt2$intraop_sep_rf <- factor(dt2$intraop_sep_rf,
                              levels = c("unchanged",
                                         "amplitude decrease",
@@ -493,14 +491,14 @@ table(dt2$intraop_sep_rf)
 ### SEP Left Foot
 ```{r}
 dt2$intraop_sep_lf <- unlist(lapply(X = substr(x = tolower(dt2$Intraoperative_SEP_left_foot),
-                                                 start = 1,
-                                                 stop = 3),
-                                      FUN = function(a) {switch(a,
-                                                                "unc" = "unchanged",
-                                                                "lat" = "unchanged",
-                                                                "abs" = "unchanged",
-                                                                "los" = "loss of response",
-                                                                "amplitude decrease")}))
+                                               start = 1,
+                                               stop = 3),
+                                    FUN = function(a) {switch(a,
+                                                              "unc" = "unchanged",
+                                                              "lat" = "unchanged",
+                                                              "abs" = "unchanged",
+                                                              "los" = "loss of response",
+                                                              "amplitude decrease")}))
 dt2$intraop_sep_lf <- factor(dt2$intraop_sep_lf,
                              levels = c("unchanged",
                                         "amplitude decrease",
@@ -1145,25 +1143,25 @@ addmargins(table(intraop_mep_legs = dt2$intraop_mep_legs,
 
 ```{r}
 s210 <- summary(glm((bowel_long_term_change == "worse") ~ intraop_mep_legs,
-                   data = dt2,
-                   family = "binomial"))
+                    data = dt2,
+                    family = "binomial"))
 s210
 
 out210 <- data.table(Y = "Bowel Worse at Long-Term",
-                    X = "Intraoperative MEP Legs",
-                    Comparisons = paste(levels(dt2$intraop_mep_legs)[-1],
-                                        "vs. unchanged"),
-                    OR = round(exp(s210$coefficients[-1, 1]),
-                               2),
-                    `95% C.I.L.B.` = exp(s210$coefficients[-1, 1] - 1.96*s210$coefficients[-1, 2]),
-                    `95% C.I.U.B.` = exp(s210$coefficients[-1, 1] + 1.96*s210$coefficients[-1, 2]),
-                    `p-Value` = ifelse(s210$coefficients[-1, 4] >= 0.001,
-                                       round(s210$coefficients[-1, 4], 3),
-                                       "<0.001"),
-                    sign = ifelse(s210$coefficients[-1, 4] <= 0.05,
-                                  ifelse(s210$coefficients[-1, 4] <= 0.01,
-                                         "**",
-                                         "*"), ""))
+                     X = "Intraoperative MEP Legs",
+                     Comparisons = paste(levels(dt2$intraop_mep_legs)[-1],
+                                         "vs. unchanged"),
+                     OR = round(exp(s210$coefficients[-1, 1]),
+                                2),
+                     `95% C.I.L.B.` = exp(s210$coefficients[-1, 1] - 1.96*s210$coefficients[-1, 2]),
+                     `95% C.I.U.B.` = exp(s210$coefficients[-1, 1] + 1.96*s210$coefficients[-1, 2]),
+                     `p-Value` = ifelse(s210$coefficients[-1, 4] >= 0.001,
+                                        round(s210$coefficients[-1, 4], 3),
+                                        "<0.001"),
+                     sign = ifelse(s210$coefficients[-1, 4] <= 0.05,
+                                   ifelse(s210$coefficients[-1, 4] <= 0.01,
+                                          "**",
+                                          "*"), ""))
 
 out210
 ```
@@ -1481,25 +1479,25 @@ addmargins(table(d_wave_distal_intraoperative = dt2$d_wave_distal_intraoperative
 
 ```{r}
 s310 <- summary(glm((bladder_long_term_change == "worse") ~ d_wave_distal_intraoperative,
-                   data = dt2,
-                   family = "binomial"))
+                    data = dt2,
+                    family = "binomial"))
 s310
 
 out310 <- data.table(Y = "Bladder Worse at Long-Term",
-                    X = "Intraoperative D-Wave",
-                    Comparisons = paste(levels(dt2$d_wave_distal_intraoperative)[-1],
-                                        "vs. unchanged"),
-                    OR = round(exp(s310$coefficients[-1, 1]),
-                               2),
-                    `95% C.I.L.B.` = exp(s310$coefficients[-1, 1] - 1.96*s310$coefficients[-1, 2]),
-                    `95% C.I.U.B.` = exp(s310$coefficients[-1, 1] + 1.96*s310$coefficients[-1, 2]),
-                    `p-Value` = ifelse(s310$coefficients[-1, 4] >= 0.001,
-                                       round(s310$coefficients[-1, 4], 3),
-                                       "<0.001"),
-                    sign = ifelse(s310$coefficients[-1, 4] <= 0.05,
-                                  ifelse(s310$coefficients[-1, 4] <= 0.01,
-                                         "**",
-                                         "*"), ""))
+                     X = "Intraoperative D-Wave",
+                     Comparisons = paste(levels(dt2$d_wave_distal_intraoperative)[-1],
+                                         "vs. unchanged"),
+                     OR = round(exp(s310$coefficients[-1, 1]),
+                                2),
+                     `95% C.I.L.B.` = exp(s310$coefficients[-1, 1] - 1.96*s310$coefficients[-1, 2]),
+                     `95% C.I.U.B.` = exp(s310$coefficients[-1, 1] + 1.96*s310$coefficients[-1, 2]),
+                     `p-Value` = ifelse(s310$coefficients[-1, 4] >= 0.001,
+                                        round(s310$coefficients[-1, 4], 3),
+                                        "<0.001"),
+                     sign = ifelse(s310$coefficients[-1, 4] <= 0.05,
+                                   ifelse(s310$coefficients[-1, 4] <= 0.01,
+                                          "**",
+                                          "*"), ""))
 
 out310
 ```
@@ -1513,25 +1511,25 @@ addmargins(table(d_wave_distal_intraoperative = dt2$d_wave_distal_intraoperative
 
 ```{r}
 s311 <- summary(glm((bowel_3m_change == "worse") ~ d_wave_distal_intraoperative,
-                   data = dt2,
-                   family = "binomial"))
+                    data = dt2,
+                    family = "binomial"))
 s311
 
 out311 <- data.table(Y = "Bowel Worse at 3 Months",
-                    X = "Intraoperative D-Wave",
-                    Comparisons = paste(levels(dt2$d_wave_distal_intraoperative)[-1],
-                                        "vs. unchanged"),
-                    OR = round(exp(s311$coefficients[-1, 1]),
-                               2),
-                    `95% C.I.L.B.` = exp(s311$coefficients[-1, 1] - 1.96*s311$coefficients[-1, 2]),
-                    `95% C.I.U.B.` = exp(s311$coefficients[-1, 1] + 1.96*s311$coefficients[-1, 2]),
-                    `p-Value` = ifelse(s311$coefficients[-1, 4] >= 0.001,
-                                       round(s311$coefficients[-1, 4], 3),
-                                       "<0.001"),
-                    sign = ifelse(s311$coefficients[-1, 4] <= 0.05,
-                                  ifelse(s311$coefficients[-1, 4] <= 0.01,
-                                         "**",
-                                         "*"), ""))
+                     X = "Intraoperative D-Wave",
+                     Comparisons = paste(levels(dt2$d_wave_distal_intraoperative)[-1],
+                                         "vs. unchanged"),
+                     OR = round(exp(s311$coefficients[-1, 1]),
+                                2),
+                     `95% C.I.L.B.` = exp(s311$coefficients[-1, 1] - 1.96*s311$coefficients[-1, 2]),
+                     `95% C.I.U.B.` = exp(s311$coefficients[-1, 1] + 1.96*s311$coefficients[-1, 2]),
+                     `p-Value` = ifelse(s311$coefficients[-1, 4] >= 0.001,
+                                        round(s311$coefficients[-1, 4], 3),
+                                        "<0.001"),
+                     sign = ifelse(s311$coefficients[-1, 4] <= 0.05,
+                                   ifelse(s311$coefficients[-1, 4] <= 0.01,
+                                          "**",
+                                          "*"), ""))
 
 out311
 ```
@@ -1544,70 +1542,112 @@ addmargins(table(d_wave_distal_intraoperative = dt2$d_wave_distal_intraoperative
 
 ```{r}
 s312 <- summary(glm((bowel_long_term_change == "worse") ~ d_wave_distal_intraoperative,
-                   data = dt2,
-                   family = "binomial"))
+                    data = dt2,
+                    family = "binomial"))
 s312
 
 out312 <- data.table(Y = "Bowel Worse at Long-Term",
-                    X = "Intraoperative D-Wave",
-                    Comparisons = paste(levels(dt2$d_wave_distal_intraoperative)[-1],
-                                        "vs. unchanged"),
-                    OR = round(exp(s312$coefficients[-1, 1]),
-                               2),
-                    `95% C.I.L.B.` = exp(s312$coefficients[-1, 1] - 1.96*s312$coefficients[-1, 2]),
-                    `95% C.I.U.B.` = exp(s312$coefficients[-1, 1] + 1.96*s312$coefficients[-1, 2]),
-                    `p-Value` = ifelse(s312$coefficients[-1, 4] >= 0.001,
-                                       round(s312$coefficients[-1, 4], 3),
-                                       "<0.001"),
-                    sign = ifelse(s312$coefficients[-1, 4] <= 0.05,
-                                  ifelse(s312$coefficients[-1, 4] <= 0.01,
-                                         "**",
-                                         "*"), ""))
+                     X = "Intraoperative D-Wave",
+                     Comparisons = paste(levels(dt2$d_wave_distal_intraoperative)[-1],
+                                         "vs. unchanged"),
+                     OR = round(exp(s312$coefficients[-1, 1]),
+                                2),
+                     `95% C.I.L.B.` = exp(s312$coefficients[-1, 1] - 1.96*s312$coefficients[-1, 2]),
+                     `95% C.I.U.B.` = exp(s312$coefficients[-1, 1] + 1.96*s312$coefficients[-1, 2]),
+                     `p-Value` = ifelse(s312$coefficients[-1, 4] >= 0.001,
+                                        round(s312$coefficients[-1, 4], 3),
+                                        "<0.001"),
+                     sign = ifelse(s312$coefficients[-1, 4] <= 0.05,
+                                   ifelse(s312$coefficients[-1, 4] <= 0.01,
+                                          "**",
+                                          "*"), ""))
 
 out312
 ```
 
 ## Save ORs
 ```{r}
-write.csv(rbind(out11,
-                out12,
-                out13,
-                out14,
-                out15,
-                out16,
-                out17,
-                out18,
-                
-                out21,
-                out22,
-                out23,
-                out24,
-                out25,
-                out26,
-                out27,
-                out28,
-                out29,
-                out210,
-                
-                out31,
-                out32,
-                out33,
-                out34,
-                out35,
-                out36,
-                out37,
-                out38,
-                out39,
-                out310,
-                out311,
-                out312),
-          file = "tmp/out.csv")
+res <- rbind(out11,
+             out12,
+             out13,
+             out14,
+             out15,
+             out16,
+             out17,
+             out18,
+             
+             out21,
+             out22,
+             out23,
+             out24,
+             out25,
+             out26,
+             out27,
+             out28,
+             out29,
+             out210,
+             
+             out31,
+             out32,
+             out33,
+             out34,
+             out35,
+             out36,
+             out37,
+             out38,
+             out39,
+             out310,
+             out311,
+             out312)
 ```
 
 # Save data
 ```{r}
+write.csv(res,
+          file = "tmp/res.csv")
+save(res,
+     file = "tmp/res.RData")
+
 save(dt2,
-     file = "tmp/gayane_data_11192023.RData")
+     file = "tmp/gayane_data_10262024.RData")
+```
+
+# Forest plot of significant ORs
+
+```{r}
+dt_fp <- res[`p-Value` < 0.05, ]
+dt_fp$lbl <- paste0(dt_fp$Y,
+                    " / ",
+                    dt_fp$X,
+                    " ",
+                    dt_fp$Comparisons)
+dt_fp$followup <- factor(c(1,2,1,2,1,2,2,2,2),
+                         levels = 1:2,
+                         labels = c("3-Month Follow-Up",
+                                    "Long-Term Follow-Up"))
+```
+
+```{r, fig.width=10, fig.height=4}
+ggplot(dt_fp,
+       aes(x = log2(OR),
+           xmin = log2(`95% C.I.L.B.`),
+           xmax = log2(`95% C.I.U.B.`),
+           y = lbl,
+           fill = followup)) +
+  geom_point(shape = 21,
+             size = 3) +
+  geom_errorbarh(height = 0.2) +
+  geom_point(shape = 21,
+             size = 4) +
+  geom_vline(xintercept = 0,
+             linetype = "dashed") +
+  scale_x_continuous("Odds Ratio",
+                     breaks = 0:7,
+                     labels = 2^(0:7)) +
+  scale_y_discrete("") +
+  scale_fill_discrete("") +
+  theme_bw() +
+  theme(legend.position = "bottom")
 ```
 
 # Detailed 7 cases
@@ -1661,85 +1701,85 @@ table1(~ .| sex, #intraop_sep_feet,
        data = dt2[as.character(dt2$study_id) %in% 
                     unique(as.character(dt4$`Study nr`)), 
                   c("intraop_sep_feet",
-                      "sex",
-                      "age",
-                      "dead",
-                      "dead_spinal_pathology",   
-                      "d_wave_distal_baseline",
-                      "d_wave_distal_intraoperative",
-                      "pad",
-                      "myelomalacia",
-                      "contrast_enhancing_tumor",
-                      "syrinx",
-                      "who",
-                      "symptom_duration_mo",
-                      
-                      "motor_pre",
-                      "motor_3m",
-                      "motor_3m_change",
-                      "motor_long_term",
-                      "motor_long_term_change",
-                      
-                      "sensory_pre",
-                      "sensory_3m",
-                      "sensory_3m_change",
-                      "sensory_long_term",
-                      "sensory_long_term_change",
-                      
-                      "pain_pre",
-                      "pain_3m",
-                      "pain_3m_change",
-                      "pain_long_term",
-                      "pain_long_term_change",
-                      
-                      "bowel_pre",
-                      "bowel_3m",
-                      "bowel_3m_change",
-                      "bowel_long_term",
-                      "bowel_long_term_change",
-                      
-                      "bladder_pre",
-                      "bladder_3m",
-                      "bladder_3m_change",
-                      "bladder_long_term",
-                      "bladder_long_term_change",
-                      
-                      "mmcs_pre",
-                      "mmcs_3m",
-                      "mmcs_3m_change",
-                      "mmcs_long_term",
-                      "mmcs_long_term_change",
-                      
-                      "asia_is_pre",
-                      "asia_is_3m",
-                      "asia_is_3m_change",
-                      "asia_is_long_term",
-                      "asia_is_long_term_change",
-                      
-                      "bcr_baseline",
-                      "bcr_intraoperative",
-                      
-                      "spinal_segment",
-                      "surgical_radicality",
-                      "adjuvent_radio",
-                      "adjuvant_chemo",
-                      
-                      "baseline_MEP_right_leg",
-                      "baseline_MEP_left_leg",
-                      "Intraoperative_MEP_right_hand",
-                      "Intraoperative_MEP_left_hand",
-                      "Intraoperative_MEP_right_leg",
-                      "Intraoperative_MEP_left_leg",
-                      
-                      "baseline_SEP_right_hand",
-                      "baseline_SEP_left_hand",
-                      "baseline_SEP_right_leg",
-                      "baseline_SEP_left_leg",
-                      "Intraoperative_SEP_right_hand",
-                      "Intraoperative_SEP_left_hand",
-                      "Intraoperative_SEP_right_foot",
-                      "Intraoperative_SEP_left_foot"
-       )])
+                    "sex",
+                    "age",
+                    "dead",
+                    "dead_spinal_pathology",   
+                    "d_wave_distal_baseline",
+                    "d_wave_distal_intraoperative",
+                    "pad",
+                    "myelomalacia",
+                    "contrast_enhancing_tumor",
+                    "syrinx",
+                    "who",
+                    "symptom_duration_mo",
+                    
+                    "motor_pre",
+                    "motor_3m",
+                    "motor_3m_change",
+                    "motor_long_term",
+                    "motor_long_term_change",
+                    
+                    "sensory_pre",
+                    "sensory_3m",
+                    "sensory_3m_change",
+                    "sensory_long_term",
+                    "sensory_long_term_change",
+                    
+                    "pain_pre",
+                    "pain_3m",
+                    "pain_3m_change",
+                    "pain_long_term",
+                    "pain_long_term_change",
+                    
+                    "bowel_pre",
+                    "bowel_3m",
+                    "bowel_3m_change",
+                    "bowel_long_term",
+                    "bowel_long_term_change",
+                    
+                    "bladder_pre",
+                    "bladder_3m",
+                    "bladder_3m_change",
+                    "bladder_long_term",
+                    "bladder_long_term_change",
+                    
+                    "mmcs_pre",
+                    "mmcs_3m",
+                    "mmcs_3m_change",
+                    "mmcs_long_term",
+                    "mmcs_long_term_change",
+                    
+                    "asia_is_pre",
+                    "asia_is_3m",
+                    "asia_is_3m_change",
+                    "asia_is_long_term",
+                    "asia_is_long_term_change",
+                    
+                    "bcr_baseline",
+                    "bcr_intraoperative",
+                    
+                    "spinal_segment",
+                    "surgical_radicality",
+                    "adjuvent_radio",
+                    "adjuvant_chemo",
+                    
+                    "baseline_MEP_right_leg",
+                    "baseline_MEP_left_leg",
+                    "Intraoperative_MEP_right_hand",
+                    "Intraoperative_MEP_left_hand",
+                    "Intraoperative_MEP_right_leg",
+                    "Intraoperative_MEP_left_leg",
+                    
+                    "baseline_SEP_right_hand",
+                    "baseline_SEP_left_hand",
+                    "baseline_SEP_right_leg",
+                    "baseline_SEP_left_leg",
+                    "Intraoperative_SEP_right_hand",
+                    "Intraoperative_SEP_left_hand",
+                    "Intraoperative_SEP_right_foot",
+                    "Intraoperative_SEP_left_foot"
+                  )])
 ```
 
 # Session

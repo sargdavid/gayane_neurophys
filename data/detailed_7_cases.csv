@@ -1,0 +1,15 @@
+Study nr,Endpoint,Timepoint,right TA,right AH,left TA ,left AH ,Distal D-wave
+15,MEP Amplitude,Baseline,83,428,169,145,33
+8,MEP Amplitude,Baseline,34,808,125,470,4
+57,MEP Amplitude,Baseline,446,41,1086,229,
+25,MEP Amplitude,Baseline,150,869,156,915,15
+37,MEP Amplitude,Baseline,784,434,290,700,15
+63,MEP Amplitude,Baseline,741,2321,326,1037,
+53,MEP Amplitude,Baseline,34,959,88,290,0
+15,MEP Amplitude,Intraoperative,0,72,1255,470,28
+8,MEP Amplitude,Intraoperative,0,175,29,211,3
+57,MEP Amplitude,Intraoperative,0,169,772,113,
+25,MEP Amplitude,Intraoperative,0,0,0,0,5
+37,MEP Amplitude,Intraoperative,211,349,0,104,15
+63,MEP Amplitude,Intraoperative,105,593,392,1037,
+53,MEP Amplitude,Intraoperative,0,90,0,0,0
