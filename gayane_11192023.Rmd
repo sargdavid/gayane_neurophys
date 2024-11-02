@@ -4,7 +4,7 @@ output: html_notebook
 ---
 
 Date: 11/19/2023  
-Last Updated: 10/26/2024  
+Last Updated: 11/2/2024  
 
 # Definitions
 Correlation of intraoperative changes in SEP, MEP and D-wave vs. Clinical Variables at 3 months and long-term
@@ -621,7 +621,7 @@ out13 <- data.table(Y = "McCormick Scale Worse at 3 Months",
 
 out13
 ```
-#### Intraoperative SEP vs. Long-Term Sensory Change
+#### Intraoperative SEP vs. Long-Term McCormick Scale Change
 ```{r}
 addmargins(table(intraop_sep_feet = dt2$intraop_sep_feet,
                  mmcs_long_term_change = dt2$mmcs_long_term_change))
@@ -1621,13 +1621,22 @@ dt_fp$lbl <- paste0(dt_fp$Y,
                     dt_fp$X,
                     " ",
                     dt_fp$Comparisons)
+
+write.csv(data.table(lbl = unique(dt_fp$lbl),
+           short = LETTERS[1:length(unique(dt_fp$lbl))]),
+           file = "tmp/ttt1.csv")
+
+dt_fp$lbl <- factor(dt_fp$lbl,
+                    levels = rev(unique(dt_fp$lbl)),
+                    labels = rev(LETTERS[1:length(unique(dt_fp$lbl))]))
+
 dt_fp$followup <- factor(c(1,2,1,2,1,2,2,2,2),
                          levels = 1:2,
                          labels = c("3-Month Follow-Up",
                                     "Long-Term Follow-Up"))
 ```
 
-```{r, fig.width=10, fig.height=4}
+```{r, fig.width=5, fig.height=4}
 ggplot(dt_fp,
        aes(x = log2(OR),
            xmin = log2(`95% C.I.L.B.`),
